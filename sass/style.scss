@@ -1,0 +1,132 @@
+
+
+
+
+//*****  Older-Browser Support & Styling
+//*****  Non-grid Design
+
+/* Extra Small Mobile Devices */
+@media only screen and (min-width : 320px) {
+/***********************GENERAL********************/
+    *,*:before,*:after {
+        box-sizing: border-box;
+    }
+
+    html {
+        font-size: 16px;
+    }
+
+    body {
+        max-width: 50em;
+        margin: 0 auto;
+        padding-bottom: 10vh;
+    }
+
+    .italic {
+        font-style: italic!important;
+    }
+    .bold {
+        font-weight: bold!important;
+    }
+}
+
+/* Large Mobile Devices */
+@media only screen and (min-width : 425px) {
+    
+}
+
+/* Extra-Large Mobile Devices */
+@media only screen and (min-width : 480px) {
+    
+}
+
+/* Small Devices, Tablets */
+@media only screen and (min-width : 768px) {
+    
+}
+
+/* Medium Devices, Desktops - No minimum height */
+@media only screen and (min-width : 1000px){
+    
+}
+
+/* Large Devices, Wide Screens */
+@media only screen and (min-width : 1200px) {
+    
+}
+
+/* Extra-Large Devices, Wide Screens */
+@media only screen and (min-width : 1300px) {
+    
+}
+
+
+
+
+
+
+//***** Newer Browser Support
+//***** Grid Design
+
+@supports(grid-area: auto){
+	/* Extra Small Mobile Devices */ 
+	@media only screen and (min-width : 5320px) {
+        body {
+            display: grid;
+            max-width: none;
+            grid-template-columns: 1fr 1fr;
+            grid-template-areas:
+                "header header" 
+                "content content";
+            grid-gap: 0 1em;
+
+        }
+        .navbar {
+            grid-area: header;
+            
+        }
+        .navbar .nav-ul {
+            
+        }
+        .navbar .nav-ul .nav-li {
+            
+        }
+        .navbar .nav-ul .nav-li a {
+            
+        }
+        .banner {
+            grid-area: content;
+            
+        }
+	}
+
+	/* Large Mobile Devices */
+	@media only screen and (min-width : 425px) {
+		
+	}
+
+	/* Extra-Large Mobile Devices */
+	@media only screen and (min-width : 480px) {
+		
+	}
+
+	/* Small Devices, Tablets */
+	@media only screen and (min-width : 768px) {
+		
+	}
+
+	/* Medium Devices, Desktops - No minimum height */
+	@media only screen and (min-width : 1000px){
+		
+	}
+
+	/* Large Devices, Wide Screens */
+	@media only screen and (min-width : 1200px) {
+		
+	}
+
+	/* Extra-Large Devices, Wide Screens */
+	@media only screen and (min-width : 1300px) {
+		
+	}
+}
