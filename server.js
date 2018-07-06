@@ -28,6 +28,11 @@ server.use(session({
 server.use(passport.initialize());
 server.use(passport.session());
 
+server.use((req,res,next) => {
+    res.locals.user = req.user;
+    next();
+});
+
 server.set('view engine', 'ejs');
 
 server.get('/', (req, res) => {

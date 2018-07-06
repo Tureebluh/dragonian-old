@@ -7,8 +7,8 @@ const SteamStrategy = new OpenIDStrategy(
     {
         providerURL: 'http://steamcommunity.com/openid',
         stateless: true,
-        returnURL: (config.nodeEnv === 'development') ? 'http://localhost:3000/auth/login/return' : '',
-        realm: (config.nodeEnv === 'development') ? 'http://localhost:3000/' : ''
+        returnURL: (config.nodeEnv === 'development') ? 'http://localhost:3000/auth/login/return' : 'http://www.dragonian.xyz/auth/login/return',
+        realm: (config.nodeEnv === 'development') ? 'http://localhost:3000' : 'http://www.dragonian.xyz'
     },
         function(identifier, done){
             //Check to see if user owns Planet Coaster (493340)
@@ -19,7 +19,7 @@ const SteamStrategy = new OpenIDStrategy(
                 return res.json();
             })
             .then(resJson => {
-                //If the game count is equal to one it was found, other wise done will be called with false and fail validation
+                //If the game count is equal to 1 it was found, other wise done will be called with false and fail validation
                 if(resJson.response['game_count'] === 1){
                     fetch('http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=' + process.env.STEAM_API_KEY + '&steamids=' + identifier.match(/\d+$/)[0])
                     .then(res => {
