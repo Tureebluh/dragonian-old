@@ -15,7 +15,7 @@ server.use(sassMiddleware({
     src: path.join(__dirname, 'sass'),
     dest: path.join(__dirname, 'public')
 }));
-server.use(bodyParser.json());
+
 server.use(bodyParser.urlencoded({extended: true}));
 
 server.use(session({
