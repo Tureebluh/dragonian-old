@@ -98,5 +98,87 @@ module.exports = __webpack_require__(1);
 "use strict";
 
 
+var _unassignedrole = __webpack_require__(2);
+
+var _unassignedrole2 = _interopRequireDefault(_unassignedrole);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var UnassignedRole = function () {
+    function UnassignedRole(Name, personaname, avatarfull, collab_role_assoc_ID, collab_role, comment, CreatedDate) {
+        _classCallCheck(this, UnassignedRole);
+
+        this.Name = Name;
+        this.personaname = personaname;
+        this.avatarfull = avatarfull;
+        this.collab_role_assoc_ID = collab_role_assoc_ID;
+        this.collab_role = collab_role;
+        this.comment = comment;
+        this.CreatedDate = CreatedDate;
+    }
+
+    _createClass(UnassignedRole, [{
+        key: "unassignedRoleDiv",
+        value: function unassignedRoleDiv() {
+            var tempString = "";
+            tempString += "<div class=\"unassignedRole\" data-collab_role_assoc_ID=\"" + this.collab_role_assoc_ID + "\">";
+            tempString += "<span class=\"Name\">" + this.Name + "</span>";
+            tempString += "<span class=\"personaname\">" + this.personaname + "<img src=\"" + this.avatarfull + "\" alt=\"Steam Profile Picture\" />" + "</span>";
+            tempString += "<span class=\"collab_role\">" + this.collab_role + "</span>";
+            tempString += "<span class=\"comment\">" + this.comment + "</span>";
+            tempString += "<span class=\"CreatedDate\">" + this.CreatedDate + "</span>";
+            return tempString;
+        }
+    }, {
+        key: "Name",
+        get: function get() {
+            return this.Name;
+        }
+    }, {
+        key: "personaname",
+        get: function get() {
+            return this.personaname;
+        }
+    }, {
+        key: "avatarfull",
+        get: function get() {
+            return this.avatarfull;
+        }
+    }, {
+        key: "collab_role",
+        get: function get() {
+            return this.collab_role;
+        }
+    }, {
+        key: "collab_role_assoc_ID",
+        get: function get() {
+            return this.collab_role_assoc_ID;
+        }
+    }, {
+        key: "comment",
+        get: function get() {
+            return this.comment;
+        }
+    }, {
+        key: "CreatedDate",
+        get: function get() {
+            return this.CreatedDate;
+        }
+    }]);
+
+    return UnassignedRole;
+}();
+
 /***/ })
 /******/ ]);
