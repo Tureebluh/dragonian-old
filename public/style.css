@@ -12,7 +12,37 @@
   .italic {
     font-style: italic !important; }
   .bold {
-    font-weight: bold !important; } }
+    font-weight: bold !important; }
+  .navbar {
+    text-align: center;
+    background-color: #1f1d1d; }
+  .navbar a {
+    font-size: 1.5rem;
+    padding: 0.5rem 1rem;
+    line-height: 3rem;
+    text-decoration: none; }
+  .navbar a:active, .navbar a:visited {
+    color: white; }
+  .navbar a:hover {
+    background-color: orange; }
+  .navbanner {
+    background-color: darkred;
+    width: 100%;
+    height: 25vh;
+    padding: 1rem; }
+  .navbanner svg {
+    max-height: 100%;
+    width: 40%;
+    margin-left: 0 5% 0 0; }
+  .userbutton {
+    float: right; }
+  .userbutton input {
+    font-size: 0.8rem;
+    line-height: 1rem;
+    background-color: darkslategrey;
+    color: white;
+    border-radius: 5px;
+    margin-top: 25%; } }
 
 /* Large Mobile Devices */
 /* Extra-Large Mobile Devices */

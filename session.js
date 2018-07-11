@@ -8,14 +8,12 @@ const sessionStore = new MYSQLStore({clearExpired: false, expiration: 86400000},
 const deleteExpiry = setInterval(() => {
     dbpool.getConnection( (err, connection) => {
         // Use the connection
-        connection.query('CALL Delete_Expired_Sessions(' + Date.now() + ');', (error, results, fields) => {
-            res.send(results);
+        connection.query('CALL Delete_Expired_Sessions(' + Math.round(Date.now() / 1000) + ');', (error, results, fields) => {
             connection.release();
             if (error) throw error;
             // Don't use the connection here, it has been returned to the pool.
         });
     });
-    console.log("Delete Expired Sessions");
 }, 86400000);
 
 export default sessionStore;
