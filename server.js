@@ -11,6 +11,16 @@ import passport from './steampassport';
 
 const server = express();
 
+if(config.nodeEnv === 'production'){
+    let forceSsl = function (req, res, next) {
+        if (req.headers['x-forwarded-proto'] !== 'https') {
+            return res.redirect(301, ['https://', req.get('Host'), req.url].join(''));
+        }
+        return next();
+    };
+    server.use(forceSsl);
+}
+
 server.use(sassMiddleware({
     src: path.join(__dirname, 'sass'),
     dest: path.join(__dirname, 'public')
@@ -37,6 +47,20 @@ server.set('view engine', 'ejs');
 
 server.get('/', (req, res) => {
     res.render('index');
+});
+server.get('/collabs', (req, res) => {
+    if(req.isAuthenticated()){
+        res.render('collabs');
+    } else {
+        res.redirect('/auth/login');
+    }
+});
+server.get('/contest', (req, res) => {
+    if(req.isAuthenticated()){
+        res.render('contest');
+    } else {
+        res.redirect('/auth/login');
+    }
 });
 
 server.use('/api', apiRouter);

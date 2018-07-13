@@ -1,4 +1,4 @@
-
+@import url('https://fonts.googleapis.com/css?family=MedievalSharp');
 
 
 
@@ -38,33 +38,101 @@
         line-height: 3rem;
         text-decoration: none;
     }
-    .navbar a:active, .navbar a:visited {
+    .navbar a:active {
+        background-color: orange;
+    }
+    .navbar a:visited, .navbar a {
         color: white;
     }
     .navbar a:hover {
         background-color: orange;
     }
-    .navbanner {
+
+    .welcome {
+        text-align: center;
+        font-weight: bold;
+        font-family: 'MedievalSharp', cursive;
+        font-size: 1.8rem;
+        background-color: darkred;
+        color: whitesmoke;
+        height: 15vh;
+        line-height: 3rem;
+    }
+    .loginbanner {
         background-color: darkred;
         width: 100%;
         height: 25vh;
         padding: 1rem;
     }
-    .navbanner svg {
+    .loginbanner img {
         max-height: 100%;
         width: 40%;
         margin-left: 0 5% 0 0;
     }
-    .userbutton {
+    .loginBtn, .logoutBtn {
         float: right;
     }
-    .userbutton input {
+    .loginBtn input, .logoutBtn input {
         font-size: 0.8rem;
         line-height: 1rem;
         background-color: darkslategrey;
         color: white;
         border-radius: 5px;
         margin-top: 25%;
+    }
+    .logoutBtn input {
+        font-size: 1rem;
+        margin-top: 40%;
+        margin-right: 3rem;
+    }
+
+    .discord {
+        width: 100%;
+        height: 40vh;
+        padding: 1rem;
+        background-color: orange;
+        text-align: center;
+        font-weight: bold;
+        font-family: Georgia, 'Times New Roman', Times, serif;
+        font-size: 1.5rem;
+        color: whitesmoke;
+        line-height: 2rem;
+    }
+    .discord img {
+        max-height: 50%;
+    }
+
+    .twitch {
+        width: 100%;
+        height: 40vh;
+        padding: 1rem;
+        background-color: darkorange;
+        text-align: center;
+        font-weight: bold;
+        font-family: Georgia, 'Times New Roman', Times, serif;
+        font-size: 1.5rem;
+        color: whitesmoke;
+        line-height: 2rem;
+    }
+    .twitch img {
+        max-height: 50%;
+        margin-bottom: 1.5rem;
+    }
+
+    .patreon {
+        width: 100%;
+        height: 40vh;
+        padding: 1rem;
+        background-color: rgb(249, 104, 84);
+        text-align: center;
+        font-weight: bold;
+        font-family: Georgia, 'Times New Roman', Times, serif;
+        font-size: 1.5rem;
+        color: whitesmoke;
+        line-height: 2rem;
+    }
+    .patreon img {
+        max-height: 50%;
     }
 }
 

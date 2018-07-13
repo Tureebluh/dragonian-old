@@ -3,17 +3,17 @@ import express from 'express';
 
 const router = express.Router();
 
-router.get('/login', (req, res) => {
-  res.render('../views/login');
-});
-
-router.post('/login', passport.authenticate('openid'));
+router.get('/login', passport.authenticate('openid'));
 
 router.get('/login/return', passport.authenticate('openid', {successRedirect: '/', failureRedirect: '/auth/login'}));
 
-router.post('/logout', (req, res) => {
-  req.session.destroy();
-  res.redirect(req.get('Referer') || '/');
+router.get('/logout', (req, res) => {
+  if(req.isAuthenticated()){
+    req.session.destroy();
+    res.redirect('/');
+  } else {
+    res.redirect('/');
+  }
 });
 
 export default router;

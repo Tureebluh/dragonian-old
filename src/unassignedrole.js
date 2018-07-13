@@ -12,48 +12,47 @@ class UnassignedRole {
     set Name(Name){
         this._Name = Name;
     }
+    get Name(){
+        return this._Name;
+    }
 
     set personaname(personaname){
         this._personaname = personaname;
+    }
+    get personaname(){
+        return this._personaname;
     }
 
     set avatarfull(avatarfull){
         this._avatarfull = avatarfull;
     }
+    get avatarfull(){
+        return this._avatarfull;
+    }
 
     set collab_role_assoc_ID(collab_role_assoc_ID){
         this._collab_role_assoc_ID = collab_role_assoc_ID;
+    }
+    get collab_role_assoc_ID(){
+        return this._collab_role_assoc_ID;
     }
 
     set collab_role(collab_role){
         this._collab_role = collab_role;
     }
+    get collab_role(){
+        return this._collab_role;
+    }
 
     set comment(comment){
         this._comment = comment;
     }
+    get comment(){
+        return this._comment;
+    }
 
     set CreatedDate(CreatedDate){
         this._CreatedDate = CreatedDate;
-    }
-
-    get Name(){
-        return this._Name;
-    }
-    get personaname(){
-        return this._personaname;
-    }
-    get avatarfull(){
-        return this._avatarfull;
-    }
-    get collab_role(){
-        return this._collab_role;
-    }
-    get collab_role_assoc_ID(){
-        return this._collab_role_assoc_ID;
-    }
-    get comment(){
-        return this._comment;
     }
     get CreatedDate(){
         return this._CreatedDate;
@@ -74,10 +73,13 @@ class UnassignedRole {
 }
 
 window.onload = function(){
-    var unassignedRoles = '';
-    for(var i = 0; i < 5; i++){
-        var temp = new UnassignedRole('Name ' + i.toString(), 'personaname ' + i.toString(), 'avatarfull ' + i.toString(), 'collab_role_assoc_ID ' + i.toString(), 'collab_role ' + i.toString(), 'comment ' + i.toString(), 'CreatedDate ' + i.toString());
-        unassignedRoles += temp.unassignedRoleDiv();
+    if(window.location.pathname === "/collabs"){
+        var unassignedRoles = '';
+        for(var i = 0; i < 5; i++){
+            var temp = new UnassignedRole('Name ' + i.toString(), 'personaname ' + i.toString(), 'avatarfull ' + i.toString(), 'collab_role_assoc_ID ' + i.toString(), 'collab_role ' + i.toString(), 'comment ' + i.toString(), 'CreatedDate ' + i.toString());
+            unassignedRoles += temp.unassignedRoleDiv();
+        }
+        document.getElementById('div-collabs').innerHTML = unassignedRoles;
     }
-    document.getElementById('div-collabs').innerHTML = unassignedRoles;
 }
+

@@ -1,2 +1,1 @@
 import UnassignedRole from './unassignedrole';
-
