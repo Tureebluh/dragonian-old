@@ -34,7 +34,8 @@
     }
     .navbar a{
         font-size: 1.5rem;
-        padding: 0.5rem 1rem;
+        font-family: 'MedievalSharp', cursive;
+        padding: 0.5rem 0.5rem;
         line-height: 3rem;
         text-decoration: none;
     }
@@ -66,24 +67,20 @@
     }
     .loginbanner img {
         max-height: 100%;
-        width: 40%;
-        margin-left: 0 5% 0 0;
+        width: 35%;
     }
     .loginBtn, .logoutBtn {
         float: right;
+        margin: 5% 5% 0 0;
     }
     .loginBtn input, .logoutBtn input {
         font-size: 0.8rem;
-        line-height: 1rem;
         background-color: darkslategrey;
         color: white;
         border-radius: 5px;
-        margin-top: 25%;
     }
     .logoutBtn input {
         font-size: 1rem;
-        margin-top: 40%;
-        margin-right: 3rem;
     }
 
     .discord {
@@ -133,6 +130,18 @@
     }
     .patreon img {
         max-height: 50%;
+    }
+
+    .contestbanner {
+        background-color: darkred;
+        width: 100%;
+        height: 25vh;
+        padding: 1rem;
+    }
+    .contestbanner img {
+        max-height: 100%;
+        width: 40%;
+        margin-left: 0 5% 0 0;
     }
 }
 
