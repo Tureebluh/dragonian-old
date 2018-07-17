@@ -1,6 +1,7 @@
 import config from './config';
 import apiRouter from './api';
 import authRouter from './auth';
+import adminRouter from './admin'
 import session from 'express-session';
 import sessionStore from './session';
 import bodyParser from 'body-parser';
@@ -41,7 +42,6 @@ server.use(passport.session());
 
 server.use((req,res,next) => {
     res.locals.user = req.user;
-    res.locals.roles = req.session.roles;
     next();
 });
 
@@ -59,22 +59,6 @@ server.get('/collabs', (req, res) => {
 });
 server.get('/contest', (req, res) => {
     if(req.isAuthenticated()){
-        if(!req.session.roles){
-            dbpool.getConnection( (err, connection) => {
-                // Use the connection
-                connection.query('CALL Get_UserRoles(' + req.user + ');', (error, results, fields) => {
-                    let tempArray = results[0];
-                    let rolesArray = [];
-                    tempArray.forEach((obj)=>{
-                        rolesArray.push(obj.role);
-                    });
-                    req.session.roles = rolesArray;
-                    connection.release();
-                    if (error) throw error;
-                    // Don't use the connection here, it has been returned to the pool.
-                });
-            });
-        }   
         res.render('contest');
     } else {
         res.redirect('/auth/login');
@@ -83,6 +67,7 @@ server.get('/contest', (req, res) => {
 
 server.use('/api', apiRouter);
 server.use('/auth', authRouter);
+server.use('/admin', adminRouter);
 
 server.use(express.static('public'));
 

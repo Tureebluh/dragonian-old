@@ -1,8 +1,7 @@
 <%- include('user/steaminfo') %>
-<section class="contestbanner">
+<section class="collabbanner">
     <img src="img/chill_dragon.svg">
     <div class="controlPanel">
-        <%- (user.roles.includes('Administrator')) ? include('admin/contestBtn') : null %>
         <%- (user) ? include('user/logoutbtn') : include('user/loginbtn') %>
     </div>
 </section>

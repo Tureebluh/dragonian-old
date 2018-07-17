@@ -1,6 +1,7 @@
 import config from './config';
 import dbpool from './dbpool';
 import fetch from 'node-fetch';
+import session from 'express-session';
 
 const OpenIDStrategy = require('passport-openid').Strategy;
 const SteamStrategy = new OpenIDStrategy(
@@ -28,9 +29,22 @@ const SteamStrategy = new OpenIDStrategy(
                     .then(resJson => {
                         dbpool.getConnection( (err, connection) => {
                             connection.query('CALL Upsert_User(\'' + resJson.response.players[0].steamid + '\',\'' + resJson.response.players[0].personaname + '\',\'' + resJson.response.players[0].avatarfull + '\');', (error, results, fields) => {
+                                if (error) throw error;
+                            });
+                            connection.query('CALL Get_UserRoles(' + resJson.response.players[0].steamid + ');', (error, results, fields) => {
+                                let tempArray = results[0];
+                                let rolesArray = [];
+                                tempArray.forEach((obj)=>{
+                                    rolesArray.push(obj.role);
+                                });
+                                let userJson =  {'steamid': resJson.response.players[0].steamid,
+                                                 'roles': rolesArray,
+                                                 'personaname': resJson.response.players[0].personaname,
+                                                 'avatarfull': resJson.response.players[0].avatarfull
+                                                };
                                 connection.release();
                                 if (error) throw error;
-                                return done(null, resJson.response.players[0].steamid);
+                                return done(null, userJson);
                                 // Don't use the connection here, it has been returned to the pool.
                             });
                         });

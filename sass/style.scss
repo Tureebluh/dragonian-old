@@ -49,7 +49,7 @@
         background-color: orange;
     }
 
-    .welcome {
+    .welcome, .steaminfo {
         text-align: center;
         font-weight: bold;
         font-family: 'MedievalSharp', cursive;
@@ -57,23 +57,59 @@
         background-color: darkred;
         color: whitesmoke;
         height: 15vh;
-        line-height: 3rem;
+        padding-top: 5vh;
+    }
+    .steaminfo span {
+        display: flex;
+        align-content: center;
+        justify-content: center;
+    }
+    .steaminfo img {
+        height: 1.8rem;
+    }
+
+    .controlPanel {
+        float: right;
+        height: 100%;
+        width: 55%;
+        align-content: center;
+    }
+    .adminBtn {
+        width: 3rem;
+        margin: 0 auto;
+        border-radius: 50%;
+        background-color: rgba(255,255,255, 0.7);
+    }
+    .userSubmitBtn {
+        width: 75%;
+        margin: 0 auto;
+    }
+    .userSubmitBtn input{
+        width: 100%;
+        font-size: 0.9rem;
+        background-color: darkslategrey;
+        color: white;
+        border-radius: 5px;
     }
     .loginbanner {
         background-color: darkred;
         width: 100%;
-        height: 25vh;
+        height: 25vh!important;
         padding: 1rem;
     }
     .loginbanner img {
-        max-height: 100%;
         width: 35%;
     }
+    
     .loginBtn, .logoutBtn {
-        float: right;
-        margin: 5% 5% 0 0;
+        width: 75%;
+        margin: 1rem auto;
+    }
+    .loginBtn {
+        width: 100%;
     }
     .loginBtn input, .logoutBtn input {
+        width: 100%;
         font-size: 0.8rem;
         background-color: darkslategrey;
         color: white;
@@ -82,34 +118,26 @@
     .logoutBtn input {
         font-size: 1rem;
     }
-
-    .discord {
+    .infopanel {
         width: 100%;
         height: 40vh;
         padding: 1rem;
-        background-color: orange;
+        line-height: 2rem;
         text-align: center;
         font-weight: bold;
         font-family: Georgia, 'Times New Roman', Times, serif;
         font-size: 1.5rem;
         color: whitesmoke;
-        line-height: 2rem;
+    }
+    .discord {
+        background-color: orange;
     }
     .discord img {
         max-height: 50%;
     }
 
     .twitch {
-        width: 100%;
-        height: 40vh;
-        padding: 1rem;
         background-color: darkorange;
-        text-align: center;
-        font-weight: bold;
-        font-family: Georgia, 'Times New Roman', Times, serif;
-        font-size: 1.5rem;
-        color: whitesmoke;
-        line-height: 2rem;
     }
     .twitch img {
         max-height: 50%;
@@ -117,32 +145,42 @@
     }
 
     .patreon {
-        width: 100%;
-        height: 40vh;
-        padding: 1rem;
         background-color: rgb(249, 104, 84);
-        text-align: center;
-        font-weight: bold;
-        font-family: Georgia, 'Times New Roman', Times, serif;
-        font-size: 1.5rem;
-        color: whitesmoke;
-        line-height: 2rem;
     }
     .patreon img {
         max-height: 50%;
     }
 
-    .contestbanner {
+    .contestbanner, .collabbanner{
         background-color: darkred;
         width: 100%;
         height: 25vh;
         padding: 1rem;
     }
-    .contestbanner img {
+    .contestbanner img, .collabbanner img{
         max-height: 100%;
         width: 40%;
         margin-left: 0 5% 0 0;
     }
+    .contest-creation {
+        width: 100%;
+        padding: 3rem;
+    }
+    .contest-creation h1 {
+        text-align: center;
+    }
+    .contest-creation-form {
+        width: 100%;
+        margin: 0 auto;
+    }
+    .contest-creation-form * {
+        width: 100%;
+    }
+    #contestDescription {
+        width: 100%;
+        height: 50vh;
+    }
+    
 }
 
 /* Large Mobile Devices */
