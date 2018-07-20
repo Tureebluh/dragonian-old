@@ -106,23 +106,54 @@ var _Contest = __webpack_require__(3);
 
 var _Contest2 = _interopRequireDefault(_Contest);
 
+var _ContestOption = __webpack_require__(4);
+
+var _ContestOption2 = _interopRequireDefault(_ContestOption);
+
+var _ChangeEvents = __webpack_require__(5);
+
+var _ChangeEvents2 = _interopRequireDefault(_ChangeEvents);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+//Can only have one window.onload function so we're checking the pathname to see which page the user is on
 window.onload = function () {
+
+    //If user is on collab page display under construction
     if (window.location.pathname === "/collabs") {
         var unassignedRoles = '<h1>Page Currently Under Construction!</h1>';
-        document.getElementById('collabsDiv').innerHTML = unassignedRoles;
+        document.querySelector('#collabsDiv').innerHTML = unassignedRoles;
+
+        //When admin creates a contest, it will redirect back to same page with added URL params if successful.
     } else if (window.location.pathname === '/admin/contest') {
-        if (document.URL.indexOf('result=success') !== -1) {
-            this.alert('Contest successfully created!');
-        }
-    } else if (window.location.pathname === '/contest') {
-        fetch('/api/active/contest', { credentials: 'include' }).then(function (res) {
+        fetch('/api/contest/names/all', { credentials: 'include' }).then(function (res) {
             return res.json();
+        }).then(function (resJson) {
+            resJson[0].forEach(function (contest) {
+                var node = new _ContestOption2.default(contest.contest_ID, contest.Name).getContestOption();
+                document.querySelector('#contestDropdown').appendChild(node);
+            });
+        }).catch(function (error) {
+            console.error(error);
+        });
+
+        if (document.URL.indexOf('result=success') !== -1) {
+            this.alert('Contest successfully created/edited!');
+        }
+
+        //If user is on contest page, load the oldest active contest and pull all rules associated with that contest. Store all info in an object and call
+        //call provided function to create HTML visual of data
+        //NOTE: Cookies are not sent with fetch() by default, therefore {credentials} are supplied to server to authenticate fetch() request
+    } else if (window.location.pathname === '/contest') {
+        fetch('/api/contest/all/active', { credentials: 'include' }).then(function (res) {
+            return res.json();
+            //Return res in JSON form to next then()
         }).then(function (resJson) {
             var activeContest = new _Contest2.default(resJson[0][0].contest_ID, resJson[0][0].Name, new Date(resJson[0][0].SubmissionStartDate), new Date(resJson[0][0].SubmissionEndDate), new Date(resJson[0][0].VoteStartDate), new Date(resJson[0][0].VoteEndDate), resJson[0][0].Description, null);
             return activeContest;
+            //Create obj and return to next then()
         }).then(function (contestObj) {
+            //Fetch rules associated with contest_ID
             fetch('/api/contest/rules/' + contestObj.contest_ID, { credentials: 'include' }).then(function (res) {
                 return res.json();
             }).then(function (resJson) {
@@ -273,6 +304,8 @@ var Contest = function () {
 
     _createClass(Contest, [{
         key: "activeContestDiv",
+
+        //Builds Contest Div using object
         value: function activeContestDiv() {
             var tempString = "";
             tempString += "<div class=\"Name\"><h1>" + this._Name + "</h1></div>";
@@ -369,6 +402,91 @@ var Contest = function () {
 }();
 
 exports.default = Contest;
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var ContestOption = function () {
+    function ContestOption(contest_ID, Name) {
+        _classCallCheck(this, ContestOption);
+
+        this._contest_ID = contest_ID;
+        this._Name = Name;
+    }
+
+    _createClass(ContestOption, [{
+        key: "getContestOption",
+        value: function getContestOption() {
+            var node = document.createElement("OPTION");
+            node.value = this._contest_ID;
+            var textnode = document.createTextNode(this._Name);
+            node.appendChild(textnode);
+            return node;
+        }
+    }, {
+        key: "contest_ID",
+        set: function set(contest_ID) {
+            this._contest_ID = contest_ID;
+        },
+        get: function get() {
+            return this._contest_ID;
+        }
+    }, {
+        key: "Name",
+        set: function set(Name) {
+            this._Name = Name;
+        },
+        get: function get() {
+            return this._Name;
+        }
+    }]);
+
+    return ContestOption;
+}();
+
+exports.default = ContestOption;
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+//When admin selects contest from dropdown list
+document.querySelector('#contestDropdown').addEventListener('change', function (event) {
+    if (event.target.value !== '0') {
+        fetch('/api/contest/all/' + event.target.value, { credentials: 'include' }).then(function (res) {
+            return res.json();
+        }).then(function (resJson) {
+            var temp = resJson[0][0];
+
+            document.querySelector('#contestName').value = temp.Name;
+            document.querySelector('#contestSubmissionStart').value = temp.SubmissionStartDate.toString().replace('Z', '');
+            document.querySelector('#contestSubmissionEnd').value = temp.SubmissionEndDate.toString().replace('Z', '');
+            document.querySelector('#contestVoteStart').value = temp.VoteStartDate.toString().replace('Z', '');
+            document.querySelector('#contestVoteEnd').value = temp.VoteEndDate.toString().replace('Z', '');
+            document.querySelector('#contestDescription').value = temp.Description;
+            document.querySelector('#createEditContestHeader').textContent = "Edit Contest";
+        }).catch(function (error) {
+            console.error(error);
+        });
+    } else {
+        document.querySelector('#createEditContestHeader').textContent = "Create Contest";
+    }
+});
 
 /***/ })
 /******/ ]);

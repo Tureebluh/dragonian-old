@@ -15,11 +15,20 @@ router.get('/contest', (req, res) => {
 router.post('/create/contest', (req, res) => {
     if(req.isAuthenticated() && req.user.roles.includes('Administrator')){
         dbpool.getConnection( (err, connection) => {
-            connection.query('CALL Upsert_Contest(' + null + ',\'' + req.body.contestName + '\',\'' + req.body.contestSubmissionStart.replace('T',' ') + '\',\'' + req.body.contestSubmissionEnd.replace('T',' ') + '\',\'' + req.body.contestVoteStart.replace('T',' ') + '\',\'' + req.body.contestVoteEnd.replace('T',' ') + '\',\'' + req.body.contestDescription + '\',' + null + ');', (error, results, fields) => {
-                connection.release();
-                if (error) throw error;
-                res.redirect('/admin/contest' + '?result=success');
-            });
+            if(req.body.contestID > 0) {
+                connection.query('CALL Upsert_Contest(' + '\'' + req.body.contestID + '\'' + ',\'' + req.body.contestName + '\',\'' + req.body.contestSubmissionStart.replace('T',' ') + '\',\'' + req.body.contestSubmissionEnd.replace('T',' ') + '\',\'' + req.body.contestVoteStart.replace('T',' ') + '\',\'' + req.body.contestVoteEnd.replace('T',' ') + '\',\'' + req.body.contestDescription + '\',' + null + ');', (error, results, fields) => {
+                    connection.release();
+                    if (error) throw error;
+                    res.redirect('/admin/contest' + '?result=success');
+                });
+            } else {
+                connection.query('CALL Upsert_Contest(' + null + ',\'' + req.body.contestName + '\',\'' + req.body.contestSubmissionStart.replace('T',' ') + '\',\'' + req.body.contestSubmissionEnd.replace('T',' ') + '\',\'' + req.body.contestVoteStart.replace('T',' ') + '\',\'' + req.body.contestVoteEnd.replace('T',' ') + '\',\'' + req.body.contestDescription + '\',' + null + ');', (error, results, fields) => {
+                    connection.release();
+                    if (error) throw error;
+                    res.redirect('/admin/contest' + '?result=success');
+                });
+            }
+            
             if(err) throw err;
         });
     } else {

@@ -1,8 +1,15 @@
 <%- include('../header') -%>
 <%- include('../navbar') -%>
 <section class="contest-creation">
-    <h1>Create Contest</h1>
+    <h1 id="createEditContestHeader">Create Contest</h1>
     <form action="/admin/create/contest" method="post" class="contest-creation-form">
+
+        <select name="contestID" id="contestDropdown">
+            <option value="0">Create New...</option>
+        </select>
+        <br>
+        <br>
+
         <label for="contestName">Name:<br>(MAX 45 Characters)</label><br>
         <input type="text" alt="Enter name" id="contestName" name="contestName" required/><br>
         <br>

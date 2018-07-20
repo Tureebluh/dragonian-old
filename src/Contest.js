@@ -65,7 +65,7 @@ class Contest {
     get rules(){
         return this._rules;
     }
-
+    //Builds Contest Div using object
     activeContestDiv(){
         let tempString = "";
         tempString += "<div class=\"Name\"><h1>" + this._Name + "</h1></div>";
