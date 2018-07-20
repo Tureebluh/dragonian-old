@@ -106,6 +106,10 @@
     background-color: #f96854; }
   .patreon img {
     max-height: 50%; }
+  #divCollabs {
+    text-align: center;
+    background-color: red;
+    color: white; }
   .contestbanner, .collabbanner {
     background-color: darkred;
     width: 100%;
@@ -117,7 +121,8 @@
     margin-left: 0 5% 0 0; }
   .contest-creation {
     width: 100%;
-    padding: 3rem; }
+    padding: 3rem;
+    background-color: gainsboro; }
   .contest-creation h1 {
     text-align: center; }
   .contest-creation-form {
@@ -125,9 +130,41 @@
     margin: 0 auto; }
   .contest-creation-form * {
     width: 100%; }
+  .contest-creation-form input[type="submit"] {
+    background-color: green;
+    color: whitesmoke; }
+  .contest-creation-form input[type="reset"] {
+    background-color: red;
+    color: whitesmoke; }
   #contestDescription {
     width: 100%;
-    height: 50vh; } }
+    height: 50vh; }
+  #activeContest {
+    text-align: center;
+    font-size: 1rem;
+    padding: 0 2.5%; }
+  #activeContest h1, #activeContest h2 {
+    font-family: 'MedievalSharp', cursive;
+    font-weight: bold; }
+  #activeContest .sml-container {
+    width: 100%;
+    height: 20vh; }
+  #activeContest .sml-container span {
+    max-width: 47.5%; }
+  #activeContest .sml-container span:nth-of-type(1) {
+    float: left; }
+  #activeContest .sml-container span:nth-of-type(2) {
+    float: right; }
+  #activeContest .sml-container span:nth-of-type(3) {
+    float: left; }
+  #activeContest .sml-container span:nth-of-type(4) {
+    float: right; }
+  #rulesDiv {
+    text-align: left;
+    padding: 0 5%; }
+  #rulesDiv .rule {
+    font-size: 1.5rem;
+    margin-top: 5%; } }
 
 /* Large Mobile Devices */
 /* Extra-Large Mobile Devices */

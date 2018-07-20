@@ -1,16 +1,42 @@
 <%- include('../header') -%>
 <%- include('../navbar') -%>
 <section class="contest-creation">
-        <h1>Create Contest</h1>
-        <form action="/admin/create/contest" method="get" class="contest-creation-form">
-            <label for="contestName">Name:</label><br>
-            <input type="text" alt="Enter name" id="contestName"/><br><br>
-            <label for="contestDescription">Description:</label><br>
-            <textarea alt="Enter description" id="contestDescription"></textarea><br><br>
-            <label for="contestSubmissionStart">Contest Start-Date:</label><br>
-            <input type="datetime-local" alt="Enter start date" id="contestSubmissionStart"/><br><br>
-            <label for="contestSubmissionEnd">Contest End-Date:</label><br>
-            <input type="datetime-local" alt="Enter end date" id="contestSubmissionEnd"/><br><br>
-        </form>
+    <h1>Create Contest</h1>
+    <form action="/admin/create/contest" method="post" class="contest-creation-form">
+        <label for="contestName">Name:<br>(MAX 45 Characters)</label><br>
+        <input type="text" alt="Enter name" id="contestName" name="contestName" required/><br>
+        <br>
+        <br>
+
+        <label for="contestSubmissionStart">Contest Start-Date</label><br>
+        <input type="datetime-local" alt="Enter submission start date" id="contestSubmissionStart" name="contestSubmissionStart" required/><br>
+        <br>
+        <br>
+
+        <label for="contestSubmissionEnd">Contest End-Date</label><br>
+        <input type="datetime-local" alt="Enter submission end date" id="contestSubmissionEnd" name="contestSubmissionEnd" required/><br>
+        <br>
+        <br>
+
+        <label for="contestVoteStart">Voting Start-Date</label><br>
+        <input type="datetime-local" alt="Enter vote start date" id="contestVoteStart" name="contestVoteStart" required/><br>
+        <br>
+        <br>
+
+        <label for="contestVoteEnd">Voting End-Date</label><br>
+        <input type="datetime-local" alt="Enter vote end date" id="contestVoteEnd" name="contestVoteEnd" required/><br>
+        <br>
+        <br>
+
+        <label for="contestDescription">Description:<br>(MAX 5000 Characters)</label><br>
+        <textarea alt="Enter description" id="contestDescription" name="contestDescription" required></textarea><br>
+        <br>
+        <br>
+
+        <input type="submit" alt="Create Contest" value="Create Contest" />
+        <br>
+        <br>
+        <input type="reset" alt="Create Contest" value="Reset Form" />
+    </form>
 </section>
 <%- include('../bodyend') -%>

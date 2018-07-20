@@ -98,11 +98,44 @@ module.exports = __webpack_require__(1);
 "use strict";
 
 
-var _unassignedrole = __webpack_require__(2);
+var _UnassignedRole = __webpack_require__(2);
 
-var _unassignedrole2 = _interopRequireDefault(_unassignedrole);
+var _UnassignedRole2 = _interopRequireDefault(_UnassignedRole);
+
+var _Contest = __webpack_require__(3);
+
+var _Contest2 = _interopRequireDefault(_Contest);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+window.onload = function () {
+    if (window.location.pathname === "/collabs") {
+        var unassignedRoles = '<h1>Page Currently Under Construction!</h1>';
+        document.getElementById('collabsDiv').innerHTML = unassignedRoles;
+    } else if (window.location.pathname === '/admin/contest') {
+        if (document.URL.indexOf('result=success') !== -1) {
+            this.alert('Contest successfully created!');
+        }
+    } else if (window.location.pathname === '/contest') {
+        fetch('/api/active/contest', { credentials: 'include' }).then(function (res) {
+            return res.json();
+        }).then(function (resJson) {
+            var activeContest = new _Contest2.default(resJson[0][0].contest_ID, resJson[0][0].Name, new Date(resJson[0][0].SubmissionStartDate), new Date(resJson[0][0].SubmissionEndDate), new Date(resJson[0][0].VoteStartDate), new Date(resJson[0][0].VoteEndDate), resJson[0][0].Description, null);
+            return activeContest;
+        }).then(function (contestObj) {
+            fetch('/api/contest/rules/' + contestObj.contest_ID, { credentials: 'include' }).then(function (res) {
+                return res.json();
+            }).then(function (resJson) {
+                contestObj.rules = resJson[0];
+                document.querySelector('#activeContest').innerHTML = contestObj.activeContestDiv();
+            }).catch(function (error) {
+                return console.error(error);
+            });
+        }).catch(function (error) {
+            return console.error(error);
+        });
+    }
+};
 
 /***/ }),
 /* 2 */
@@ -110,6 +143,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 "use strict";
 
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -203,16 +240,135 @@ var UnassignedRole = function () {
     return UnassignedRole;
 }();
 
-window.onload = function () {
-    if (window.location.pathname === "/collabs") {
-        var unassignedRoles = '';
-        for (var i = 0; i < 5; i++) {
-            var temp = new UnassignedRole('Name ' + i.toString(), 'personaname ' + i.toString(), 'avatarfull ' + i.toString(), 'collab_role_assoc_ID ' + i.toString(), 'collab_role ' + i.toString(), 'comment ' + i.toString(), 'CreatedDate ' + i.toString());
-            unassignedRoles += temp.unassignedRoleDiv();
-        }
-        document.getElementById('div-collabs').innerHTML = unassignedRoles;
+exports.default = UnassignedRole;
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Contest = function () {
+    function Contest(contest_ID, Name, SubmissionStartDate, SubmissionEndDate, VoteStartDate, VoteEndDate, Description, rules) {
+        _classCallCheck(this, Contest);
+
+        this._contest_ID = contest_ID;
+        this._Name = Name;
+        this._SubmissionStartDate = SubmissionStartDate;
+        this._SubmissionEndDate = SubmissionEndDate;
+        this._VoteStartDate = VoteStartDate;
+        this._VoteEndDate = VoteEndDate;
+        this._Description = Description;
+        this._rules = rules;
     }
-};
+
+    _createClass(Contest, [{
+        key: "activeContestDiv",
+        value: function activeContestDiv() {
+            var tempString = "";
+            tempString += "<div class=\"Name\"><h1>" + this._Name + "</h1></div>";
+            tempString += "<br>";
+            tempString += "<div class=\"sml-container\">";
+            tempString += "<span class=\"SubmissionStartDate\"><h2>Start</h2>" + this._SubmissionStartDate.toLocaleString() + "</span>";
+            tempString += "<span class=\"SubmissionEndDate\"><h2>End</h2>" + this._SubmissionEndDate.toLocaleString() + "</span>";
+            tempString += "</div>";
+            tempString += "<br>";
+            tempString += "<div class=\"sml-container\">";
+            tempString += "<span class=\"VoteStartDate\"><h2>Vote Start</h2>" + this._VoteStartDate.toLocaleString() + "</span>";
+            tempString += "<span class=\"VoteEndDate\"><h2>Vote End</h2>" + this._VoteEndDate.toLocaleString() + "</span>";
+            tempString += "</div>";
+            tempString += "<br>";
+            tempString += "<div class=\"Description\"><h2>Summary</h2>" + this._Description + "</div>";
+            tempString += "<br>";
+            tempString += "<h1>Rules</h1>";
+            tempString += "<div id=\"rulesDiv\">";
+            if (this._rules !== null) {
+                this._rules.forEach(function (tempRule) {
+                    tempString += "<div class=\"rule\">&bull; " + tempRule.rule + "</div>";
+                });
+            }
+            tempString += "</div>";
+            return tempString;
+        }
+    }, {
+        key: "Name",
+        set: function set(Name) {
+            this._Name = Name;
+        },
+        get: function get() {
+            return this._Name;
+        }
+    }, {
+        key: "contest_ID",
+        set: function set(contest_ID) {
+            this._contest_ID = contest_ID;
+        },
+        get: function get() {
+            return this._contest_ID;
+        }
+    }, {
+        key: "SubmissionStartDate",
+        set: function set(SubmissionStartDate) {
+            this._SubmissionStartDate = SubmissionStartDate;
+        },
+        get: function get() {
+            return this._SubmissionStartDate;
+        }
+    }, {
+        key: "SubmissionEndDate",
+        set: function set(SubmissionEndDate) {
+            this._SubmissionEndDate = SubmissionEndDate;
+        },
+        get: function get() {
+            return this._SubmissionEndDate;
+        }
+    }, {
+        key: "VoteStartDate",
+        set: function set(VoteStartDate) {
+            this._VoteStartDate = VoteStartDate;
+        },
+        get: function get() {
+            return this._VoteStartDate;
+        }
+    }, {
+        key: "VoteEndDate",
+        set: function set(VoteEndDate) {
+            this._VoteEndDate = VoteEndDate;
+        },
+        get: function get() {
+            return this._VoteEndDate;
+        }
+    }, {
+        key: "Description",
+        set: function set(Description) {
+            this._Description = Description;
+        },
+        get: function get() {
+            return this._Description;
+        }
+    }, {
+        key: "rules",
+        set: function set(rules) {
+            this._rules = rules;
+        },
+        get: function get() {
+            return this._rules;
+        }
+    }]);
+
+    return Contest;
+}();
+
+exports.default = Contest;
 
 /***/ })
 /******/ ]);

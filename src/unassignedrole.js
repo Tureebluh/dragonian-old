@@ -72,14 +72,5 @@ class UnassignedRole {
     }
 }
 
-window.onload = function(){
-    if(window.location.pathname === "/collabs"){
-        var unassignedRoles = '';
-        for(var i = 0; i < 5; i++){
-            var temp = new UnassignedRole('Name ' + i.toString(), 'personaname ' + i.toString(), 'avatarfull ' + i.toString(), 'collab_role_assoc_ID ' + i.toString(), 'collab_role ' + i.toString(), 'comment ' + i.toString(), 'CreatedDate ' + i.toString());
-            unassignedRoles += temp.unassignedRoleDiv();
-        }
-        document.getElementById('div-collabs').innerHTML = unassignedRoles;
-    }
-}
+export default UnassignedRole;
 

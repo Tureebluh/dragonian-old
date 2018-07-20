@@ -11,15 +11,16 @@ router.get('/contest', (req, res) => {
         res.redirect('/contest');
     }
 });
-//Administration can POST to this endpoint for contest creation
+//Administrators can POST to this endpoint for contest creation
 router.post('/create/contest', (req, res) => {
     if(req.isAuthenticated() && req.user.roles.includes('Administrator')){
         dbpool.getConnection( (err, connection) => {
-            connection.query('CALL Get_UnassignedCollabRoles(0, 20);', (error, results, fields) => {
-                res.send(results);
+            connection.query('CALL Upsert_Contest(' + null + ',\'' + req.body.contestName + '\',\'' + req.body.contestSubmissionStart.replace('T',' ') + '\',\'' + req.body.contestSubmissionEnd.replace('T',' ') + '\',\'' + req.body.contestVoteStart.replace('T',' ') + '\',\'' + req.body.contestVoteEnd.replace('T',' ') + '\',\'' + req.body.contestDescription + '\',' + null + ');', (error, results, fields) => {
                 connection.release();
                 if (error) throw error;
+                res.redirect('/admin/contest' + '?result=success');
             });
+            if(err) throw err;
         });
     } else {
         res.send('Unauthorized Access');
