@@ -194,6 +194,9 @@
     .contest-creation-form * {
         width: 100%;
     }
+    .contest-creation-form input[type="checkbox"] {
+        width: auto;
+    }
     .contest-creation-form input[type="submit"] {
         background-color: green;
         color: whitesmoke;
