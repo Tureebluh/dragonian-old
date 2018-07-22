@@ -30,3 +30,7 @@ if(window.location.pathname === '/admin/contest'){
     });    
 }
 
+document.querySelector('#adminPanel').addEventListener('click', (event)=>{
+    document.getElementById("adminDropdown").classList.toggle("show");
+});
+
