@@ -4,7 +4,7 @@
     <h1 id="createEditContestHeader">Create Contest</h1>
     <form action="/admin/create/contest" method="post" class="contest-creation-form">
 
-        <select name="contestID" id="contestDropdown">
+        <select name="contestID" id="contestNameDropdown">
             <option value="0">Create New...</option>
         </select>
         <br>
@@ -40,6 +40,12 @@
         <br>
         <br>
 
+        <label for="contestRules">Rules:<br>(Select Multiple)</label><br>
+        <select name="contestRules" id="contestRulesDropdown" size="10" multiple>
+            
+        </select>
+        <br>
+        <br>
         
         <input type="checkbox" id="contestActive" name="contestActive" disabled checked> Active<br>
         <br>

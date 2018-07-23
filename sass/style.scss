@@ -33,6 +33,7 @@
     .navbar {
         text-align: center;
         background-color: rgb(31, 29, 29);
+        padding: 2%;
     }
     .navbar a{
         font-size: 1.5rem;
@@ -50,37 +51,30 @@
     .navbar a:hover {
         background-color: orange;
     }
-    #adminPanel:hover {
-        background-color: orange;
-    }
     .dropdown {
         overflow: hidden;
+        width: 3rem;
+        margin: 0 auto;
     }    
     .dropdown .dropbtn {
         cursor: pointer;
-        font-size: 16px;    
+        font-size: 1rem;    
         border: none;
         outline: none;
         color: white;
         background-color: inherit;
         font-family: inherit;
-        margin: 0;
     }
     .dropdown-content {
         display: none;
         position: absolute;
         background-color: rgb(31, 29, 29);
-        min-width: 160px;
-        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
         z-index: 1;
     }
     .dropdown-content a {
-        float: none;
         color: white;
-        padding: 12px 16px;
         text-decoration: none;
         display: block;
-        text-align: left;
     }
     .dropdown-content a:hover {
         background-color: orange;
@@ -88,7 +82,7 @@
     .show {
         display: block;
     }
-
+    
 
 
 
@@ -120,11 +114,6 @@
         width: 55%;
         align-content: center;
     }
-    .adminBtn {
-        width: 3rem;
-        margin: 0 auto;
-        border-radius: 50%;
-    }
     .userSubmitBtn {
         width: 75%;
         margin: 0 auto;
@@ -143,7 +132,7 @@
         padding: 1rem;
     }
     .loginbanner img {
-        width: 35%;
+        max-width: 35%;
     }
     
     .loginBtn, .logoutBtn {
@@ -234,6 +223,11 @@
     }
     .contest-creation-form * {
         width: 100%;
+    }
+    .contest-creation-form label {
+        font-size: 1rem;
+        font-weight: bold;
+        font-family: Georgia, 'Times New Roman', Times, serif;
     }
     .contest-creation-form input[type="checkbox"] {
         width: auto;

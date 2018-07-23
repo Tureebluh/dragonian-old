@@ -1,6 +1,7 @@
 import UnassignedRole from './UnassignedRole';
 import Contest from './Contest';
 import ContestOption from './ContestOption';
+import ContestRule from './ContestRule';
 import ChangeEvents from './ChangeEvents';
 
 //Can only have one window.onload function so we're checking the pathname to see which page the user is on
@@ -20,7 +21,18 @@ window.onload = function(){
         .then(resJson => {
             resJson[0].forEach(contest => {
                 let node = new ContestOption(contest.contest_ID, contest.Name).getContestOption();
-                document.querySelector('#contestDropdown').appendChild(node);
+                document.querySelector('#contestNameDropdown').appendChild(node);
+            });
+        }).catch(error => {console.error(error)});
+
+        fetch('/api/contest/rules', {credentials: 'include'})
+        .then(res => {
+            return res.json();
+        })
+        .then(resJson => {
+            resJson[0].forEach(rule => {
+                let node = new ContestRule(rule.contest_rule_ID, rule.rule).getRuleOption();
+                document.querySelector('#contestRulesDropdown').appendChild(node);
             });
         }).catch(error => {console.error(error)});
 
@@ -37,27 +49,35 @@ window.onload = function(){
             return res.json();
             //Return res in JSON form to next then()
         }).then(resJson =>{
-            let activeContest = new Contest(
-                resJson[0][0].contest_ID,
-                resJson[0][0].Name,
-                new Date(resJson[0][0].SubmissionStartDate),
-                new Date(resJson[0][0].SubmissionEndDate),
-                new Date(resJson[0][0].VoteStartDate),
-                new Date(resJson[0][0].VoteEndDate),
-                resJson[0][0].Description,
-                null
-            );
-            return activeContest;
+            if(typeof resJson[0][0] !== 'undefined'){
+                let activeContest = new Contest(
+                    resJson[0][0].contest_ID,
+                    resJson[0][0].Name,
+                    new Date(resJson[0][0].SubmissionStartDate),
+                    new Date(resJson[0][0].SubmissionEndDate),
+                    new Date(resJson[0][0].VoteStartDate),
+                    new Date(resJson[0][0].VoteEndDate),
+                    resJson[0][0].Description,
+                    null
+                );
+                return activeContest;
+            } else {
+                return {};
+            }
             //Create obj and return to next then()
         }).then(contestObj => {
-            //Fetch rules associated with contest_ID
-            fetch('/api/contest/rules/' + contestObj.contest_ID, {credentials: 'include'})
-            .then(res => {
-                return res.json();
-            }).then(resJson => {
-                contestObj.rules = resJson[0];
-                document.querySelector('#activeContest').innerHTML = contestObj.activeContestDiv();
-            }).catch(error => console.error(error));
+            if(contestObj.hasOwnProperty('_contest_ID')){
+                //Fetch rules associated with contest_ID
+                fetch('/api/contest/rules/' + contestObj.contest_ID, {credentials: 'include'})
+                .then(res => {
+                    return res.json();
+                }).then(resJson => {
+                    contestObj.rules = resJson[0];
+                    document.querySelector('#activeContest').innerHTML = contestObj.activeContestDiv();
+                }).catch(error => console.error(error));
+            } else {
+                document.querySelector('#activeContest').innerHTML = '<h1>No Contest Currently Running.<br>Check back soon!</h1>'
+            }
         }).catch(error => console.error(error));
     }
 }

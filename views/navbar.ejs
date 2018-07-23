@@ -2,5 +2,5 @@
     <a href="/">Home
     </a><a href="/collabs">Collabs
     </a><a href="/contest">Contest</a>
-    <%- (user.roles.includes('Administrator')) ? include('admin/contestBtn') : null %>
+    <%- (user) ? ((user.roles.includes('Administrator')) ? include('admin/contestBtn') : null) : null %>
 </nav>

@@ -110,7 +110,11 @@ var _ContestOption = __webpack_require__(4);
 
 var _ContestOption2 = _interopRequireDefault(_ContestOption);
 
-var _ChangeEvents = __webpack_require__(5);
+var _ContestRule = __webpack_require__(5);
+
+var _ContestRule2 = _interopRequireDefault(_ContestRule);
+
+var _ChangeEvents = __webpack_require__(6);
 
 var _ChangeEvents2 = _interopRequireDefault(_ChangeEvents);
 
@@ -131,7 +135,18 @@ window.onload = function () {
         }).then(function (resJson) {
             resJson[0].forEach(function (contest) {
                 var node = new _ContestOption2.default(contest.contest_ID, contest.Name).getContestOption();
-                document.querySelector('#contestDropdown').appendChild(node);
+                document.querySelector('#contestNameDropdown').appendChild(node);
+            });
+        }).catch(function (error) {
+            console.error(error);
+        });
+
+        fetch('/api/contest/rules', { credentials: 'include' }).then(function (res) {
+            return res.json();
+        }).then(function (resJson) {
+            resJson[0].forEach(function (rule) {
+                var node = new _ContestRule2.default(rule.contest_rule_ID, rule.rule).getRuleOption();
+                document.querySelector('#contestRulesDropdown').appendChild(node);
             });
         }).catch(function (error) {
             console.error(error);
@@ -149,19 +164,27 @@ window.onload = function () {
             return res.json();
             //Return res in JSON form to next then()
         }).then(function (resJson) {
-            var activeContest = new _Contest2.default(resJson[0][0].contest_ID, resJson[0][0].Name, new Date(resJson[0][0].SubmissionStartDate), new Date(resJson[0][0].SubmissionEndDate), new Date(resJson[0][0].VoteStartDate), new Date(resJson[0][0].VoteEndDate), resJson[0][0].Description, null);
-            return activeContest;
+            if (typeof resJson[0][0] !== 'undefined') {
+                var activeContest = new _Contest2.default(resJson[0][0].contest_ID, resJson[0][0].Name, new Date(resJson[0][0].SubmissionStartDate), new Date(resJson[0][0].SubmissionEndDate), new Date(resJson[0][0].VoteStartDate), new Date(resJson[0][0].VoteEndDate), resJson[0][0].Description, null);
+                return activeContest;
+            } else {
+                return {};
+            }
             //Create obj and return to next then()
         }).then(function (contestObj) {
-            //Fetch rules associated with contest_ID
-            fetch('/api/contest/rules/' + contestObj.contest_ID, { credentials: 'include' }).then(function (res) {
-                return res.json();
-            }).then(function (resJson) {
-                contestObj.rules = resJson[0];
-                document.querySelector('#activeContest').innerHTML = contestObj.activeContestDiv();
-            }).catch(function (error) {
-                return console.error(error);
-            });
+            if (contestObj.hasOwnProperty('_contest_ID')) {
+                //Fetch rules associated with contest_ID
+                fetch('/api/contest/rules/' + contestObj.contest_ID, { credentials: 'include' }).then(function (res) {
+                    return res.json();
+                }).then(function (resJson) {
+                    contestObj.rules = resJson[0];
+                    document.querySelector('#activeContest').innerHTML = contestObj.activeContestDiv();
+                }).catch(function (error) {
+                    return console.error(error);
+                });
+            } else {
+                document.querySelector('#activeContest').innerHTML = '<h1>No Contest Currently Running.<br>Check back soon!</h1>';
+            }
         }).catch(function (error) {
             return console.error(error);
         });
@@ -475,9 +498,64 @@ exports.default = ContestOption;
 "use strict";
 
 
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var ContestRule = function () {
+    function ContestRule(contest_rule_ID, rule) {
+        _classCallCheck(this, ContestRule);
+
+        this._contest_rule_ID = contest_rule_ID;
+        this._rule = rule;
+    }
+
+    _createClass(ContestRule, [{
+        key: "getRuleOption",
+        value: function getRuleOption() {
+            var node = document.createElement("OPTION");
+            node.value = this._contest_rule_ID;
+            var textnode = document.createTextNode(this._rule);
+            node.appendChild(textnode);
+            return node;
+        }
+    }, {
+        key: "contest_rule_ID",
+        set: function set(contest_rule_ID) {
+            this._contest_rule_ID = contest_rule_ID;
+        },
+        get: function get() {
+            return this._contest_rule_ID;
+        }
+    }, {
+        key: "rule",
+        set: function set(rule) {
+            this._rule = rule;
+        },
+        get: function get() {
+            return this._rule;
+        }
+    }]);
+
+    return ContestRule;
+}();
+
+exports.default = ContestRule;
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
 if (window.location.pathname === '/admin/contest') {
     //When admin selects contest from dropdown list
-    document.querySelector('#contestDropdown').addEventListener('change', function (event) {
+    document.querySelector('#contestNameDropdown').addEventListener('change', function (event) {
         if (event.target.value !== '0') {
             fetch('/api/contest/all/' + event.target.value, { credentials: 'include' }).then(function (res) {
                 return res.json();
@@ -505,10 +583,11 @@ if (window.location.pathname === '/admin/contest') {
         }
     });
 }
-
-document.querySelector('#adminPanel').addEventListener('click', function (event) {
-    document.getElementById("adminDropdown").classList.toggle("show");
-});
+if (document.querySelector('#adminPanel') !== null) {
+    document.querySelector('#adminPanel').addEventListener('click', function (event) {
+        document.getElementById("adminDropdown").classList.toggle("show");
+    });
+}
 
 /***/ })
 /******/ ]);

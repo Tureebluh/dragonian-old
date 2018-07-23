@@ -1,6 +1,6 @@
 if(window.location.pathname === '/admin/contest'){
     //When admin selects contest from dropdown list
-    document.querySelector('#contestDropdown').addEventListener('change', (event)=>{
+    document.querySelector('#contestNameDropdown').addEventListener('change', (event)=>{
         if(event.target.value !== '0') {
             fetch('/api/contest/all/' + event.target.value, {credentials: 'include'})
             .then(res => {
@@ -29,8 +29,9 @@ if(window.location.pathname === '/admin/contest'){
         }
     });    
 }
-
-document.querySelector('#adminPanel').addEventListener('click', (event)=>{
-    document.getElementById("adminDropdown").classList.toggle("show");
-});
+if(document.querySelector('#adminPanel') !== null){
+    document.querySelector('#adminPanel').addEventListener('click', (event)=>{
+        document.getElementById("adminDropdown").classList.toggle("show");
+    });
+}
 

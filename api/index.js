@@ -66,7 +66,22 @@ router.get('/contest/all/:contestID', (req, res) => {
 router.get('/contest/rules/:contestID', (req, res) => {
     if(req.isAuthenticated()){
         dbpool.getConnection( (err, connection) => {
-            connection.query('CALL Get_Contest_Rules(' + req.params.contestID + ');', (error, results, fields) => {
+            connection.query('CALL Get_Contest_Rules_By_ID(' + req.params.contestID + ');', (error, results, fields) => {
+                connection.release();
+                if (error) throw error;
+                res.send(results);
+            });
+        });
+    } else {
+        res.send('Unauthorized Access');
+    }
+});
+
+//Returns back all the contest_ID's and Name's of all the contest
+router.get("/contest/rules/", (req, res) => {
+    if(req.isAuthenticated()){
+        dbpool.getConnection( (err, connection) => {
+            connection.query('CALL Get_All_Contest_Rules();', (error, results, fields) => {
                 connection.release();
                 if (error) throw error;
                 res.send(results);
