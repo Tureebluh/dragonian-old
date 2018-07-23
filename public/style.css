@@ -226,7 +226,8 @@
       display: grid;
       max-width: none;
       grid-template-columns: 1fr 1fr;
-      grid-template-areas: "header header"  "content content";
+      grid-template-areas: "header header" 
+ "content content";
       grid-gap: 0 1em; }
     .navbar {
       grid-area: header; }
