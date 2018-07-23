@@ -34,8 +34,6 @@
     color: white; }
   .navbar a:hover {
     background-color: orange; }
-  #adminPanel {
-    fill: white; }
   #adminPanel:hover {
     background-color: orange; }
   .dropdown {
