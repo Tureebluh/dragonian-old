@@ -146,14 +146,15 @@ window.onload = function () {
         }).then(function (resJson) {
             resJson[0].forEach(function (rule) {
                 var node = new _ContestRule2.default(rule.contest_rule_ID, rule.rule).getRuleOption();
-                document.querySelector('#contestRulesDropdown').appendChild(node);
+                document.querySelector('#ruleNameDropdown').appendChild(node);
+                document.querySelector('#contestRulesDropdown').appendChild(node.cloneNode(true));
             });
         }).catch(function (error) {
             console.error(error);
         });
 
         if (document.URL.indexOf('result=success') !== -1) {
-            this.alert('Contest successfully created/edited!');
+            this.alert('Action was successful!');
         }
 
         //If user is on contest page, load the oldest active contest and pull all rules associated with that contest. Store all info in an object and call
@@ -581,6 +582,9 @@ if (window.location.pathname === '/admin/contest') {
             document.querySelector('#contestActive').checked = true;
             document.querySelector('#contestActive').disabled = true;
         }
+    });
+    document.querySelector('#ruleNameDropdown').addEventListener('change', function (event) {
+        document.querySelector('#contestRule').value = document.querySelector('#ruleNameDropdown').selectedOptions[0].text;
     });
 }
 if (document.querySelector('#adminPanel') !== null) {

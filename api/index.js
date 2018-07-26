@@ -52,7 +52,7 @@ router.get('/contest/names/all', (req, res) => {
 router.get('/contest/all/:contestID', (req, res) => {
     if(req.isAuthenticated()){
         dbpool.getConnection( (err, connection) => {
-            connection.query('CALL Get_Contest_By_ID(' + req.params.contestID + ');', (error, results, fields) => {
+            connection.query('CALL Get_Contest_By_ID(' + dbpool.escape(req.params.contestID) + ');', (error, results, fields) => {
                 connection.release();
                 if (error) throw error;
                 res.send(results);
@@ -66,7 +66,7 @@ router.get('/contest/all/:contestID', (req, res) => {
 router.get('/contest/rules/:contestID', (req, res) => {
     if(req.isAuthenticated()){
         dbpool.getConnection( (err, connection) => {
-            connection.query('CALL Get_Contest_Rules_By_ID(' + req.params.contestID + ');', (error, results, fields) => {
+            connection.query('CALL Get_Contest_Rules_By_ID(' + dbpool.escape(req.params.contestID) + ');', (error, results, fields) => {
                 connection.release();
                 if (error) throw error;
                 res.send(results);

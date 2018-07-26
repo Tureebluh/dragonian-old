@@ -27,7 +27,10 @@ if(window.location.pathname === '/admin/contest'){
             document.querySelector('#contestActive').checked = true;
             document.querySelector('#contestActive').disabled = true;
         }
-    });    
+    });
+    document.querySelector('#ruleNameDropdown').addEventListener('change', (event) => {
+        document.querySelector('#contestRule').value = document.querySelector('#ruleNameDropdown').selectedOptions[0].text;
+    });
 }
 if(document.querySelector('#adminPanel') !== null){
     document.querySelector('#adminPanel').addEventListener('click', (event)=>{
