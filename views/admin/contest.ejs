@@ -1,7 +1,7 @@
 <%- include('../header') -%>
 <%- include('../navbar') -%>
 <section class="contest-creation">
-    <h1 id="editCreateContestHeader">Create Rule</h1>
+    <h1 id="createEditRuleHeader">Create Rule</h1>
     <form action="/admin/create/rule" method="post" class="contest-creation-form">
         <select name="ruleID" id="ruleNameDropdown">
             <option value="0">Create New...</option>
@@ -14,8 +14,10 @@
         <br>
         <br>
         
-        <input type="submit" id="createRule" alt="Create Rule" value="Create Rule" />
+        <input type="submit" id="submitRule" alt="Create Rule" value="Create Rule" />
     </form>
+    <br>
+    <br>
 
     <h1 id="createEditContestHeader">Create Contest</h1>
     <form action="/admin/create/contest" method="post" class="contest-creation-form">
@@ -57,7 +59,7 @@
         <br>
 
         <label for="contestRules">Rules:<br>(Select Multiple)</label><br>
-        <select name="contestRules" id="contestRulesDropdown" size="10" multiple></select>
+        <select name="contestRules" id="contestRulesDropdown" size="10" disabled multiple></select>
         <br>
         <br>
         

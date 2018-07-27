@@ -68,6 +68,7 @@ window.onload = function(){
             //Create obj and return to next then()
         }).then(contestObj => {
             if(contestObj.hasOwnProperty('_contest_ID')){
+                document.querySelector('#contestIDSubmit').value = contestObj.contest_ID;
                 //Fetch rules associated with contest_ID
                 fetch('/api/contest/rules/' + contestObj.contest_ID, {credentials: 'include'})
                 .then(res => {
@@ -77,7 +78,7 @@ window.onload = function(){
                     document.querySelector('#activeContest').innerHTML = contestObj.activeContestDiv();
                 }).catch(error => console.error(error));
             } else {
-                document.querySelector('#activeContest').innerHTML = '<h1>No Contest Currently Running.<br>Check back soon!</h1>'
+                document.querySelector('#activeContest').innerHTML = '<h1>No Contest Currently Running.<br>Check back soon!</h1>';
             }
         }).catch(error => console.error(error));
     }

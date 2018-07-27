@@ -90,6 +90,7 @@ class Contest {
             });
         }
         tempString += "</div>";
+        tempString += "<br>";
         return tempString;
     }
 }

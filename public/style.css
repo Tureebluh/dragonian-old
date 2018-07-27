@@ -206,12 +206,21 @@
     float: left; }
   #activeContest .sml-container span:nth-of-type(4) {
     float: right; }
-  #rulesDiv {
+  #activeContest #rulesDiv {
     text-align: left;
     padding: 0 5%; }
-  #rulesDiv .rule {
+  #activeContest #rulesDiv .rule {
     font-size: 1.5rem;
-    margin-top: 5%; } }
+    margin-top: 5%; }
+  #submitOrVoteSection {
+    padding: 5%;
+    text-align: center; }
+  #submitOrVoteSection h2 {
+    font-size: 1.5rem; }
+  #submitOrVoteSection #submissionURL {
+    width: 100%; }
+  #submitOrVoteSection #submitContestUser {
+    padding: 0.5rem; } }
 
 /* Large Mobile Devices */
 /* Extra-Large Mobile Devices */

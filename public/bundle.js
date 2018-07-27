@@ -174,6 +174,7 @@ window.onload = function () {
             //Create obj and return to next then()
         }).then(function (contestObj) {
             if (contestObj.hasOwnProperty('_contest_ID')) {
+                document.querySelector('#contestIDSubmit').value = contestObj.contest_ID;
                 //Fetch rules associated with contest_ID
                 fetch('/api/contest/rules/' + contestObj.contest_ID, { credentials: 'include' }).then(function (res) {
                     return res.json();
@@ -364,6 +365,7 @@ var Contest = function () {
                 });
             }
             tempString += "</div>";
+            tempString += "<br>";
             return tempString;
         }
     }, {
@@ -573,6 +575,26 @@ if (window.location.pathname === '/admin/contest') {
                 document.querySelector('#submitContest').value = "Edit Contest";
                 document.querySelector('#contestActive').checked = temp.Active.data[0] ? true : false;
                 document.querySelector('#contestActive').disabled = false;
+                document.querySelector('#contestRulesDropdown').disabled = false;
+
+                //Fetch rules associated with contest_ID
+                fetch('/api/contest/rules/' + event.target.value, { credentials: 'include' }).then(function (res) {
+                    return res.json();
+                }).then(function (resJson) {
+                    var rules = resJson[0];
+                    if (rules !== null) {
+                        document.querySelector('#contestRulesDropdown').childNodes.forEach(function (tempOption) {
+                            rules.forEach(function (element) {
+                                if (tempOption.value == element.contest_rule_ID) {
+                                    tempOption.selected = true;
+                                    return;
+                                }
+                            });
+                        });
+                    }
+                }).catch(function (error) {
+                    return console.error(error);
+                });
             }).catch(function (error) {
                 console.error(error);
             });
@@ -581,10 +603,18 @@ if (window.location.pathname === '/admin/contest') {
             document.querySelector('#submitContest').value = "Create Contest";
             document.querySelector('#contestActive').checked = true;
             document.querySelector('#contestActive').disabled = true;
+            document.querySelector('#contestRulesDropdown').disabled = true;
         }
     });
     document.querySelector('#ruleNameDropdown').addEventListener('change', function (event) {
-        document.querySelector('#contestRule').value = document.querySelector('#ruleNameDropdown').selectedOptions[0].text;
+        if (event.target.value !== '0') {
+            document.querySelector('#createEditRuleHeader').textContent = "Edit Rule";
+            document.querySelector('#submitRule').value = "Edit Rule";
+            document.querySelector('#contestRule').value = document.querySelector('#ruleNameDropdown').selectedOptions[0].text;
+        } else {
+            document.querySelector('#createEditRuleHeader').textContent = "Create Rule";
+            document.querySelector('#submitRule').value = "Create Rule";
+        }
     });
 }
 if (document.querySelector('#adminPanel') !== null) {

@@ -20,6 +20,19 @@ router.get('/collabs/all/unassignedroles', (req, res) => {
     }
 });
 
+//Enters the user into the specified contest by ID
+router.post('/contest/submit/', (req, res) => {
+    if(req.isAuthenticated()){
+        if(typeof req.body.verifySubmissionCB !== 'undefined'){
+            
+        } else {
+            res.redirect('/contest');
+        }
+    } else {
+        res.send('Unauthorized Access');
+    }
+});
+
 //Returns back the oldest active contest. Could be easily changed for multiple contest
 router.get('/contest/all/active', (req, res) => {
     if(req.isAuthenticated()){
