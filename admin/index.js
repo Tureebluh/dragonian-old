@@ -14,6 +14,7 @@ router.get('/contest', (req, res) => {
 //Administrators can POST to this endpoint for contest creation
 router.post('/create/contest', (req, res) => {
     if(req.isAuthenticated() && req.user.roles.includes('Administrator')){
+        let insertID = 0;
         dbpool.getConnection( (err, connection) => {
             if(req.body.contestID > 0) {
                 connection.query('CALL Upsert_Contest(' + dbpool.escape(req.body.contestID) +
@@ -24,11 +25,11 @@ router.post('/create/contest', (req, res) => {
                                                             ',' + dbpool.escape(req.body.contestVoteEnd.replace('T',' ')) +
                                                             ',' + dbpool.escape(req.body.contestDescription) + ',' +
                                                         null + 
-                                                        ',' + ((typeof req.body.contestActive === 'undefined') ? 0 : 1) + ');', 
+                                                        ',' + ((typeof req.body.contestActive === 'undefined') ? 0 : 1) +
+                                                        ',@insertID);',
                 (error, results, fields) => {
-                    connection.release();
                     if (error) throw error;
-                    res.redirect('/admin/contest' + '?result=success');
+                    insertID = req.body.contestID;
                 });
             } else {
                 connection.query('CALL Upsert_Contest(' + null + 
@@ -39,15 +40,35 @@ router.post('/create/contest', (req, res) => {
                                                         ',' + dbpool.escape(req.body.contestVoteEnd.replace('T',' ')) + 
                                                         ',' + dbpool.escape(req.body.contestDescription) + ',' + 
                                                         null + 
-                                                        ',' + ((typeof req.body.contestActive === 'undefined') ? 0 : 1) + ');', 
+                                                        ',' + ((typeof req.body.contestActive === 'undefined') ? 0 : 1) +
+                                                        ',@insertID);', 
                 (error, results, fields) => {
-                    connection.release();
                     if (error) throw error;
-                    res.redirect('/admin/contest' + '?result=success');
+                });
+                connection.query('SELECT @insertID as insertID', (error, results, fields) => {
+                    insertID = results.insertID;
+                    if (error) throw error;
                 });
             }
-            
+
             if(err) throw err;
+
+            if(req.body.contestRules !== undefined){
+                connection.query('CALL Delete_Contest_Rule_Assoc(' + dbpool.escape(insertID) + ');', (error, results, fields) => {
+                    if (error) throw error;
+                });
+                req.body.contestRules.forEach(rule => {
+                    connection.query('CALL Insert_Contest_Rule_Assoc(' + dbpool.escape(insertID) + ',' + dbpool.escape(rule) + ');', (error, results, fields) => {
+                        if (error) throw error;
+                    });
+                });
+            } else {
+                connection.query('CALL Delete_Contest_Rule_Assoc(' + dbpool.escape(insertID) + ');', (error, results, fields) => {
+                    if (error) throw error;
+                });
+            }
+            connection.release();
+            res.redirect('/admin/contest' + '?result=success');
         });
     } else {
         res.send('Unauthorized Access');
