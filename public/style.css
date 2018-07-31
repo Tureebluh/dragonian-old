@@ -160,7 +160,8 @@
   .contest-creation {
     width: 100%;
     padding: 3rem;
-    background-color: gainsboro; }
+    background-color: #3c3c3c;
+    color: antiquewhite; }
   .contest-creation h1 {
     text-align: center; }
   .contest-creation-form {
@@ -186,13 +187,19 @@
   /*
 **********************ACTIVE CONTEST PAGE*******************
 */
-  #activeContest {
+  #activeContest, #submitOrVoteSection {
     text-align: center;
     font-size: 1rem;
-    padding: 0 2.5%; }
+    background-color: #3c3c3c;
+    color: antiquewhite;
+    font-weight: bold; }
   #activeContest h1, #activeContest h2 {
     font-family: 'MedievalSharp', cursive;
     font-weight: bold; }
+  #activeContest .contest-banner-container {
+    background: url("img/contest_banner.png");
+    background-size: 100% 100%;
+    padding: 2.5%; }
   #activeContest .sml-container {
     width: 100%;
     height: 20vh; }
@@ -213,8 +220,7 @@
     font-size: 1.5rem;
     margin-top: 5%; }
   #submitOrVoteSection {
-    padding: 5%;
-    text-align: center; }
+    padding: 2.5%; }
   #submitOrVoteSection h2 {
     font-size: 1.5rem; }
   #submitOrVoteSection #submissionURL {

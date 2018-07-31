@@ -9,7 +9,7 @@ import express from 'express';
 import sassMiddleware from 'node-sass-middleware';
 import path from 'path';
 import passport from './steampassport';
-import dbpool from './dbpool';
+import helmet from 'helmet';
 
 const server = express();
 
@@ -22,6 +22,7 @@ if(config.nodeEnv === 'production'){
         return next();
     };
     server.use(forceSsl);
+    server.use(helmet());
 }
 
 //Middleware to convert SASS to CSS
@@ -36,6 +37,7 @@ server.use(bodyParser.urlencoded({extended: true}));
 //Middleware to use express sessions and load session store
 server.use(session({
     secret: process.env.DRAGONIAN_DB_PASS,
+    name: 'dragonianID',
     store: sessionStore,
     resave: false,
     saveUninitialized: false
