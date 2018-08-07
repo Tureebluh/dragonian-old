@@ -187,7 +187,7 @@
   /*
 **********************ACTIVE CONTEST PAGE*******************
 */
-  #activeContest, #submitOrVoteSection {
+  #activeContest, #submitEntrySection, #howItWorkSection {
     text-align: center;
     font-size: 1rem;
     background-color: #3c3c3c;
@@ -219,13 +219,16 @@
   #activeContest #rulesDiv .rule {
     font-size: 1.5rem;
     margin-top: 5%; }
-  #submitOrVoteSection {
-    padding: 2.5%; }
-  #submitOrVoteSection h2 {
+  #howItWorkSection a {
+    text-decoration: none;
+    color: darkgoldenrod; }
+  #submitEntrySection, #howItWorkSection {
+    padding: 5%; }
+  #submitEntrySection h2 {
     font-size: 1.5rem; }
-  #submitOrVoteSection #submissionURL {
+  #submitEntrySection #submissionURL {
     width: 100%; }
-  #submitOrVoteSection #submitContestUser {
+  #submitEntrySection #submitContestUser {
     padding: 0.5rem; } }
 
 /* Large Mobile Devices */
