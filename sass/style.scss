@@ -248,7 +248,7 @@
 /*
 **********************ACTIVE CONTEST PAGE*******************
 */
-    #activeContest, #submitOrVoteSection {
+    #activeContest, #submitEntrySection {
         text-align: center;
         font-size: 1rem;
         background-color: #3c3c3c;
@@ -291,16 +291,16 @@
         font-size: 1.5rem;
         margin-top: 5%;
     }
-    #submitOrVoteSection {
+    #submitEntrySection {
         padding: 2.5%;
     }
-    #submitOrVoteSection h2 {
+    #submitEntrySection h2 {
         font-size: 1.5rem;
     }
-    #submitOrVoteSection #submissionURL {
+    #submitEntrySection #submissionURL {
         width: 100%;
     }
-    #submitOrVoteSection #submitContestUser {
+    #submitEntrySection #submitContestUser {
         padding: 0.5rem;
     }
 
