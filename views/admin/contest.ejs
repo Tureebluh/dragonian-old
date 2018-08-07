@@ -1,0 +1,76 @@
+<%- include('../header') -%>
+<%- include('../navbar') -%>
+<section class="contest-creation">
+    <h1 id="createEditRuleHeader">Create Rule</h1>
+    <form action="/admin/create/rule" method="post" class="contest-creation-form">
+        <select name="ruleID" id="ruleNameDropdown">
+            <option value="0">Create New...</option>
+        </select>
+        <br>
+        <br>
+
+        <label for="rule">Rule:<br>(MAX 300 Characters)</label><br>
+        <textarea alt="Enter rule" id="contestRule" name="contestRule" required></textarea><br>
+        <br>
+        <br>
+        
+        <input type="submit" id="submitRule" alt="Create Rule" value="Create Rule" />
+    </form>
+    <br>
+    <br>
+
+    <h1 id="createEditContestHeader">Create Contest</h1>
+    <form action="/admin/create/contest" method="post" class="contest-creation-form">
+
+        <select name="contestID" id="contestNameDropdown">
+            <option value="0">Create New...</option>
+        </select>
+        <br>
+        <br>
+
+        <label for="contestName">Name:<br>(MAX 45 Characters)</label><br>
+        <input type="text" alt="Enter name" id="contestName" name="contestName" required/><br>
+        <br>
+        <br>
+
+        <label for="contestSubmissionStart">Contest Start-Date</label><br>
+        <input type="datetime-local" alt="Enter submission start date" id="contestSubmissionStart" name="contestSubmissionStart" required/><br>
+        <br>
+        <br>
+
+        <label for="contestSubmissionEnd">Contest End-Date</label><br>
+        <input type="datetime-local" alt="Enter submission end date" id="contestSubmissionEnd" name="contestSubmissionEnd" required/><br>
+        <br>
+        <br>
+
+        <label for="contestVoteStart">Voting Start-Date</label><br>
+        <input type="datetime-local" alt="Enter vote start date" id="contestVoteStart" name="contestVoteStart" required/><br>
+        <br>
+        <br>
+
+        <label for="contestVoteEnd">Voting End-Date</label><br>
+        <input type="datetime-local" alt="Enter vote end date" id="contestVoteEnd" name="contestVoteEnd" required/><br>
+        <br>
+        <br>
+
+        <label for="contestDescription">Description:<br>(MAX 5000 Characters)</label><br>
+        <textarea alt="Enter description" id="contestDescription" name="contestDescription" required></textarea><br>
+        <br>
+        <br>
+
+        <label for="contestRules">Rules:<br>(Select Multiple)</label><br>
+        <select name="contestRules" id="contestRulesDropdown" size="10" disabled multiple></select>
+        <br>
+        <br>
+        
+        <input type="checkbox" id="contestActive" name="contestActive" disabled checked> Active<br>
+        <br>
+        <br>
+        
+        <input type="submit" id="submitContest" alt="Create Contest" value="Create Contest" />
+        <br>
+        <br>
+        <input type="reset" alt="Create Contest" value="Reset Form" />
+    </form>
+</section>
+<%- include('../bodyend') -%>
