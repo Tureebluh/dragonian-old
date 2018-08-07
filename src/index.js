@@ -81,6 +81,15 @@ window.onload = function(){
                 document.querySelector('#activeContest').innerHTML = '<h1>No Contest Currently Running.<br>Check back soon!</h1>';
             }
         }).catch(error => console.error(error));
+
+        if(document.URL.indexOf('result=success') !== -1){
+            document.querySelector('#showErrorSuccess').innerHTML = '<h1 class="success-notification">Contest entry successfully submitted. Thank you for participating in the contest!</h1>';
+        } else if (document.URL.indexOf('result=badurl') !== -1){
+            document.querySelector('#showErrorSuccess').innerHTML = '<h1 class="error-notification">The workshop link entered is not a valid workshop link. Please fix any issues with the link and try submitting again.</h1>';
+        } else if (document.URL.indexOf('result=noterms') !== -1){
+            document.querySelector('#showErrorSuccess').innerHTML = '<h1 class="error-notification">You must agree to the terms of the contest by ticking the box at the bottom of the page. Failure to agree to the terms will result in your submission not being entered.</h1>';
+        }
+
     }
 }
 

@@ -9,6 +9,7 @@ const router = express.Router();
 router.get('/collabs/all/unassignedroles', (req, res) => {
     if(req.isAuthenticated()){
         dbpool.getConnection( (err, connection) => {
+            if (err) throw err;
             connection.query('CALL Get_UnassignedCollabRoles(0, 20);', (error, results, fields) => {
                 res.send(results);
                 connection.release();
@@ -24,9 +25,25 @@ router.get('/collabs/all/unassignedroles', (req, res) => {
 router.post('/contest/submit/', (req, res) => {
     if(req.isAuthenticated()){
         if(typeof req.body.verifySubmissionCB !== 'undefined'){
-            
+            if(req.body.contestID && req.body.submissionURL.includes('https://steamcommunity.com/sharedfiles/filedetails/?id=')){
+                dbpool.getConnection( (err, connection) => {
+                    if (err) throw err;
+                    connection.query('CALL Upsert_Contest_Submission(' + null + 
+                                                                    ',' + dbpool.escape(req.body.contestID) +
+                                                                    ',' + dbpool.escape(req.user.steamid) + 
+                                                                    ',' + dbpool.escape(req.body.submissionURL) + 
+                                                                    ',' + null + ');',
+                        (error, results, fields) => {
+                            res.redirect('/contest' + '?result=success');
+                            connection.release();
+                            if (error) throw error;
+                        });
+                });
+            } else {
+                res.redirect('/contest' + '?result=badurl');
+            }
         } else {
-            res.redirect('/contest');
+            res.redirect('/contest' + '?result=noterms');
         }
     } else {
         res.send('Unauthorized Access');
@@ -37,6 +54,7 @@ router.post('/contest/submit/', (req, res) => {
 router.get('/contest/all/active', (req, res) => {
     if(req.isAuthenticated()){
         dbpool.getConnection( (err, connection) => {
+            if (err) throw err;
             connection.query('CALL Get_Active_Contest();', (error, results, fields) => {
                 connection.release();
                 if (error) throw error;
@@ -51,6 +69,7 @@ router.get('/contest/all/active', (req, res) => {
 router.get('/contest/names/all', (req, res) => {
     if(req.isAuthenticated()){
         dbpool.getConnection( (err, connection) => {
+            if (err) throw err;
             connection.query('CALL Get_All_Contest_Names();', (error, results, fields) => {
                 connection.release();
                 if (error) throw error;
@@ -65,6 +84,7 @@ router.get('/contest/names/all', (req, res) => {
 router.get('/contest/all/:contestID', (req, res) => {
     if(req.isAuthenticated()){
         dbpool.getConnection( (err, connection) => {
+            if (err) throw err;
             connection.query('CALL Get_Contest_By_ID(' + dbpool.escape(req.params.contestID) + ');', (error, results, fields) => {
                 connection.release();
                 if (error) throw error;
@@ -79,6 +99,7 @@ router.get('/contest/all/:contestID', (req, res) => {
 router.get('/contest/rules/:contestID', (req, res) => {
     if(req.isAuthenticated()){
         dbpool.getConnection( (err, connection) => {
+            if (err) throw err;
             connection.query('CALL Get_Contest_Rules_By_ID(' + dbpool.escape(req.params.contestID) + ');', (error, results, fields) => {
                 connection.release();
                 if (error) throw error;
@@ -94,6 +115,7 @@ router.get('/contest/rules/:contestID', (req, res) => {
 router.get("/contest/rules/", (req, res) => {
     if(req.isAuthenticated()){
         dbpool.getConnection( (err, connection) => {
+            if (err) throw err;
             connection.query('CALL Get_All_Contest_Rules();', (error, results, fields) => {
                 connection.release();
                 if (error) throw error;
