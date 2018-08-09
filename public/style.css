@@ -76,11 +76,13 @@
     color: whitesmoke;
     height: 15vh;
     padding-top: 5vh; }
-  .steaminfo span {
+  .steaminfo {
+    width: 50%;
     display: flex;
     align-content: center;
-    justify-content: center; }
+    justify-content: right; }
   .steaminfo img {
+    width: 80%;
     height: 1.8rem; }
   .controlPanel {
     float: right;
@@ -105,7 +107,7 @@
     max-width: 35%; }
   .loginBtn, .logoutBtn {
     width: 75%;
-    margin: 1rem auto; }
+    margin: 0 auto; }
   .loginBtn {
     width: 100%; }
   .loginBtn input, .logoutBtn input {
@@ -200,6 +202,8 @@
   #activeContest h1, #activeContest h2 {
     font-family: 'MedievalSharp', cursive;
     font-weight: bold; }
+  #activeContest h1 {
+    font-size: 2.5rem; }
   #activeContest .contest-banner-container {
     background: url("img/contest_banner.png");
     background-size: 100% 100%;
@@ -226,6 +230,9 @@
   #howItWorkSection a {
     text-decoration: none;
     color: darkgoldenrod; }
+  #howItWorkSection h3 {
+    color: #2368ff;
+    letter-spacing: 0.1rem; }
   #submitEntrySection, #howItWorkSection {
     padding: 5%; }
   #submitEntrySection h2 {

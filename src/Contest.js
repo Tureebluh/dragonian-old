@@ -95,6 +95,34 @@ class Contest {
         tempString += "<br>";
         return tempString;
     }
+    entryOrVote(){
+        if(this.VoteStartDate < Date.now()){
+
+            let tempString = '';
+                tempString += '<form action="/api/contest/vote/" method="post" class="contestVotingForm">';
+                    tempString += '<input type="hidden" id="contestIDHidden" name="contestID">';
+                    tempString += '<input type="submit" alt="Go To Voting Page" value="Vote On Contest">';
+                tempString += '</form>';
+            return tempString;
+
+        } else {
+            let tempString = "";
+            tempString += '<h2 id="submissionHeader">Contest Entry</h2>';
+            tempString += '<form action="/api/contest/submit/" method="post" class="contestSubmissionForm">';
+                tempString += '<input type="hidden" id="contestIDHidden" name="contestID">';
+                tempString += '<input type="url" id="submissionURL" name="submissionURL" placeholder="https://steamcommunity.com/sharedfiles/filedetails/?id=XXXXXXXXXX" required/>';
+                tempString += '<br>';
+                tempString += '<br>';
+                tempString += '<span>';
+                    tempString += '<input type="checkbox" id="verifySubmissionCB" name="verifySubmissionCB" required> By ticking this box and clicking the button("Submit Entry"), I agree and acknowledge that this is my own work';
+                    tempString += ' and is associated with this Steam&#174; account. Violating these terms will result in the immediate and irrevocable termination of my privileges on this website.<br>';
+                    tempString += '<br>';
+                    tempString += '<input type="submit" id="submitContestUser" alt="Submit To Contest" value="Submit Entry">';
+                tempString += '</span>';
+            tempString += '</form>';
+            return tempString;
+        }
+    }
 }
 
 export default Contest;

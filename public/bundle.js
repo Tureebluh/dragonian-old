@@ -174,18 +174,21 @@ window.onload = function () {
             //Create obj and return to next then()
         }).then(function (contestObj) {
             if (contestObj.hasOwnProperty('_contest_ID')) {
-                document.querySelector('#contestIDSubmit').value = contestObj.contest_ID;
+
                 //Fetch rules associated with contest_ID
                 fetch('/api/contest/rules/' + contestObj.contest_ID, { credentials: 'include' }).then(function (res) {
                     return res.json();
                 }).then(function (resJson) {
                     contestObj.rules = resJson[0];
                     document.querySelector('#activeContest').innerHTML = contestObj.activeContestDiv();
+                    document.querySelector('#submitEntrySection').innerHTML = contestObj.entryOrVote();
+                    document.querySelector('#contestIDHidden').value = contestObj.contest_ID;
                 }).catch(function (error) {
                     return console.error(error);
                 });
             } else {
                 document.querySelector('#activeContest').innerHTML = '<h1>No Contest Currently Running.<br>Check back soon!</h1>';
+                document.querySelector('#submitEntrySection').innerHTML = '';
             }
         }).catch(function (error) {
             return console.error(error);
@@ -377,6 +380,35 @@ var Contest = function () {
             tempString += "</div>";
             tempString += "<br>";
             return tempString;
+        }
+    }, {
+        key: "entryOrVote",
+        value: function entryOrVote() {
+            if (this.VoteStartDate < Date.now()) {
+
+                var tempString = '';
+                tempString += '<form action="/api/contest/vote/" method="post" class="contestVotingForm">';
+                tempString += '<input type="hidden" id="contestIDHidden" name="contestID">';
+                tempString += '<input type="submit" alt="Go To Voting Page" value="Vote On Contest">';
+                tempString += '</form>';
+                return tempString;
+            } else {
+                var _tempString = "";
+                _tempString += '<h2 id="submissionHeader">Contest Entry</h2>';
+                _tempString += '<form action="/api/contest/submit/" method="post" class="contestSubmissionForm">';
+                _tempString += '<input type="hidden" id="contestIDHidden" name="contestID">';
+                _tempString += '<input type="url" id="submissionURL" name="submissionURL" placeholder="https://steamcommunity.com/sharedfiles/filedetails/?id=XXXXXXXXXX" required/>';
+                _tempString += '<br>';
+                _tempString += '<br>';
+                _tempString += '<span>';
+                _tempString += '<input type="checkbox" id="verifySubmissionCB" name="verifySubmissionCB" required> By ticking this box and clicking the button("Submit Entry"), I agree and acknowledge that this is my own work';
+                _tempString += ' and is associated with this Steam&#174; account. Violating these terms will result in the immediate and irrevocable termination of my privileges on this website.<br>';
+                _tempString += '<br>';
+                _tempString += '<input type="submit" id="submitContestUser" alt="Submit To Contest" value="Submit Entry">';
+                _tempString += '</span>';
+                _tempString += '</form>';
+                return _tempString;
+            }
         }
     }, {
         key: "Name",

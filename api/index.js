@@ -25,9 +25,10 @@ router.get('/collabs/all/unassignedroles', (req, res) => {
 router.post('/contest/submit/', (req, res) => {
     if(req.isAuthenticated()){
         if(typeof req.body.verifySubmissionCB !== 'undefined'){
-            if(req.body.contestID && req.body.submissionURL.includes('https://steamcommunity.com/sharedfiles/filedetails/?id=')){
+            if(req.body.contestID && req.body.submissionURL.indexOf('https://steamcommunity.com/sharedfiles/filedetails/?id=') === 0){
                 dbpool.getConnection( (err, connection) => {
                     if (err) throw err;
+                    
                     connection.query('CALL Upsert_Contest_Submission(' + null + 
                                                                     ',' + dbpool.escape(req.body.contestID) +
                                                                     ',' + dbpool.escape(req.user.steamid) + 
@@ -37,13 +38,26 @@ router.post('/contest/submit/', (req, res) => {
                             res.redirect('/contest' + '?result=success');
                             connection.release();
                             if (error) throw error;
-                        });
+                    });
                 });
             } else {
                 res.redirect('/contest' + '?result=badurl');
             }
         } else {
             res.redirect('/contest' + '?result=noterms');
+        }
+    } else {
+        res.send('Unauthorized Access');
+    }
+});
+
+//Sends the user to the voting page for the specified contest
+router.post('/contest/vote/', (req, res) => {
+    if(req.isAuthenticated()){
+        if(req.body.contestID){
+            res.redirect('/contest/vote');
+        } else {
+            res.redirect('/');
         }
     } else {
         res.send('Unauthorized Access');

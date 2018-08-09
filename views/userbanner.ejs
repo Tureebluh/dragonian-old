@@ -1,7 +1,7 @@
-<%- include('user/steaminfo') %>
 <section class="contestbanner">
-    <img src="img/chill_dragon.svg">
+    <img src="/img/chill_dragon.svg">
     <div class="controlPanel">
+        <%- include('user/steaminfo') %>
         <%- (user) ? include('user/logoutbtn') : include('user/loginbtn') %>
     </div>
 </section>

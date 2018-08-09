@@ -77,6 +77,13 @@ server.get('/contest', (req, res) => {
         res.redirect('/auth/login');
     }
 });
+server.get('/contest/vote', (req, res) => {
+    if(req.isAuthenticated()){
+        res.render('user/contestVote');
+    } else {
+        res.redirect('/auth/login');
+    }
+});
 
 //Endpoint routers for express to separate concerns
 server.use('/api', apiRouter);

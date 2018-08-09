@@ -105,12 +105,14 @@
         height: 15vh;
         padding-top: 5vh;
     }
-    .steaminfo span {
+    .steaminfo {
+        width: 50%;
         display: flex;
         align-content: center;
-        justify-content: center;
+        justify-content: right;
     }
     .steaminfo img {
+        width: 80%;
         height: 1.8rem;
     }
 
@@ -143,7 +145,7 @@
     
     .loginBtn, .logoutBtn {
         width: 75%;
-        margin: 1rem auto;
+        margin: 0 auto;
     }
     .loginBtn {
         width: 100%;
@@ -265,6 +267,9 @@
         font-family: 'MedievalSharp', cursive;
         font-weight: bold;
     }
+    #activeContest h1 {
+        font-size: 2.5rem;
+    }
     #activeContest .contest-banner-container {
         background: url('img/contest_banner.png');
         background-size: 100% 100%;
@@ -300,6 +305,10 @@
     #howItWorkSection a {
         text-decoration: none;
         color: darkgoldenrod;
+    }
+    #howItWorkSection h3 {
+        color: rgb(35, 104, 255);
+        letter-spacing: 0.1rem;
     }
     #submitEntrySection, #howItWorkSection {
         padding: 5%;
