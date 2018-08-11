@@ -174,6 +174,14 @@ window.onload = function () {
             //Create obj and return to next then()
         }).then(function (contestObj) {
             if (contestObj.hasOwnProperty('_contest_ID')) {
+                //Check if user has submitted to contest
+                fetch('/api/contest/submission/check/' + contestObj.contest_ID, { credentials: 'include' }).then(function (res) {
+                    return res.json();
+                }).then(function (resJson) {
+                    contestObj.submitted = resJson.submitted;
+                }).catch(function (error) {
+                    return console.error(error);
+                });
 
                 //Fetch rules associated with contest_ID
                 fetch('/api/contest/rules/' + contestObj.contest_ID, { credentials: 'include' }).then(function (res) {
@@ -335,7 +343,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var Contest = function () {
-    function Contest(contest_ID, Name, SubmissionStartDate, SubmissionEndDate, VoteStartDate, VoteEndDate, Description, rules) {
+    function Contest(contest_ID, Name, SubmissionStartDate, SubmissionEndDate, VoteStartDate, VoteEndDate, Description, rules, submitted) {
         _classCallCheck(this, Contest);
 
         this._contest_ID = contest_ID;
@@ -346,10 +354,12 @@ var Contest = function () {
         this._VoteEndDate = VoteEndDate;
         this._Description = Description;
         this._rules = rules;
+        this._submitted = submitted;
     }
 
     _createClass(Contest, [{
         key: "activeContestDiv",
+
 
         //Builds Contest Div using object
         value: function activeContestDiv() {
@@ -384,15 +394,14 @@ var Contest = function () {
     }, {
         key: "entryOrVote",
         value: function entryOrVote() {
-            if (this.VoteStartDate < Date.now()) {
-
+            if (this._VoteStartDate < Date.now()) {
                 var tempString = '';
                 tempString += '<form action="/api/contest/vote/" method="post" class="contestVotingForm">';
                 tempString += '<input type="hidden" id="contestIDHidden" name="contestID">';
                 tempString += '<input type="submit" alt="Go To Voting Page" value="Vote On Contest">';
                 tempString += '</form>';
                 return tempString;
-            } else {
+            } else if (this.submitted !== 1 && this.SubmissionEndDate > Date.now()) {
                 var _tempString = "";
                 _tempString += '<h2 id="submissionHeader">Contest Entry</h2>';
                 _tempString += '<form action="/api/contest/submit/" method="post" class="contestSubmissionForm">';
@@ -408,6 +417,18 @@ var Contest = function () {
                 _tempString += '</span>';
                 _tempString += '</form>';
                 return _tempString;
+            } else if (this.submitted === 1) {
+                var _tempString2 = "";
+                _tempString2 += '<h2 id="submissionHeader">Awesome!<br>We got your submission!</h2>';
+                _tempString2 += '<input type="hidden" id="contestIDHidden" name="contestID">';
+                return _tempString2;
+            } else {
+                var _tempString3 = "";
+                _tempString3 += '<input type="hidden" id="contestIDHidden" name="contestID">';
+                var hoursUntil = Math.round((this._VoteStartDate.getTime() - Date.now()) / 1000 / 60 / 60);
+                _tempString3 += '<h2 id="submissionHeader">Community voting for this contest will begin in ' + hoursUntil + ' hours.<br>Be sure to check out the stream to see all the contest submissions before the voting goes live!</h2>';
+                _tempString3 += '<a href="https://www.twitch.tv/r3ddragons" target="_blank"><img src="img/twitch_purple_combo.svg"></a>';
+                return _tempString3;
             }
         }
     }, {
@@ -473,6 +494,14 @@ var Contest = function () {
         },
         get: function get() {
             return this._rules;
+        }
+    }, {
+        key: "submitted",
+        set: function set(submitted) {
+            this._submitted = submitted;
+        },
+        get: function get() {
+            return this._submitted;
         }
     }]);
 

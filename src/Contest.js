@@ -1,5 +1,5 @@
 class Contest {
-    constructor(contest_ID, Name, SubmissionStartDate, SubmissionEndDate, VoteStartDate, VoteEndDate, Description, rules) {
+    constructor(contest_ID, Name, SubmissionStartDate, SubmissionEndDate, VoteStartDate, VoteEndDate, Description, rules, submitted) {
         this._contest_ID = contest_ID;
         this._Name = Name;
         this._SubmissionStartDate = SubmissionStartDate;
@@ -8,6 +8,7 @@ class Contest {
         this._VoteEndDate = VoteEndDate;
         this._Description = Description;
         this._rules = rules;
+        this._submitted = submitted;
     }
 
     set Name(Name){
@@ -65,6 +66,14 @@ class Contest {
     get rules(){
         return this._rules;
     }
+
+    set submitted(submitted){
+        this._submitted = submitted;
+    }
+    get submitted(){
+        return this._submitted;
+    }
+
     //Builds Contest Div using object
     activeContestDiv(){
         let tempString = "";
@@ -96,8 +105,7 @@ class Contest {
         return tempString;
     }
     entryOrVote(){
-        if(this.VoteStartDate < Date.now()){
-
+        if(this._VoteStartDate < Date.now()){
             let tempString = '';
                 tempString += '<form action="/api/contest/vote/" method="post" class="contestVotingForm">';
                     tempString += '<input type="hidden" id="contestIDHidden" name="contestID">';
@@ -105,7 +113,7 @@ class Contest {
                 tempString += '</form>';
             return tempString;
 
-        } else {
+        } else if(this.submitted !== 1 && this.SubmissionEndDate > Date.now()){
             let tempString = "";
             tempString += '<h2 id="submissionHeader">Contest Entry</h2>';
             tempString += '<form action="/api/contest/submit/" method="post" class="contestSubmissionForm">';
@@ -120,6 +128,18 @@ class Contest {
                     tempString += '<input type="submit" id="submitContestUser" alt="Submit To Contest" value="Submit Entry">';
                 tempString += '</span>';
             tempString += '</form>';
+            return tempString;
+        } else if(this.submitted === 1){
+            let tempString = "";
+            tempString += '<h2 id="submissionHeader">Awesome!<br>We got your submission!</h2>';
+            tempString += '<input type="hidden" id="contestIDHidden" name="contestID">';
+            return tempString;
+        } else {
+            let tempString = "";
+            tempString += '<input type="hidden" id="contestIDHidden" name="contestID">';
+            let hoursUntil = Math.round((((this._VoteStartDate.getTime() - Date.now()) / 1000) / 60) / 60);
+            tempString += '<h2 id="submissionHeader">Community voting for this contest will begin in ' + hoursUntil + ' hours.<br>Be sure to check out the stream to see all the contest submissions before the voting goes live!</h2>';
+            tempString += '<a href="https://www.twitch.tv/r3ddragons" target="_blank"><img src="img/twitch_purple_combo.svg"></a>';
             return tempString;
         }
     }

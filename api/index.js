@@ -5,21 +5,11 @@ const router = express.Router();
 //
 //          API Endpoints are Structured as /PAGE/DATA_REQUESTED/ALL_OR_SPECIFIED
 //
-//Get Collaboration Roles that have no currently assigned team member if user is authenticated
-router.get('/collabs/all/unassignedroles', (req, res) => {
-    if(req.isAuthenticated()){
-        dbpool.getConnection( (err, connection) => {
-            if (err) throw err;
-            connection.query('CALL Get_UnassignedCollabRoles(0, 20);', (error, results, fields) => {
-                res.send(results);
-                connection.release();
-                if (error) throw error;
-            });
-        });
-    } else {
-        res.send('Unauthorized Access');
-    }
-});
+/*
+*
+*                                       CONTEST
+*
+*/
 
 //Enters the user into the specified contest by ID
 router.post('/contest/submit/', (req, res) => {
@@ -61,6 +51,23 @@ router.post('/contest/vote/', (req, res) => {
         }
     } else {
         res.send('Unauthorized Access');
+    }
+});
+
+//Returns back true or false if the user has already submitted to the contest
+router.get('/contest/submission/check/:contestID', (req, res) => {
+    if(req.isAuthenticated()){
+        if(typeof req.params.contestID !== undefined){
+            dbpool.getConnection( (err, connection) => {
+                if (err) throw err;
+                connection.query('CALL Get_Contest_Submission_Count(' + dbpool.escape(req.params.contestID) + ',' + dbpool.escape(req.user.steamid) + ');', (error, results, fields) => {
+                    connection.release();
+                    if (error) throw error;
+                    let tempJson = {submitted: results[0][0]['COUNT(1)']};
+                    res.send(tempJson);
+                });
+            });
+        }
     }
 });
 
@@ -134,6 +141,28 @@ router.get("/contest/rules/", (req, res) => {
                 connection.release();
                 if (error) throw error;
                 res.send(results);
+            });
+        });
+    } else {
+        res.send('Unauthorized Access');
+    }
+});
+
+/*
+*
+*                                       COLLABORATION
+*
+*/
+
+//Get Collaboration Roles that have no currently assigned team member if user is authenticated
+router.get('/collabs/all/unassignedroles', (req, res) => {
+    if(req.isAuthenticated()){
+        dbpool.getConnection( (err, connection) => {
+            if (err) throw err;
+            connection.query('CALL Get_UnassignedCollabRoles(0, 20);', (error, results, fields) => {
+                res.send(results);
+                connection.release();
+                if (error) throw error;
             });
         });
     } else {

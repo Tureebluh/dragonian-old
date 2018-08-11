@@ -322,6 +322,16 @@
     #submitEntrySection #submitContestUser {
         padding: 0.5rem;
     }
+    #submitEntrySection img {
+        width: 50%;
+    }
+    .contestVotingForm input[type='submit']{
+        font-size: 1.2rem;
+        padding: 5%;
+        background-color: rgb(15, 129, 223);
+        color: rgb(248, 242, 242);
+        border-radius: 5%;
+    }
 
 }
 

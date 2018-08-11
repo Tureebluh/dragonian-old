@@ -68,7 +68,14 @@ window.onload = function(){
             //Create obj and return to next then()
         }).then(contestObj => {
             if(contestObj.hasOwnProperty('_contest_ID')){
-                
+                //Check if user has submitted to contest
+                fetch('/api/contest/submission/check/' + contestObj.contest_ID, {credentials: 'include'})
+                .then(res => {
+                    return res.json();
+                }).then(resJson => {
+                    contestObj.submitted = resJson.submitted;
+                }).catch(error => console.error(error));
+
                 //Fetch rules associated with contest_ID
                 fetch('/api/contest/rules/' + contestObj.contest_ID, {credentials: 'include'})
                 .then(res => {
