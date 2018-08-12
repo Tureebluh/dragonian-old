@@ -635,12 +635,23 @@ if (window.location.pathname === '/admin/contest') {
                 return res.json();
             }).then(function (resJson) {
                 var temp = resJson[0][0];
+                var subStart = new Date(temp.SubmissionStartDate.toString().replace('Z', ''));
+                subStart.setHours(subStart.getHours() - subStart.getTimezoneOffset() / 60 * 2);
+
+                var subEnd = new Date(temp.SubmissionEndDate.toString().replace('Z', ''));
+                subEnd.setHours(subEnd.getHours() - subEnd.getTimezoneOffset() / 60 * 2);
+
+                var voteStart = new Date(temp.VoteStartDate.toString().replace('Z', ''));
+                voteStart.setHours(voteStart.getHours() - voteStart.getTimezoneOffset() / 60 * 2);
+
+                var voteEnd = new Date(temp.VoteEndDate.toString().replace('Z', ''));
+                voteEnd.setHours(voteEnd.getHours() - voteEnd.getTimezoneOffset() / 60 * 2);
 
                 document.querySelector('#contestName').value = temp.Name;
-                document.querySelector('#contestSubmissionStart').value = temp.SubmissionStartDate.toString().replace('Z', '');
-                document.querySelector('#contestSubmissionEnd').value = temp.SubmissionEndDate.toString().replace('Z', '');
-                document.querySelector('#contestVoteStart').value = temp.VoteStartDate.toString().replace('Z', '');
-                document.querySelector('#contestVoteEnd').value = temp.VoteEndDate.toString().replace('Z', '');
+                document.querySelector('#contestSubmissionStart').value = subStart.toISOString().replace('Z', '');
+                document.querySelector('#contestSubmissionEnd').value = subEnd.toISOString().replace('Z', '');
+                document.querySelector('#contestVoteStart').value = voteStart.toISOString().replace('Z', '');
+                document.querySelector('#contestVoteEnd').value = voteEnd.toISOString().replace('Z', '');
                 document.querySelector('#contestDescription').value = temp.Description;
                 document.querySelector('#createEditContestHeader').textContent = "Edit Contest";
                 document.querySelector('#submitContest').value = "Edit Contest";
