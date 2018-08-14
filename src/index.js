@@ -51,13 +51,26 @@ window.onload = function(){
             //Return res in JSON form to next then()
         }).then(resJson =>{
             if(typeof resJson[0][0] !== 'undefined'){
+                let subStart = new Date(resJson[0][0].SubmissionStartDate);
+                let offset = subStart.getTimezoneOffset() / 60;
+                subStart.setHours(subStart.getHours() - offset);
+
+                let subEnd = new Date(resJson[0][0].SubmissionEndDate);
+                subEnd.setHours(subEnd.getHours() - offset);
+
+                let voteStart = new Date(resJson[0][0].VoteStartDate);
+                voteStart.setHours(voteStart.getHours() - offset);
+
+                let voteEnd = new Date(resJson[0][0].VoteEndDate);
+                voteEnd.setHours(voteEnd.getHours() - offset);
+
                 let activeContest = new Contest(
                     resJson[0][0].contest_ID,
                     resJson[0][0].Name,
-                    new Date(resJson[0][0].SubmissionStartDate),
-                    new Date(resJson[0][0].SubmissionEndDate),
-                    new Date(resJson[0][0].VoteStartDate),
-                    new Date(resJson[0][0].VoteEndDate),
+                    subStart,
+                    subEnd,
+                    voteStart,
+                    voteEnd,
                     resJson[0][0].Description,
                     null
                 );
@@ -74,17 +87,17 @@ window.onload = function(){
                     return res.json();
                 }).then(resJson => {
                     contestObj.submitted = resJson.submitted;
-                }).catch(error => console.error(error));
-
-                //Fetch rules associated with contest_ID
-                fetch('/api/contest/rules/' + contestObj.contest_ID, {credentials: 'include'})
-                .then(res => {
-                    return res.json();
-                }).then(resJson => {
-                    contestObj.rules = resJson[0];
-                    document.querySelector('#activeContest').innerHTML = contestObj.activeContestDiv();
-                    document.querySelector('#submitEntrySection').innerHTML = contestObj.entryOrVote();
-                    document.querySelector('#contestIDHidden').value = contestObj.contest_ID;
+                }).then( () => {
+                    //Fetch rules associated with contest_ID
+                    fetch('/api/contest/rules/' + contestObj.contest_ID, {credentials: 'include'})
+                    .then(res => {
+                        return res.json();
+                    }).then(resJson => {
+                        contestObj.rules = resJson[0];
+                        document.querySelector('#activeContest').innerHTML = contestObj.activeContestDiv();
+                        document.querySelector('#submitEntrySection').innerHTML = contestObj.entryOrVote();
+                        document.querySelector('#contestIDHidden').value = contestObj.contest_ID;
+                    }).catch(error => console.error(error));
                 }).catch(error => console.error(error));
             } else {
                 document.querySelector('#activeContest').innerHTML = '<h1>No Contest Currently Running.<br>Check back soon!</h1>';

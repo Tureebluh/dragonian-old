@@ -166,7 +166,20 @@ window.onload = function () {
             //Return res in JSON form to next then()
         }).then(function (resJson) {
             if (typeof resJson[0][0] !== 'undefined') {
-                var activeContest = new _Contest2.default(resJson[0][0].contest_ID, resJson[0][0].Name, new Date(resJson[0][0].SubmissionStartDate), new Date(resJson[0][0].SubmissionEndDate), new Date(resJson[0][0].VoteStartDate), new Date(resJson[0][0].VoteEndDate), resJson[0][0].Description, null);
+                var subStart = new Date(resJson[0][0].SubmissionStartDate);
+                var offset = subStart.getTimezoneOffset() / 60;
+                subStart.setHours(subStart.getHours() - offset);
+
+                var subEnd = new Date(resJson[0][0].SubmissionEndDate);
+                subEnd.setHours(subEnd.getHours() - offset);
+
+                var voteStart = new Date(resJson[0][0].VoteStartDate);
+                voteStart.setHours(voteStart.getHours() - offset);
+
+                var voteEnd = new Date(resJson[0][0].VoteEndDate);
+                voteEnd.setHours(voteEnd.getHours() - offset);
+
+                var activeContest = new _Contest2.default(resJson[0][0].contest_ID, resJson[0][0].Name, subStart, subEnd, voteStart, voteEnd, resJson[0][0].Description, null);
                 return activeContest;
             } else {
                 return {};
@@ -179,18 +192,18 @@ window.onload = function () {
                     return res.json();
                 }).then(function (resJson) {
                     contestObj.submitted = resJson.submitted;
-                }).catch(function (error) {
-                    return console.error(error);
-                });
-
-                //Fetch rules associated with contest_ID
-                fetch('/api/contest/rules/' + contestObj.contest_ID, { credentials: 'include' }).then(function (res) {
-                    return res.json();
-                }).then(function (resJson) {
-                    contestObj.rules = resJson[0];
-                    document.querySelector('#activeContest').innerHTML = contestObj.activeContestDiv();
-                    document.querySelector('#submitEntrySection').innerHTML = contestObj.entryOrVote();
-                    document.querySelector('#contestIDHidden').value = contestObj.contest_ID;
+                }).then(function () {
+                    //Fetch rules associated with contest_ID
+                    fetch('/api/contest/rules/' + contestObj.contest_ID, { credentials: 'include' }).then(function (res) {
+                        return res.json();
+                    }).then(function (resJson) {
+                        contestObj.rules = resJson[0];
+                        document.querySelector('#activeContest').innerHTML = contestObj.activeContestDiv();
+                        document.querySelector('#submitEntrySection').innerHTML = contestObj.entryOrVote();
+                        document.querySelector('#contestIDHidden').value = contestObj.contest_ID;
+                    }).catch(function (error) {
+                        return console.error(error);
+                    });
                 }).catch(function (error) {
                     return console.error(error);
                 });
@@ -368,13 +381,13 @@ var Contest = function () {
             tempString += "<div class=\"Name\"><h1>" + this._Name + "</h1></div>";
             tempString += "<br>";
             tempString += "<div class=\"sml-container\">";
-            tempString += "<span class=\"SubmissionStartDate\"><h2>Start</h2>" + this._SubmissionStartDate.toLocaleString() + "</span>";
-            tempString += "<span class=\"SubmissionEndDate\"><h2>End</h2>" + this._SubmissionEndDate.toLocaleString() + "</span>";
+            tempString += "<span class=\"SubmissionStartDate\"><h2>Start</h2>" + this._SubmissionStartDate.toString() + "</span>";
+            tempString += "<span class=\"SubmissionEndDate\"><h2>End</h2>" + this._SubmissionEndDate.toString() + "</span>";
             tempString += "</div>";
             tempString += "<br>";
             tempString += "<div class=\"sml-container\">";
-            tempString += "<span class=\"VoteStartDate\"><h2>Vote Start</h2>" + this._VoteStartDate.toLocaleString() + "</span>";
-            tempString += "<span class=\"VoteEndDate\"><h2>Vote End</h2>" + this._VoteEndDate.toLocaleString() + "</span>";
+            tempString += "<span class=\"VoteStartDate\"><h2>Vote Start</h2>" + this._VoteStartDate.toString() + "</span>";
+            tempString += "<span class=\"VoteEndDate\"><h2>Vote End</h2>" + this._VoteEndDate.toString() + "</span>";
             tempString += "</div>";
             tempString += "</div>";
             tempString += "<br>";
@@ -635,15 +648,19 @@ if (window.location.pathname === '/admin/contest') {
                 return res.json();
             }).then(function (resJson) {
                 var temp = resJson[0][0];
-                console.log(temp);
 
                 var subStart = new Date(temp.SubmissionStartDate.toString());
+                var offset = subStart.getTimezoneOffset() / 60 * 2;
+                subStart.setHours(subStart.getHours() - offset);
 
                 var subEnd = new Date(temp.SubmissionEndDate.toString());
+                subEnd.setHours(subEnd.getHours() - offset);
 
                 var voteStart = new Date(temp.VoteStartDate.toString());
+                voteStart.setHours(voteStart.getHours() - offset);
 
                 var voteEnd = new Date(temp.VoteEndDate.toString());
+                voteEnd.setHours(voteEnd.getHours() - offset);
 
                 document.querySelector('#contestName').value = temp.Name;
                 document.querySelector('#contestSubmissionStart').value = subStart.toISOString().replace('Z', '');

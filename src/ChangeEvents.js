@@ -8,15 +8,19 @@ if(window.location.pathname === '/admin/contest'){
             })
             .then(resJson => {
                 let temp = resJson[0][0];
-                console.log(temp);
-
+                
                 let subStart = new Date(temp.SubmissionStartDate.toString());
+                let offset = (subStart.getTimezoneOffset() / 60) * 2;
+                subStart.setHours(subStart.getHours() - offset);
 
                 let subEnd = new Date(temp.SubmissionEndDate.toString());
+                subEnd.setHours(subEnd.getHours() - offset);
 
                 let voteStart = new Date(temp.VoteStartDate.toString());
+                voteStart.setHours(voteStart.getHours() - offset);
 
                 let voteEnd = new Date(temp.VoteEndDate.toString());
+                voteEnd.setHours(voteEnd.getHours() - offset);
 
                 document.querySelector('#contestName').value = temp.Name;
                 document.querySelector('#contestSubmissionStart').value = subStart.toISOString().replace('Z','');
