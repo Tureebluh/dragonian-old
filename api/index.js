@@ -41,26 +41,14 @@ router.post('/contest/submit/', (req, res) => {
     }
 });
 
-//Sends the user to the voting page for the specified contest
-router.post('/contest/vote/', (req, res) => {
-    if(req.isAuthenticated()){
-        if(req.body.contestID){
-            res.redirect('/contest/vote');
-        } else {
-            res.redirect('/');
-        }
-    } else {
-        res.send('Unauthorized Access');
-    }
-});
 
 //Returns back true or false if the user has already submitted to the contest
 router.get('/contest/submission/check/:contestID', (req, res) => {
     if(req.isAuthenticated()){
-        if(typeof req.params.contestID !== undefined){
+        if(typeof req.params.contestID !== 'undefined'){
             dbpool.getConnection( (err, connection) => {
                 if (err) throw err;
-                connection.query('CALL Get_Contest_Submission_Count(' + dbpool.escape(req.params.contestID) + ',' + dbpool.escape(req.user.steamid) + ');', (error, results, fields) => {
+                connection.query('CALL Get_Contest_Submitted(' + dbpool.escape(req.params.contestID) + ',' + dbpool.escape(req.user.steamid) + ');', (error, results, fields) => {
                     connection.release();
                     if (error) throw error;
                     let tempJson = {submitted: results[0][0]['COUNT(1)']};

@@ -77,9 +77,14 @@ server.get('/contest', (req, res) => {
         res.redirect('/auth/login');
     }
 });
-server.get('/contest/vote', (req, res) => {
+//Sends the user to the voting page for the specified contest
+server.get('/contest/vote/', (req, res) => {
     if(req.isAuthenticated()){
-        res.render('user/contestVote');
+        if(typeof req.body.contestID !== 'undefined'){
+            res.render('user/contestVote');
+        } else {
+            res.redirect('/contest');
+        }
     } else {
         res.redirect('/auth/login');
     }

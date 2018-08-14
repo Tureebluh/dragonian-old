@@ -8,17 +8,15 @@ if(window.location.pathname === '/admin/contest'){
             })
             .then(resJson => {
                 let temp = resJson[0][0];
-                let subStart = new Date(temp.SubmissionStartDate.toString().replace('Z',''));
-                subStart.setHours(subStart.getHours() - (subStart.getTimezoneOffset() / 60) * 2);
+                console.log(temp);
 
-                let subEnd = new Date(temp.SubmissionEndDate.toString().replace('Z',''));
-                subEnd.setHours(subEnd.getHours() - (subEnd.getTimezoneOffset() / 60) * 2);
+                let subStart = new Date(temp.SubmissionStartDate.toString());
 
-                let voteStart = new Date(temp.VoteStartDate.toString().replace('Z',''));
-                voteStart.setHours(voteStart.getHours() - (voteStart.getTimezoneOffset() / 60) * 2);
+                let subEnd = new Date(temp.SubmissionEndDate.toString());
 
-                let voteEnd = new Date(temp.VoteEndDate.toString().replace('Z',''));
-                voteEnd.setHours(voteEnd.getHours() - (voteEnd.getTimezoneOffset() / 60) * 2);
+                let voteStart = new Date(temp.VoteStartDate.toString());
+
+                let voteEnd = new Date(temp.VoteEndDate.toString());
 
                 document.querySelector('#contestName').value = temp.Name;
                 document.querySelector('#contestSubmissionStart').value = subStart.toISOString().replace('Z','');
@@ -49,7 +47,6 @@ if(window.location.pathname === '/admin/contest'){
                         });
                     }
                 }).catch(error => console.error(error));
-
             })
             .catch(error => {console.error(error)});
 

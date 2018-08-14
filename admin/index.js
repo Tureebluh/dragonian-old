@@ -15,13 +15,14 @@ router.get('/contest', (req, res) => {
 router.post('/create/contest', (req, res) => {
     if(req.isAuthenticated() && req.user.roles.includes('Administrator')){
         dbpool.getConnection( (err, connection) => {
+            console.log(req.body);
             if(req.body.contestID > 0) {
                 connection.query('CALL Upsert_Contest(' + dbpool.escape(req.body.contestID) +
                                                             ',' + dbpool.escape(req.body.contestName) +
-                                                            ',' + dbpool.escape(req.body.contestSubmissionStart.replace('T',' ')) +
-                                                            ',' + dbpool.escape(req.body.contestSubmissionEnd.replace('T',' ')) +
-                                                            ',' + dbpool.escape(req.body.contestVoteStart.replace('T',' ')) +
-                                                            ',' + dbpool.escape(req.body.contestVoteEnd.replace('T',' ')) +
+                                                            ',' + dbpool.escape(req.body.contestSubmissionStart.toString().replace('T', ' ')) +
+                                                            ',' + dbpool.escape(req.body.contestSubmissionEnd.toString().replace('T', ' ')) +
+                                                            ',' + dbpool.escape(req.body.contestVoteStart.toString().replace('T', ' ')) +
+                                                            ',' + dbpool.escape(req.body.contestVoteEnd.toString().replace('T', ' ')) +
                                                             ',' + dbpool.escape(req.body.contestDescription) + ',' +
                                                         null + 
                                                         ',' + ((typeof req.body.contestActive === 'undefined') ? 0 : 1) +

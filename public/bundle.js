@@ -396,7 +396,7 @@ var Contest = function () {
         value: function entryOrVote() {
             if (this._VoteStartDate < Date.now()) {
                 var tempString = '';
-                tempString += '<form action="/api/contest/vote/" method="post" class="contestVotingForm">';
+                tempString += '<form action="/contest/vote/" method="get" class="contestVotingForm">';
                 tempString += '<input type="hidden" id="contestIDHidden" name="contestID">';
                 tempString += '<input type="submit" alt="Go To Voting Page" value="Vote On Contest">';
                 tempString += '</form>';
@@ -417,9 +417,9 @@ var Contest = function () {
                 _tempString += '</span>';
                 _tempString += '</form>';
                 return _tempString;
-            } else if (this.submitted === 1) {
+            } else if (this.submitted === 1 && this.SubmissionEndDate > Date.now()) {
                 var _tempString2 = "";
-                _tempString2 += '<h2 id="submissionHeader">Awesome!<br>We got your submission!</h2>';
+                _tempString2 += '<h2 id="submissionHeader" class="success-notification">Awesome!<br>We have your submission!</h2>';
                 _tempString2 += '<input type="hidden" id="contestIDHidden" name="contestID">';
                 return _tempString2;
             } else {
@@ -635,17 +635,15 @@ if (window.location.pathname === '/admin/contest') {
                 return res.json();
             }).then(function (resJson) {
                 var temp = resJson[0][0];
-                var subStart = new Date(temp.SubmissionStartDate.toString().replace('Z', ''));
-                subStart.setHours(subStart.getHours() - subStart.getTimezoneOffset() / 60 * 2);
+                console.log(temp);
 
-                var subEnd = new Date(temp.SubmissionEndDate.toString().replace('Z', ''));
-                subEnd.setHours(subEnd.getHours() - subEnd.getTimezoneOffset() / 60 * 2);
+                var subStart = new Date(temp.SubmissionStartDate.toString());
 
-                var voteStart = new Date(temp.VoteStartDate.toString().replace('Z', ''));
-                voteStart.setHours(voteStart.getHours() - voteStart.getTimezoneOffset() / 60 * 2);
+                var subEnd = new Date(temp.SubmissionEndDate.toString());
 
-                var voteEnd = new Date(temp.VoteEndDate.toString().replace('Z', ''));
-                voteEnd.setHours(voteEnd.getHours() - voteEnd.getTimezoneOffset() / 60 * 2);
+                var voteStart = new Date(temp.VoteStartDate.toString());
+
+                var voteEnd = new Date(temp.VoteEndDate.toString());
 
                 document.querySelector('#contestName').value = temp.Name;
                 document.querySelector('#contestSubmissionStart').value = subStart.toISOString().replace('Z', '');
