@@ -114,6 +114,10 @@ var _ContestRule = __webpack_require__(5);
 
 var _ContestRule2 = _interopRequireDefault(_ContestRule);
 
+var _ContestSubmission = __webpack_require__(7);
+
+var _ContestSubmission2 = _interopRequireDefault(_ContestSubmission);
+
 var _ChangeEvents = __webpack_require__(6);
 
 var _ChangeEvents2 = _interopRequireDefault(_ChangeEvents);
@@ -222,6 +226,29 @@ window.onload = function () {
         } else if (document.URL.indexOf('result=noterms') !== -1) {
             document.querySelector('#showErrorSuccess').innerHTML = '<h1 class="error-notification">You must agree to the terms of the contest by ticking the box at the bottom of the page. Failure to agree to the terms will result in your submission not being entered.</h1>';
         }
+    } else if (window.location.pathname === '/contest/vote/') {
+        fetch('/api/contest/submissions', { credentials: 'include' }).then(function (res) {
+            return res.json();
+            //Return res in JSON form to next then()
+        }).then(function (resJson) {
+            if (typeof resJson[0][0] !== 'undefined') {
+                var allSubRes = resJson[0];
+                var allSubHtml = '';
+                allSubRes.forEach(function (submission) {
+                    var tempSub = new _ContestSubmission2.default(submission.contest_submission_ID, submission.workshop_URL, submission.personaname, submission.avatarfull);
+                    allSubHtml += tempSub.getSubmissionDiv();
+                    var node = tempSub.getSubmissionOption();
+                    document.querySelector('#firstPick').appendChild(node);
+                    document.querySelector('#secondPick').appendChild(node.cloneNode(true));
+                    document.querySelector('#thirdPick').appendChild(node.cloneNode(true));
+                    document.querySelector('#fourthPick').appendChild(node.cloneNode(true));
+                    document.querySelector('#fifthPick').appendChild(node.cloneNode(true));
+                });
+                document.querySelector('#contestSubmissionContainer').innerHTML = allSubHtml;
+            }
+        }).catch(function (error) {
+            return console.error(error);
+        });
     }
 };
 
@@ -409,7 +436,7 @@ var Contest = function () {
         value: function entryOrVote() {
             if (this._VoteStartDate < Date.now()) {
                 var tempString = '';
-                tempString += '<form action="/contest/vote/" method="get" class="contestVotingForm">';
+                tempString += '<form action="/contest/vote/" method="post" class="contestVotingForm">';
                 tempString += '<input type="hidden" id="contestIDHidden" name="contestID">';
                 tempString += '<input type="submit" alt="Go To Voting Page" value="Vote On Contest">';
                 tempString += '</form>';
@@ -439,7 +466,7 @@ var Contest = function () {
                 var _tempString3 = "";
                 _tempString3 += '<input type="hidden" id="contestIDHidden" name="contestID">';
                 var hoursUntil = Math.round((this._VoteStartDate.getTime() - Date.now()) / 1000 / 60 / 60);
-                _tempString3 += '<h2 id="submissionHeader">Community voting for this contest will begin in ' + hoursUntil + ' hours.<br>Be sure to check out the stream to see all the contest submissions before the voting goes live!</h2>';
+                _tempString3 += '<h2 id="submissionHeader">Community voting for this contest will begin in ' + hoursUntil + ' hour(s).<br>Be sure to check out the stream to see all the contest submissions before the voting goes live!</h2>';
                 _tempString3 += '<a href="https://www.twitch.tv/r3ddragons" target="_blank"><img src="img/twitch_purple_combo.svg"></a>';
                 return _tempString3;
             }
@@ -719,6 +746,91 @@ if (document.querySelector('#adminPanel') !== null) {
         document.getElementById("adminDropdown").classList.toggle("show");
     });
 }
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var ContestSubmission = function () {
+    function ContestSubmission(contest_submission_ID, workshop_URL, personaname, avatarfull) {
+        _classCallCheck(this, ContestSubmission);
+
+        this._contest_submission_ID = contest_submission_ID;
+        this._workshop_URL = workshop_URL;
+        this._personaname = personaname;
+        this._avatarfull = avatarfull;
+    }
+
+    _createClass(ContestSubmission, [{
+        key: 'getSubmissionDiv',
+        value: function getSubmissionDiv() {
+            var tempString = "";
+            tempString += '<div class="contest-submission" id="contestSubmission' + this._contest_submission_ID + '">';
+            tempString += '<span class="steaminfo"><img src="' + this._avatarfull + '" class="submission-avatar" />' + this._personaname + '</span>';
+            tempString += '<br>';
+            tempString += '<a href="' + this._workshop_URL + '" target="_blank" class="contest-submission-url">Submission Link</a>';
+            tempString += '</div>';
+
+            return tempString;
+        }
+    }, {
+        key: 'getSubmissionOption',
+        value: function getSubmissionOption() {
+            var node = document.createElement("OPTION");
+            node.value = this._contest_submission_ID;
+            var textnode = document.createTextNode(this._personaname);
+            node.appendChild(textnode);
+            return node;
+        }
+    }, {
+        key: 'contest_submission_ID',
+        set: function set(contest_submission_ID) {
+            this._contest_submission_ID = contest_submission_ID;
+        },
+        get: function get() {
+            return this._contest_submission_ID;
+        }
+    }, {
+        key: 'workshop_URL',
+        set: function set(workshop_URL) {
+            this._workshop_URL = workshop_URL;
+        },
+        get: function get() {
+            return this._workshop_URL;
+        }
+    }, {
+        key: 'personaname',
+        set: function set(personaname) {
+            this._personaname = personaname;
+        },
+        get: function get() {
+            return this._personaname;
+        }
+    }, {
+        key: 'avatarfull',
+        set: function set(avatarfull) {
+            this._avatarfull = avatarfull;
+        },
+        get: function get() {
+            return this._avatarfull;
+        }
+    }]);
+
+    return ContestSubmission;
+}();
+
+exports.default = ContestSubmission;
 
 /***/ })
 /******/ ]);

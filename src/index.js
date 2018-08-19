@@ -2,6 +2,7 @@ import UnassignedRole from './UnassignedRole';
 import Contest from './Contest';
 import ContestOption from './ContestOption';
 import ContestRule from './ContestRule';
+import ContestSubmission from './ContestSubmission';
 import ChangeEvents from './ChangeEvents';
 
 //Can only have one window.onload function so we're checking the pathname to see which page the user is on
@@ -113,6 +114,33 @@ window.onload = function(){
             document.querySelector('#showErrorSuccess').innerHTML = '<h1 class="error-notification">You must agree to the terms of the contest by ticking the box at the bottom of the page. Failure to agree to the terms will result in your submission not being entered.</h1>';
         }
 
+    } else if(window.location.pathname === '/contest/vote/'){
+        fetch('/api/contest/submissions', {credentials: 'include'})
+        .then(res =>{
+            return res.json();
+            //Return res in JSON form to next then()
+        }).then(resJson =>{
+            if(typeof resJson[0][0] !== 'undefined'){
+                let allSubRes = resJson[0];
+                let allSubHtml = '';
+                allSubRes.forEach(submission => {
+                    let tempSub = new ContestSubmission(
+                        submission.contest_submission_ID,
+                        submission.workshop_URL,
+                        submission.personaname,
+                        submission.avatarfull
+                    );
+                    allSubHtml += tempSub.getSubmissionDiv();
+                    let node = tempSub.getSubmissionOption();
+                    document.querySelector('#firstPick').appendChild(node);
+                    document.querySelector('#secondPick').appendChild(node.cloneNode(true));
+                    document.querySelector('#thirdPick').appendChild(node.cloneNode(true));
+                    document.querySelector('#fourthPick').appendChild(node.cloneNode(true));
+                    document.querySelector('#fifthPick').appendChild(node.cloneNode(true));
+                });
+                document.querySelector('#contestSubmissionContainer').innerHTML = allSubHtml;
+            }
+        }).catch(error => console.error(error));
     }
 }
 

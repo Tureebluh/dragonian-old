@@ -78,7 +78,7 @@ server.get('/contest', (req, res) => {
     }
 });
 //Sends the user to the voting page for the specified contest
-server.get('/contest/vote/', (req, res) => {
+server.post('/contest/vote/', (req, res) => {
     if(req.isAuthenticated()){
         if(typeof req.body.contestID !== 'undefined'){
             res.render('user/contestVote');

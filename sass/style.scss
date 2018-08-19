@@ -112,7 +112,7 @@
         justify-content: right;
     }
     .steaminfo img {
-        width: 80%;
+        width: auto;
         height: 1.8rem;
     }
 
@@ -332,7 +332,47 @@
         color: rgb(248, 242, 242);
         border-radius: 5%;
     }
-
+/*
+**********************ACTIVE CONTEST SUBMISSIONS PAGE*******************
+*/
+    #contestVotingContainer {
+        text-align: center;
+        padding: 5%;
+        width: 100%;
+        font-size: 1rem;
+        font-family: Georgia, 'Times New Roman', Times, serif;
+    }
+    #contestVotingContainer .votingPick {
+        margin: 2% auto;
+        width: 10rem;
+    }
+    
+    #contestSubmissionContainer {
+        text-align: center;
+        padding: 5%;
+    }
+    #contestSubmissionContainer .contest-submission {
+        background-color: darkslategray;
+        margin: 0 0 5% 0;
+        width: 100%;
+        align-content: center;
+        padding: 3%;
+    }
+    #contestSubmissionContainer .contest-submission .steaminfo {
+        margin: 0 auto;
+        background-color: inherit;
+        height: auto;
+        padding: 0;
+        font-size: 1.5rem;
+    }
+    #contestSubmissionContainer .contest-submission .steaminfo > img {
+        height: 1.5rem;
+    }
+    #contestSubmissionContainer .contest-submission a.contest-submission-url:link, #contestSubmissionContainer .contest-submission a.contest-submission-url:visited  {
+        color: white;
+        text-decoration: none;
+        font-size: 1.5rem;
+    }
 }
 
 /* Large Mobile Devices */

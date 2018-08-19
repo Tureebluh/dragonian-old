@@ -136,6 +136,22 @@ router.get("/contest/rules/", (req, res) => {
     }
 });
 
+//Returns back all the contest submissions for active contest
+router.get("/contest/submissions", (req, res) => {
+    if(req.isAuthenticated()){
+        dbpool.getConnection( (err, connection) => {
+            if (err) throw err;
+            connection.query('CALL Get_Valid_Contest_Submissions();', (error, results, fields) => {
+                connection.release();
+                if (error) throw error;
+                res.send(results);
+            });
+        });
+    } else {
+        res.send('Unauthorized Access');
+    }
+});
+
 /*
 *
 *                                       COLLABORATION
