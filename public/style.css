@@ -12,6 +12,18 @@
     max-width: 50em;
     margin: 0 auto;
     padding-bottom: 10vh; }
+  #backToTop {
+    display: none;
+    bottom: 1%;
+    right: 1%;
+    position: fixed;
+    float: right;
+    height: 2rem;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    background-color: #c83232;
+    color: white; }
   .italic {
     font-style: italic !important; }
   .bold {
@@ -20,6 +32,9 @@
     background-color: rgba(24, 143, 24, 0.5); }
   .error-notification {
     background-color: rgba(196, 11, 11, 0.5); }
+  .jump-to-icon {
+    background: url("img/forward.png");
+    background-size: 100% 100%; }
   /*
 ********************NAVBAR*******************
 */
@@ -253,20 +268,29 @@
 **********************ACTIVE CONTEST SUBMISSIONS PAGE*******************
 */
   #contestVotingContainer {
-    text-align: center;
     padding: 5%;
     width: 100%;
     font-size: 1rem;
     font-family: Georgia, 'Times New Roman', Times, serif; }
+  #contestVotingContainer form {
+    width: 100%; }
+  #contestVotingContainer table {
+    width: 100%; }
+  #contestVotingContainer h1 {
+    text-align: center; }
   #contestVotingContainer .votingPick {
-    margin: 2% auto;
-    width: 10rem; }
+    width: 8rem; }
+  #contestVotingContainer input[type="button"] {
+    width: 2rem; }
+  #contestVotingContainer form input[type="submit"] {
+    margin: 5% 25%;
+    font-size: 1.5rem; }
   #contestSubmissionContainer {
     text-align: center;
     padding: 5%; }
   #contestSubmissionContainer .contest-submission {
     background-color: darkslategray;
-    margin: 0 0 5% 0;
+    margin: 100% 0 5% 0;
     width: 100%;
     align-content: center;
     padding: 3%; }

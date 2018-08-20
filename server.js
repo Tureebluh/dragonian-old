@@ -89,6 +89,18 @@ server.post('/contest/vote/', (req, res) => {
         res.redirect('/auth/login');
     }
 });
+//Typed into URL - redirect to Contest page
+server.get('/contest/vote/', (req, res) => {
+    if(req.isAuthenticated()){
+        if(typeof req.body.contestID !== 'undefined'){
+            res.render('user/contestVote');
+        } else {
+            res.redirect('/contest');
+        }
+    } else {
+        res.redirect('/auth/login');
+    }
+});
 
 //Endpoint routers for express to separate concerns
 server.use('/api', apiRouter);

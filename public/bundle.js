@@ -114,11 +114,11 @@ var _ContestRule = __webpack_require__(5);
 
 var _ContestRule2 = _interopRequireDefault(_ContestRule);
 
-var _ContestSubmission = __webpack_require__(7);
+var _ContestSubmission = __webpack_require__(6);
 
 var _ContestSubmission2 = _interopRequireDefault(_ContestSubmission);
 
-var _ChangeEvents = __webpack_require__(6);
+var _ChangeEvents = __webpack_require__(7);
 
 var _ChangeEvents2 = _interopRequireDefault(_ChangeEvents);
 
@@ -258,6 +258,17 @@ window.onclick = function (e) {
         var myDropdown = document.getElementById("adminDropdown");
         if (myDropdown.classList.contains('show')) {
             myDropdown.classList.remove('show');
+        }
+    }
+};
+
+//If user scrolls down page
+window.onscroll = function () {
+    if (document.querySelector('#backToTop') !== null) {
+        if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+            document.getElementById("backToTop").style.display = "block";
+        } else {
+            document.getElementById("backToTop").style.display = "none";
         }
     }
 };
@@ -667,6 +678,91 @@ exports.default = ContestRule;
 "use strict";
 
 
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var ContestSubmission = function () {
+    function ContestSubmission(contest_submission_ID, workshop_URL, personaname, avatarfull) {
+        _classCallCheck(this, ContestSubmission);
+
+        this._contest_submission_ID = contest_submission_ID;
+        this._workshop_URL = workshop_URL;
+        this._personaname = personaname;
+        this._avatarfull = avatarfull;
+    }
+
+    _createClass(ContestSubmission, [{
+        key: 'getSubmissionDiv',
+        value: function getSubmissionDiv() {
+            var tempString = "";
+            tempString += '<div class="contest-submission" id="contestSubmission' + this._contest_submission_ID + '">';
+            tempString += '<span class="steaminfo"><img src="' + this._avatarfull + '" class="submission-avatar" />&nbsp;' + this._personaname + '</span>';
+            tempString += '<br>';
+            tempString += '<a href="' + this._workshop_URL + '" target="_blank" class="contest-submission-url">Submission Link</a>';
+            tempString += '</div>';
+
+            return tempString;
+        }
+    }, {
+        key: 'getSubmissionOption',
+        value: function getSubmissionOption() {
+            var node = document.createElement("OPTION");
+            node.value = this._contest_submission_ID;
+            var textnode = document.createTextNode(this._personaname);
+            node.appendChild(textnode);
+            return node;
+        }
+    }, {
+        key: 'contest_submission_ID',
+        set: function set(contest_submission_ID) {
+            this._contest_submission_ID = contest_submission_ID;
+        },
+        get: function get() {
+            return this._contest_submission_ID;
+        }
+    }, {
+        key: 'workshop_URL',
+        set: function set(workshop_URL) {
+            this._workshop_URL = workshop_URL;
+        },
+        get: function get() {
+            return this._workshop_URL;
+        }
+    }, {
+        key: 'personaname',
+        set: function set(personaname) {
+            this._personaname = personaname;
+        },
+        get: function get() {
+            return this._personaname;
+        }
+    }, {
+        key: 'avatarfull',
+        set: function set(avatarfull) {
+            this._avatarfull = avatarfull;
+        },
+        get: function get() {
+            return this._avatarfull;
+        }
+    }]);
+
+    return ContestSubmission;
+}();
+
+exports.default = ContestSubmission;
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
 if (window.location.pathname === '/admin/contest') {
     //When admin selects contest from dropdown list
     document.querySelector('#contestNameDropdown').addEventListener('change', function (event) {
@@ -746,91 +842,28 @@ if (document.querySelector('#adminPanel') !== null) {
         document.getElementById("adminDropdown").classList.toggle("show");
     });
 }
-
-/***/ }),
-/* 7 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var ContestSubmission = function () {
-    function ContestSubmission(contest_submission_ID, workshop_URL, personaname, avatarfull) {
-        _classCallCheck(this, ContestSubmission);
-
-        this._contest_submission_ID = contest_submission_ID;
-        this._workshop_URL = workshop_URL;
-        this._personaname = personaname;
-        this._avatarfull = avatarfull;
-    }
-
-    _createClass(ContestSubmission, [{
-        key: 'getSubmissionDiv',
-        value: function getSubmissionDiv() {
-            var tempString = "";
-            tempString += '<div class="contest-submission" id="contestSubmission' + this._contest_submission_ID + '">';
-            tempString += '<span class="steaminfo"><img src="' + this._avatarfull + '" class="submission-avatar" />' + this._personaname + '</span>';
-            tempString += '<br>';
-            tempString += '<a href="' + this._workshop_URL + '" target="_blank" class="contest-submission-url">Submission Link</a>';
-            tempString += '</div>';
-
-            return tempString;
-        }
-    }, {
-        key: 'getSubmissionOption',
-        value: function getSubmissionOption() {
-            var node = document.createElement("OPTION");
-            node.value = this._contest_submission_ID;
-            var textnode = document.createTextNode(this._personaname);
-            node.appendChild(textnode);
-            return node;
-        }
-    }, {
-        key: 'contest_submission_ID',
-        set: function set(contest_submission_ID) {
-            this._contest_submission_ID = contest_submission_ID;
-        },
-        get: function get() {
-            return this._contest_submission_ID;
-        }
-    }, {
-        key: 'workshop_URL',
-        set: function set(workshop_URL) {
-            this._workshop_URL = workshop_URL;
-        },
-        get: function get() {
-            return this._workshop_URL;
-        }
-    }, {
-        key: 'personaname',
-        set: function set(personaname) {
-            this._personaname = personaname;
-        },
-        get: function get() {
-            return this._personaname;
-        }
-    }, {
-        key: 'avatarfull',
-        set: function set(avatarfull) {
-            this._avatarfull = avatarfull;
-        },
-        get: function get() {
-            return this._avatarfull;
-        }
-    }]);
-
-    return ContestSubmission;
-}();
-
-exports.default = ContestSubmission;
+if (window.location.pathname === '/contest/vote/') {
+    document.querySelector('#firstPickBtn').addEventListener('click', function (event) {
+        var tempString = '#contestSubmission' + document.querySelector('#firstPick').value;
+        document.querySelector(tempString).scrollIntoView();
+    });
+    document.querySelector('#secondPickBtn').addEventListener('click', function (event) {
+        var tempString = '#contestSubmission' + document.querySelector('#secondPick').value;
+        document.querySelector(tempString).scrollIntoView();
+    });
+    document.querySelector('#thirdPickBtn').addEventListener('click', function (event) {
+        var tempString = '#contestSubmission' + document.querySelector('#thirdPick').value;
+        document.querySelector(tempString).scrollIntoView();
+    });
+    document.querySelector('#fourthPickBtn').addEventListener('click', function (event) {
+        var tempString = '#contestSubmission' + document.querySelector('#fourthPick').value;
+        document.querySelector(tempString).scrollIntoView();
+    });
+    document.querySelector('#fifthPickBtn').addEventListener('click', function (event) {
+        var tempString = '#contestSubmission' + document.querySelector('#fifthPick').value;
+        document.querySelector(tempString).scrollIntoView();
+    });
+}
 
 /***/ })
 /******/ ]);

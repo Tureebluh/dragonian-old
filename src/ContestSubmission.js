@@ -36,7 +36,7 @@ class ContestSubmission {
     getSubmissionDiv(){
         let tempString = "";
         tempString += '<div class="contest-submission" id="contestSubmission' + this._contest_submission_ID + '">';
-        tempString += '<span class="steaminfo"><img src="' + this._avatarfull + '" class="submission-avatar" />' + this._personaname + '</span>';
+        tempString += '<span class="steaminfo"><img src="' + this._avatarfull + '" class="submission-avatar" />&nbsp;' + this._personaname + '</span>';
         tempString += '<br>';
         tempString += '<a href="' + this._workshop_URL + '" target="_blank" class="contest-submission-url">Submission Link</a>';
         tempString += '</div>';

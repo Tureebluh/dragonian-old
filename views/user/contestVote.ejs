@@ -5,21 +5,42 @@
 <section id="contestVotingContainer">
     <h1>Choose Your Top 5</h1>
 
-    <label for="firstPick">First place:</label>
-    <select name="firstPick" id="firstPick" class="votingPick"></select>
-    <br>
-    <label for="secondPick">Second place:</label>
-    <select name="secondPick" id="secondPick" class="votingPick"></select>
-    <br>
-    <label for="thirdPick">Third place:</label>
-    <select name="thirdPick" id="thirdPick" class="votingPick"></select>
-    <br>
-    <label for="fourthPick">Fourth place:</label>
-    <select name="fourthPick" id="fourthPick" class="votingPick"></select>
-    <br>
-    <label for="fifthPick">Fifth place:</label>
-    <select name="fifthPick" id="fifthPick" class="votingPick"></select>
-    <br>
+    <form method="post" action="/contest/vote/submit" id="contestVoteForm">
+        <table>
+            <tr>
+                <td><label for="firstPick">First place:</label></td>
+                <td><select name="firstPick" id="firstPick" class="votingPick"></select></td>
+                <td><input type="button" id="firstPickBtn" class="jump-to-icon" /></td>
+            </tr>
+
+            <tr>
+                <td><label for="secondPick">Second place:</label></td>
+                <td><select name="secondPick" id="secondPick" class="votingPick"></select></td>
+                <td><input type="button" id="secondPickBtn" class="jump-to-icon" /></td>
+            </tr>
+
+            <tr>
+                <td><label for="thirdPick">Third place:</label></td>
+                <td><select name="thirdPick" id="thirdPick" class="votingPick"></select></td>
+                <td><input type="button" id="thirdPickBtn" class="jump-to-icon" /></td>
+            </tr>
+
+            <tr>
+                <td><label for="fourthPick">Fourth place:</label></td>
+                <td><select name="fourthPick" id="fourthPick" class="votingPick"></select></td>
+                <td><input type="button" id="fourthPickBtn" class="jump-to-icon" /></td>
+            </tr>
+
+            <tr>
+                <td><label for="fifthPick">Fifth place:</label></td>
+                <td><select name="fifthPick" id="fifthPick" class="votingPick"></select></td>
+                <td><input type="button" id="fifthPickBtn" class="jump-to-icon" /></td>
+            </tr>
+        </table>
+        <br>
+        <input type="submit" value="Submit Votes" />
+    </form>
 </section>
 <section id="contestSubmissionContainer"></section>
+<%- include('../backToTop') -%>
 <%- include('../bodyend') -%>

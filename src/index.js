@@ -153,3 +153,14 @@ window.onclick = function(e) {
         }
     }
 }
+
+//If user scrolls down page
+window.onscroll = function() {
+    if(document.querySelector('#backToTop') !== null){
+        if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+            document.getElementById("backToTop").style.display = "block";
+        } else {
+            document.getElementById("backToTop").style.display = "none";
+        }
+    }
+}

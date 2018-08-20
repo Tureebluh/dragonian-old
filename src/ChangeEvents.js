@@ -78,4 +78,26 @@ if(document.querySelector('#adminPanel') !== null){
         document.getElementById("adminDropdown").classList.toggle("show");
     });
 }
+if(window.location.pathname === '/contest/vote/') {
+    document.querySelector('#firstPickBtn').addEventListener('click', (event) => {
+        let tempString = '#contestSubmission' + document.querySelector('#firstPick').value;
+        document.querySelector(tempString).scrollIntoView();
+    });
+    document.querySelector('#secondPickBtn').addEventListener('click', (event) => {
+        let tempString = '#contestSubmission' + document.querySelector('#secondPick').value;
+        document.querySelector(tempString).scrollIntoView();
+    });
+    document.querySelector('#thirdPickBtn').addEventListener('click', (event) => {
+        let tempString = '#contestSubmission' + document.querySelector('#thirdPick').value;
+        document.querySelector(tempString).scrollIntoView();
+    });
+    document.querySelector('#fourthPickBtn').addEventListener('click', (event) => {
+        let tempString = '#contestSubmission' + document.querySelector('#fourthPick').value;
+        document.querySelector(tempString).scrollIntoView();
+    });
+    document.querySelector('#fifthPickBtn').addEventListener('click', (event) => {
+        let tempString = '#contestSubmission' + document.querySelector('#fifthPick').value;
+        document.querySelector(tempString).scrollIntoView();
+    });
+}
 
