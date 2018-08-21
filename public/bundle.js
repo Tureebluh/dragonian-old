@@ -233,7 +233,7 @@ window.onload = function () {
         }).then(function (resJson) {
             if (typeof resJson[0][0] !== 'undefined') {
                 var allSubRes = resJson[0];
-                var allSubHtml = '';
+                var allSubHtml = '<h1>Submissions</h1>';
                 allSubRes.forEach(function (submission) {
                     var tempSub = new _ContestSubmission2.default(submission.contest_submission_ID, submission.workshop_URL, submission.personaname, submission.avatarfull);
                     allSubHtml += tempSub.getSubmissionDiv();

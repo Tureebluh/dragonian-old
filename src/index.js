@@ -122,7 +122,7 @@ window.onload = function(){
         }).then(resJson =>{
             if(typeof resJson[0][0] !== 'undefined'){
                 let allSubRes = resJson[0];
-                let allSubHtml = '';
+                let allSubHtml = '<h1>Submissions</h1>';
                 allSubRes.forEach(submission => {
                     let tempSub = new ContestSubmission(
                         submission.contest_submission_ID,

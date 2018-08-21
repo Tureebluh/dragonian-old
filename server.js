@@ -62,6 +62,11 @@ server.get('/', (req, res) => {
     res.render('index');
 });
 
+//Default route to render homepage
+server.get('/terms-of-use', (req, res) => {
+    res.render('terms');
+});
+
 //Routes to render collab & contest page respectively. Authentication REQUIRED otherwise redirect to login endpoint
 server.get('/collabs', (req, res) => {
     if(req.isAuthenticated()){

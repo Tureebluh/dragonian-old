@@ -4,8 +4,7 @@
 <section id="showErrorSuccess"></section>
 <section id="contestVotingContainer">
     <h1>Choose Your Top 5</h1>
-
-    <form method="post" action="/contest/vote/submit" id="contestVoteForm">
+    <form method="post" action="/api/contest/vote/submit" id="contestVoteForm">
         <table>
             <tr>
                 <td><label for="firstPick">First place:</label></td>
@@ -41,6 +40,7 @@
         <input type="submit" value="Submit Votes" />
     </form>
 </section>
+
 <section id="contestSubmissionContainer"></section>
 <%- include('../backToTop') -%>
 <%- include('../bodyend') -%>

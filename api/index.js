@@ -41,6 +41,29 @@ router.post('/contest/submit/', (req, res) => {
     }
 });
 
+//Enters the user into the specified contest by ID
+router.post('/contest/vote/submit', (req, res) => {
+    if(req.isAuthenticated()){
+        if(typeof req.body.firstPick !== 'undefined' && typeof req.body.secondPick !== 'undefined' && typeof req.body.thirdPick !== 'undefined' && typeof req.body.fourthPick !== 'undefined' && typeof req.body.fifthPick !== 'undefined'){
+            dbpool.getConnection( (err, connection) => {
+                if (err) throw err;
+                
+                connection.query('CALL Upsert_Contest_Submission(' + null + 
+                                                                ',' + dbpool.escape(req.body.contestID) +
+                                                                ',' + dbpool.escape(req.user.steamid) + 
+                                                                ',' + dbpool.escape(req.body.submissionURL) + 
+                                                                ',' + null + ');',
+                    (error, results, fields) => {
+                        res.redirect('/contest' + '?result=success');
+                        connection.release();
+                        if (error) throw error;
+                });
+            });
+        }
+    } else {
+        res.send('Unauthorized Access');
+    }
+});
 
 //Returns back true or false if the user has already submitted to the contest
 router.get('/contest/submission/check/:contestID', (req, res) => {
