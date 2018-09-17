@@ -356,19 +356,23 @@
         border-radius: 5%;
     }
 /*
-**********************ACTIVE CONTEST SUBMISSIONS PAGE*******************
+**********************ACTIVE CONTEST VOTING PAGE*******************
 */
     #contestVotingContainer {
         padding: 5%;
         width: 100%;
         font-size: 1rem;
         font-family: Georgia, 'Times New Roman', Times, serif;
+        background-color: rgb(255, 136, 0);
     }
     #contestVotingContainer form {
         width: 100%;
     }
     #contestVotingContainer table {
         width: 100%;
+    }
+    #contestVotingContainer td {
+        padding: 0.5rem 0;
     }
     #contestVotingContainer h1 {
         text-align: center;
@@ -377,6 +381,8 @@
         width: 8rem;
     }
     #contestVotingContainer input[type="button"] {
+        background-color: transparent;
+        border: none;
         width: 2rem;
     }
     #contestVotingContainer form input[type="submit"] {

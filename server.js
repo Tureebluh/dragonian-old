@@ -86,7 +86,7 @@ server.get('/contest', (req, res) => {
 server.post('/contest/vote/', (req, res) => {
     if(req.isAuthenticated()){
         if(typeof req.body.contestID !== 'undefined'){
-            res.render('user/contestVote');
+            res.render('user/contestVote', {contestID: req.body.contestID});
         } else {
             res.redirect('/contest');
         }

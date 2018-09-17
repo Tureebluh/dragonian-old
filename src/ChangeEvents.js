@@ -10,7 +10,7 @@ if(window.location.pathname === '/admin/contest'){
                 let temp = resJson[0][0];
                 
                 let subStart = new Date(temp.SubmissionStartDate.toString());
-                let offset = (subStart.getTimezoneOffset() / 60) * 2;
+                let offset = 14;
                 subStart.setHours(subStart.getHours() - offset);
 
                 let subEnd = new Date(temp.SubmissionEndDate.toString());

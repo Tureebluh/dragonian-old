@@ -12,7 +12,6 @@ window.onload = function(){
     if(window.location.pathname === "/collabs"){
         var unassignedRoles = '<h1>Page Currently Under Construction!</h1>';
         document.querySelector('#collabsDiv').innerHTML = unassignedRoles;
-
     //When admin creates a contest, it will redirect back to same page with added URL params if successful.
     } else if(window.location.pathname === '/admin/contest'){
         fetch('/api/contest/names/all', {credentials: 'include'})
@@ -37,9 +36,10 @@ window.onload = function(){
                 document.querySelector('#contestRulesDropdown').appendChild(node.cloneNode(true));
             });
         }).catch(error => {console.error(error)});
-
+        //Display to user that contest was updated successfully
         if(document.URL.indexOf('result=success') !== -1){
-            this.alert('Action was successful!');
+            document.querySelector('#showErrorSuccess').innerHTML = 
+                '<h1 class="success-notification">Contest updated successfully.</h1>';
         }
 
     //If user is on contest page, load the oldest active contest and pull all rules associated with that contest. Store all info in an object and call
@@ -53,7 +53,7 @@ window.onload = function(){
         }).then(resJson =>{
             if(typeof resJson[0][0] !== 'undefined'){
                 let subStart = new Date(resJson[0][0].SubmissionStartDate);
-                let offset = subStart.getTimezoneOffset() / 60;
+                let offset = 7;
                 subStart.setHours(subStart.getHours() - offset);
 
                 let subEnd = new Date(resJson[0][0].SubmissionEndDate);
@@ -106,12 +106,21 @@ window.onload = function(){
             }
         }).catch(error => console.error(error));
 
-        if(document.URL.indexOf('result=success') !== -1){
-            document.querySelector('#showErrorSuccess').innerHTML = '<h1 class="success-notification">Contest entry successfully submitted. Thank you for participating in the contest!</h1>';
+        if(document.URL.indexOf('result=subsuccess') !== -1){
+            document.querySelector('#showErrorSuccess').innerHTML = 
+                '<h1 class="success-notification">Contest entry successfully submitted. Thank you for participating in the contest!</h1>';
         } else if (document.URL.indexOf('result=badurl') !== -1){
-            document.querySelector('#showErrorSuccess').innerHTML = '<h1 class="error-notification">The workshop link entered is not a valid workshop link. Please fix any issues with the link and try submitting again.</h1>';
+            document.querySelector('#showErrorSuccess').innerHTML = 
+                '<h1 class="error-notification">The workshop link entered is not a valid workshop link. Please fix any issues with the link and try submitting again.</h1>';
         } else if (document.URL.indexOf('result=noterms') !== -1){
-            document.querySelector('#showErrorSuccess').innerHTML = '<h1 class="error-notification">You must agree to the terms of the contest by ticking the box at the bottom of the page. Failure to agree to the terms will result in your submission not being entered.</h1>';
+            document.querySelector('#showErrorSuccess').innerHTML = 
+                '<h1 class="error-notification">You must agree to the terms of the contest by ticking the box at the bottom of the page. Failure to agree to the terms will result in your submission not being entered.</h1>';
+        } else if (document.URL.indexOf('result=votesuccess') !== -1){
+            document.querySelector('#showErrorSuccess').innerHTML = 
+                '<h1 class="success-notification">Your contest votes have been successfully submitted. Thank you for participating in the voting process!</h1>';
+        } else if (document.URL.indexOf('result=votefail') !== -1){
+            document.querySelector('#showErrorSuccess').innerHTML = 
+                '<h1 class="error-notification">Oops! Something went wrong with your voting selections. Please visit the voting page and try again.</h1>';
         }
 
     } else if(window.location.pathname === '/contest/vote/'){
@@ -146,10 +155,12 @@ window.onload = function(){
 
 // Close the dropdown if the user clicks outside of it
 window.onclick = function(e) {
-    if (!e.target.matches('.dropbtn')) {
-        var myDropdown = document.getElementById("adminDropdown");
-        if (myDropdown.classList.contains('show')) {
-            myDropdown.classList.remove('show');
+    if(document.querySelector('#adminDropdown') !== null){
+        if (!e.target.matches('.dropbtn')) {
+            var myDropdown = document.getElementById("adminDropdown");
+            if (myDropdown.classList.contains('show')) {
+                myDropdown.classList.remove('show');
+            }
         }
     }
 }

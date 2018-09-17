@@ -25,7 +25,7 @@ router.post('/contest/submit/', (req, res) => {
                                                                     ',' + dbpool.escape(req.body.submissionURL) + 
                                                                     ',' + null + ');',
                         (error, results, fields) => {
-                            res.redirect('/contest' + '?result=success');
+                            res.redirect('/contest' + '?result=subsuccess');
                             connection.release();
                             if (error) throw error;
                     });
@@ -41,24 +41,29 @@ router.post('/contest/submit/', (req, res) => {
     }
 });
 
-//Enters the user into the specified contest by ID
+//Submits the users vote to the active contest
 router.post('/contest/vote/submit', (req, res) => {
     if(req.isAuthenticated()){
-        if(typeof req.body.firstPick !== 'undefined' && typeof req.body.secondPick !== 'undefined' && typeof req.body.thirdPick !== 'undefined' && typeof req.body.fourthPick !== 'undefined' && typeof req.body.fifthPick !== 'undefined'){
+        if(typeof req.body.firstPick !== 'undefined' && typeof req.body.secondPick !== 'undefined' && typeof req.body.thirdPick !== 'undefined' &&
+         typeof req.body.fourthPick !== 'undefined' && typeof req.body.fifthPick !== 'undefined' && typeof req.body.contestID !== 'undefined'){
             dbpool.getConnection( (err, connection) => {
                 if (err) throw err;
-                
-                connection.query('CALL Upsert_Contest_Submission(' + null + 
-                                                                ',' + dbpool.escape(req.body.contestID) +
+                connection.query('CALL Upsert_Contest_Voting(' + dbpool.escape(req.body.contestID) +
                                                                 ',' + dbpool.escape(req.user.steamid) + 
-                                                                ',' + dbpool.escape(req.body.submissionURL) + 
-                                                                ',' + null + ');',
+                                                                ',' + dbpool.escape(req.body.firstPick) +
+                                                                ',' + dbpool.escape(req.body.secondPick) +
+                                                                ',' + dbpool.escape(req.body.thirdPick) +
+                                                                ',' + dbpool.escape(req.body.fourthPick) +
+                                                                ',' + dbpool.escape(req.body.fifthPick) +
+                                                                ');',
                     (error, results, fields) => {
-                        res.redirect('/contest' + '?result=success');
+                        res.redirect('/contest?result=votesuccess');
                         connection.release();
                         if (error) throw error;
                 });
             });
+        } else {
+            res.redirect('/contest?result=votefail');
         }
     } else {
         res.send('Unauthorized Access');

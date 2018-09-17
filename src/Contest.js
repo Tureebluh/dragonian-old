@@ -105,7 +105,7 @@ class Contest {
         return tempString;
     }
     entryOrVote(){
-        if(this._VoteStartDate < Date.now()){
+        if(this.VoteStartDate < Date.now()){
             let tempString = '';
                 tempString += '<form action="/contest/vote/" method="post" class="contestVotingForm">';
                     tempString += '<input type="hidden" id="contestIDHidden" name="contestID">';
@@ -134,11 +134,16 @@ class Contest {
             tempString += '<h2 id="submissionHeader" class="success-notification">Awesome!<br>We have your submission!</h2>';
             tempString += '<input type="hidden" id="contestIDHidden" name="contestID">';
             return tempString;
-        } else {
+        } else if(this.SubmissionEndDate < Date.now() && this.VoteStartDate > Date.now()){
             let tempString = "";
             tempString += '<input type="hidden" id="contestIDHidden" name="contestID">';
-            let hoursUntil = Math.round((((this._VoteStartDate.getTime() - Date.now()) / 1000) / 60) / 60);
-            tempString += '<h2 id="submissionHeader">Community voting for this contest will begin in ' + hoursUntil + ' hour(s).<br>Be sure to check out the stream to see all the contest submissions before the voting goes live!</h2>';
+            let hoursUntil = Math.round((((this.VoteStartDate.getTime() - Date.now()) / 1000) / 60) / 60);
+            if(hoursUntil > 0){
+                hoursUntil += ' hour(s)';
+            } else {
+                hoursUntil = Math.round(((this.VoteStartDate.getTime() - Date.now()) / 1000) / 60) + ' minute(s)';
+            }
+            tempString += '<h2 id="submissionHeader">Community voting for this contest will begin in ' + hoursUntil + '.<br>Be sure to check out the stream to see all the contest submissions before the voting goes live!</h2>';
             tempString += '<a href="https://www.twitch.tv/r3ddragons" target="_blank"><img src="img/twitch_purple_combo.svg"></a>';
             return tempString;
         }
