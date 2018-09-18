@@ -79,25 +79,25 @@ if(document.querySelector('#adminPanel') !== null){
     });
 }
 if(window.location.pathname === '/contest/vote/') {
-    document.querySelector('#firstPickBtn').addEventListener('click', (event) => {
-        let tempString = '#contestSubmission' + document.querySelector('#firstPick').value;
+    document.querySelector('.jump-to-icon').addEventListener('click', (event) => {
+        let tempString = '#contestSubmission' + document.querySelector('#' + event.target.id.toString().replace('Btn','')).value;
         document.querySelector(tempString).scrollIntoView();
     });
-    document.querySelector('#secondPickBtn').addEventListener('click', (event) => {
-        let tempString = '#contestSubmission' + document.querySelector('#secondPick').value;
-        document.querySelector(tempString).scrollIntoView();
-    });
-    document.querySelector('#thirdPickBtn').addEventListener('click', (event) => {
-        let tempString = '#contestSubmission' + document.querySelector('#thirdPick').value;
-        document.querySelector(tempString).scrollIntoView();
-    });
-    document.querySelector('#fourthPickBtn').addEventListener('click', (event) => {
-        let tempString = '#contestSubmission' + document.querySelector('#fourthPick').value;
-        document.querySelector(tempString).scrollIntoView();
-    });
-    document.querySelector('#fifthPickBtn').addEventListener('click', (event) => {
-        let tempString = '#contestSubmission' + document.querySelector('#fifthPick').value;
-        document.querySelector(tempString).scrollIntoView();
-    });
+    // document.querySelector('#secondPickBtn').addEventListener('click', (event) => {
+    //     let tempString = '#contestSubmission' + document.querySelector('#secondPick').value;
+    //     document.querySelector(tempString).scrollIntoView();
+    // });
+    // document.querySelector('#thirdPickBtn').addEventListener('click', (event) => {
+    //     let tempString = '#contestSubmission' + document.querySelector('#thirdPick').value;
+    //     document.querySelector(tempString).scrollIntoView();
+    // });
+    // document.querySelector('#fourthPickBtn').addEventListener('click', (event) => {
+    //     let tempString = '#contestSubmission' + document.querySelector('#fourthPick').value;
+    //     document.querySelector(tempString).scrollIntoView();
+    // });
+    // document.querySelector('#fifthPickBtn').addEventListener('click', (event) => {
+    //     let tempString = '#contestSubmission' + document.querySelector('#fifthPick').value;
+    //     document.querySelector(tempString).scrollIntoView();
+    // });
 }
 
