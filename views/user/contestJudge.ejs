@@ -1,0 +1,12 @@
+<%- include('../header') -%>
+<%- include('../navbar') -%>
+<%- include('../userbanner') -%>
+<section id="showErrorSuccess"></section>
+<section id="submissionTable">
+    <input type="hidden" id="contestIDHidden" name="contestID" value="<%= contestID %>">
+    <h1>Scoring Rubric</h1>
+    <ul id="judgingRubric"></ul>
+    <table id="judgeTable"></table>
+</section>
+<%- include('../backToTop') -%>
+<%- include('../bodyend') -%>

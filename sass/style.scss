@@ -293,6 +293,9 @@
     #activeContest h1 {
         font-size: 2.5rem;
     }
+    #activeContest img {
+        width: 100%;
+    }
     #activeContest .contest-banner-container {
         background: url('img/contest_banner.png');
         background-size: 100% 100%;
@@ -415,6 +418,21 @@
         color: white;
         text-decoration: none;
         font-size: 1.5rem;
+    }
+/*
+**********************ACTIVE CONTEST JUDGING PAGE*******************
+*/
+    #submissionTable {
+        font-family: Georgia, 'Times New Roman', Times, serif;
+    }
+    #submissionTable h1{
+        text-align: center;
+    }
+    #submissionTable table {
+        width: 100%;
+    }
+    #submissionTable table th {
+        background: lightgrey;
     }
 }
 

@@ -224,6 +224,8 @@
     font-weight: bold; }
   #activeContest h1 {
     font-size: 2.5rem; }
+  #activeContest img {
+    width: 100%; }
   #activeContest .contest-banner-container {
     background: url("img/contest_banner.png");
     background-size: 100% 100%;
@@ -315,7 +317,18 @@
   #contestSubmissionContainer .contest-submission a.contest-submission-url:link, #contestSubmissionContainer .contest-submission a.contest-submission-url:visited {
     color: white;
     text-decoration: none;
-    font-size: 1.5rem; } }
+    font-size: 1.5rem; }
+  /*
+**********************ACTIVE CONTEST JUDGING PAGE*******************
+*/
+  #submissionTable {
+    font-family: Georgia, 'Times New Roman', Times, serif; }
+  #submissionTable h1 {
+    text-align: center; }
+  #submissionTable table {
+    width: 100%; }
+  #submissionTable table th {
+    background: lightgrey; } }
 
 /* Large Mobile Devices */
 /* Extra-Large Mobile Devices */

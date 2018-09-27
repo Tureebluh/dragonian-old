@@ -81,13 +81,13 @@ class Contest {
             tempString += "<div class=\"Name\"><h1>" + this._Name + "</h1></div>";
             tempString += "<br>";
             tempString += "<div class=\"sml-container\">";
-                tempString += "<span class=\"SubmissionStartDate\"><h2>Start</h2>" + this._SubmissionStartDate.toString() + "</span>";
-                tempString += "<span class=\"SubmissionEndDate\"><h2>End</h2>" + this._SubmissionEndDate.toString() + "</span>";
+                tempString += "<span class=\"SubmissionStartDate\"><h2>Start</h2>" + this._SubmissionStartDate.toLocaleString() + "</span>";
+                tempString += "<span class=\"SubmissionEndDate\"><h2>End</h2>" + this._SubmissionEndDate.toLocaleString() + "</span>";
             tempString += "</div>";
             tempString += "<br>";
             tempString += "<div class=\"sml-container\">";
-                tempString += "<span class=\"VoteStartDate\"><h2>Vote Start</h2>" + this._VoteStartDate.toString() + "</span>";
-                tempString += "<span class=\"VoteEndDate\"><h2>Vote End</h2>" + this._VoteEndDate.toString() + "</span>";
+                tempString += "<span class=\"VoteStartDate\"><h2>Vote Start</h2>" + this._VoteStartDate.toLocaleString() + "</span>";
+                tempString += "<span class=\"VoteEndDate\"><h2>Vote End</h2>" + this._VoteEndDate.toLocaleString() + "</span>";
             tempString += "</div>";
         tempString += "</div>";
         tempString += "<br>";

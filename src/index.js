@@ -3,6 +3,7 @@ import CollabOnLoad from './CollabOnLoad';
 import AdminContestOnLoad from './AdminContestOnLoad';
 import ContestOnLoad from './ContestOnLoad';
 import ContestVoteOnLoad from './ContestVoteOnLoad';
+import ContestJudgeOnLoad from './ContestJudgeOnLoad';
 
 
 
@@ -34,6 +35,13 @@ window.onload = function(){
     *********************************************************/
     if(window.location.pathname === '/contest/vote/'){
         ContestVoteOnLoad();
+    }
+
+    /******************************************************** 
+                        CONTEST-JUDGING
+    *********************************************************/
+    if(window.location.pathname === '/contest/judge/'){
+        ContestJudgeOnLoad();
     }
 }
 
