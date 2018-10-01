@@ -1,4 +1,5 @@
+const env = process.env;
 export default {
-    port: process.env.PORT || 3000,
-    nodeEnv: process.env.NODE_ENV || 'development'
+    port: env.PORT || 3000,
+    nodeEnv: env.NODE_ENV || 'development'
 };

@@ -37,14 +37,20 @@ const SteamStrategy = new OpenIDStrategy(
                                 tempArray.forEach((obj)=>{
                                     rolesArray.push(obj.role);
                                 });
-                                let userJson =  {'steamid': resJson.response.players[0].steamid,
-                                                 'roles': rolesArray,
-                                                 'personaname': resJson.response.players[0].personaname,
-                                                 'avatarfull': resJson.response.players[0].avatarfull
-                                                };
-                                connection.release();
-                                if (error) throw error;
-                                return done(null, userJson);
+                                if(!rolesArray.includes('Banned')){
+                                    let userJson =  {
+                                        'steamid': resJson.response.players[0].steamid,
+                                        'roles': rolesArray,
+                                        'personaname': resJson.response.players[0].personaname,
+                                        'avatarfull': resJson.response.players[0].avatarfull
+                                    };
+                                    connection.release();
+                                    if (error) throw error;
+                                    return done(null, userJson);
+                                } else {
+                                    connection.release();
+                                    return done(null, false);
+                                }
                                 // Don't use the connection here, it has been returned to the pool.
                             });
                         });

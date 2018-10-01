@@ -98,113 +98,214 @@ module.exports = __webpack_require__(1);
 "use strict";
 
 
-var _UnassignedRole = __webpack_require__(2);
-
-var _UnassignedRole2 = _interopRequireDefault(_UnassignedRole);
-
-var _Contest = __webpack_require__(3);
-
-var _Contest2 = _interopRequireDefault(_Contest);
-
-var _ContestOption = __webpack_require__(4);
-
-var _ContestOption2 = _interopRequireDefault(_ContestOption);
-
-var _ContestRule = __webpack_require__(5);
-
-var _ContestRule2 = _interopRequireDefault(_ContestRule);
-
-var _ChangeEvents = __webpack_require__(6);
+var _ChangeEvents = __webpack_require__(2);
 
 var _ChangeEvents2 = _interopRequireDefault(_ChangeEvents);
 
+var _CollabOnLoad = __webpack_require__(3);
+
+var _CollabOnLoad2 = _interopRequireDefault(_CollabOnLoad);
+
+var _AdminContestOnLoad = __webpack_require__(5);
+
+var _AdminContestOnLoad2 = _interopRequireDefault(_AdminContestOnLoad);
+
+var _ContestOnLoad = __webpack_require__(8);
+
+var _ContestOnLoad2 = _interopRequireDefault(_ContestOnLoad);
+
+var _ContestVoteOnLoad = __webpack_require__(10);
+
+var _ContestVoteOnLoad2 = _interopRequireDefault(_ContestVoteOnLoad);
+
+var _ContestJudgeOnLoad = __webpack_require__(12);
+
+var _ContestJudgeOnLoad2 = _interopRequireDefault(_ContestJudgeOnLoad);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-//Can only have one window.onload function so we're checking the pathname to see which page the user is on
+//Can only have one window function in bundle.js, so we're checking the pathname to see which page the user is on
 window.onload = function () {
-
-    //If user is on collab page display under construction
+    /******************************************************** 
+                            COLLAB
+    *********************************************************/
     if (window.location.pathname === "/collabs") {
-        var unassignedRoles = '<h1>Page Currently Under Construction!</h1>';
-        document.querySelector('#collabsDiv').innerHTML = unassignedRoles;
+        (0, _CollabOnLoad2.default)();
+    }
 
-        //When admin creates a contest, it will redirect back to same page with added URL params if successful.
-    } else if (window.location.pathname === '/admin/contest') {
-        fetch('/api/contest/names/all', { credentials: 'include' }).then(function (res) {
-            return res.json();
-        }).then(function (resJson) {
-            resJson[0].forEach(function (contest) {
-                var node = new _ContestOption2.default(contest.contest_ID, contest.Name).getContestOption();
-                document.querySelector('#contestNameDropdown').appendChild(node);
-            });
-        }).catch(function (error) {
-            console.error(error);
-        });
+    /******************************************************** 
+                        ADMIN-CONTEST
+    *********************************************************/
+    if (window.location.pathname === '/admin/contest') {
+        (0, _AdminContestOnLoad2.default)();
+    }
 
-        fetch('/api/contest/rules', { credentials: 'include' }).then(function (res) {
-            return res.json();
-        }).then(function (resJson) {
-            resJson[0].forEach(function (rule) {
-                var node = new _ContestRule2.default(rule.contest_rule_ID, rule.rule).getRuleOption();
-                document.querySelector('#ruleNameDropdown').appendChild(node);
-                document.querySelector('#contestRulesDropdown').appendChild(node.cloneNode(true));
-            });
-        }).catch(function (error) {
-            console.error(error);
-        });
+    /******************************************************** 
+                            CONTEST
+    *********************************************************/
+    if (window.location.pathname === '/contest') {
+        (0, _ContestOnLoad2.default)();
+    }
 
-        if (document.URL.indexOf('result=success') !== -1) {
-            this.alert('Action was successful!');
-        }
+    /******************************************************** 
+                        CONTEST-VOTING
+    *********************************************************/
+    if (window.location.pathname === '/contest/vote/') {
+        (0, _ContestVoteOnLoad2.default)();
+    }
 
-        //If user is on contest page, load the oldest active contest and pull all rules associated with that contest. Store all info in an object and call
-        //call provided function to create HTML visual of data
-        //NOTE: Cookies are not sent with fetch() by default, therefore {credentials} are supplied to server to authenticate fetch() request
-    } else if (window.location.pathname === '/contest') {
-        fetch('/api/contest/all/active', { credentials: 'include' }).then(function (res) {
-            return res.json();
-            //Return res in JSON form to next then()
-        }).then(function (resJson) {
-            if (typeof resJson[0][0] !== 'undefined') {
-                var activeContest = new _Contest2.default(resJson[0][0].contest_ID, resJson[0][0].Name, new Date(resJson[0][0].SubmissionStartDate), new Date(resJson[0][0].SubmissionEndDate), new Date(resJson[0][0].VoteStartDate), new Date(resJson[0][0].VoteEndDate), resJson[0][0].Description, null);
-                return activeContest;
-            } else {
-                return {};
-            }
-            //Create obj and return to next then()
-        }).then(function (contestObj) {
-            if (contestObj.hasOwnProperty('_contest_ID')) {
-                document.querySelector('#contestIDSubmit').value = contestObj.contest_ID;
-                //Fetch rules associated with contest_ID
-                fetch('/api/contest/rules/' + contestObj.contest_ID, { credentials: 'include' }).then(function (res) {
-                    return res.json();
-                }).then(function (resJson) {
-                    contestObj.rules = resJson[0];
-                    document.querySelector('#activeContest').innerHTML = contestObj.activeContestDiv();
-                }).catch(function (error) {
-                    return console.error(error);
-                });
-            } else {
-                document.querySelector('#activeContest').innerHTML = '<h1>No Contest Currently Running.<br>Check back soon!</h1>';
-            }
-        }).catch(function (error) {
-            return console.error(error);
-        });
+    /******************************************************** 
+                        CONTEST-JUDGING
+    *********************************************************/
+    if (window.location.pathname === '/contest/judge/') {
+        (0, _ContestJudgeOnLoad2.default)();
     }
 };
 
 // Close the dropdown if the user clicks outside of it
 window.onclick = function (e) {
-    if (!e.target.matches('.dropbtn')) {
-        var myDropdown = document.getElementById("adminDropdown");
-        if (myDropdown.classList.contains('show')) {
-            myDropdown.classList.remove('show');
+    if (document.querySelector('#adminDropdown') !== null) {
+        if (!e.target.matches('.dropbtn')) {
+            var myDropdown = document.getElementById("adminDropdown");
+            if (myDropdown.classList.contains('show')) {
+                myDropdown.classList.remove('show');
+            }
+        }
+    }
+};
+
+//If user scrolls down page
+window.onscroll = function () {
+    if (document.querySelector('#backToTop') !== null) {
+        if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+            document.getElementById("backToTop").style.display = "block";
+        } else {
+            document.getElementById("backToTop").style.display = "none";
         }
     }
 };
 
 /***/ }),
 /* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+if (window.location.pathname === '/admin/contest') {
+    //When admin selects contest from dropdown list
+    document.querySelector('#contestNameDropdown').addEventListener('change', function (event) {
+        if (event.target.value !== '0') {
+            fetch('/api/contest/all/' + event.target.value, { credentials: 'include' }).then(function (res) {
+                return res.json();
+            }).then(function (resJson) {
+                var temp = resJson[0][0];
+
+                var subStart = new Date(temp.SubmissionStartDate.toString());
+                var offset = 14;
+                subStart.setHours(subStart.getHours() - offset);
+
+                var subEnd = new Date(temp.SubmissionEndDate.toString());
+                subEnd.setHours(subEnd.getHours() - offset);
+
+                var voteStart = new Date(temp.VoteStartDate.toString());
+                voteStart.setHours(voteStart.getHours() - offset);
+
+                var voteEnd = new Date(temp.VoteEndDate.toString());
+                voteEnd.setHours(voteEnd.getHours() - offset);
+
+                document.querySelector('#contestName').value = temp.Name;
+                document.querySelector('#contestSubmissionStart').value = subStart.toISOString().replace('Z', '');
+                document.querySelector('#contestSubmissionEnd').value = subEnd.toISOString().replace('Z', '');
+                document.querySelector('#contestVoteStart').value = voteStart.toISOString().replace('Z', '');
+                document.querySelector('#contestVoteEnd').value = voteEnd.toISOString().replace('Z', '');
+                document.querySelector('#contestDescription').value = temp.Description;
+                document.querySelector('#createEditContestHeader').textContent = "Edit Contest";
+                document.querySelector('#submitContest').value = "Edit Contest";
+                document.querySelector('#contestActive').checked = temp.Active.data[0] ? true : false;
+                document.querySelector('#contestActive').disabled = false;
+                document.querySelector('#contestRulesDropdown').disabled = false;
+
+                //Fetch rules associated with contest_ID
+                fetch('/api/contest/rules/' + event.target.value, { credentials: 'include' }).then(function (res) {
+                    return res.json();
+                }).then(function (resJson) {
+                    var rules = resJson[0];
+                    if (rules !== null) {
+                        document.querySelector('#contestRulesDropdown').childNodes.forEach(function (tempOption) {
+                            rules.forEach(function (element) {
+                                if (tempOption.value == element.contest_rule_ID) {
+                                    tempOption.selected = true;
+                                    return;
+                                }
+                            });
+                        });
+                    }
+                }).catch(function (error) {
+                    return console.error(error);
+                });
+            }).catch(function (error) {
+                console.error(error);
+            });
+        } else {
+            document.querySelector('#createEditContestHeader').textContent = "Create Contest";
+            document.querySelector('#submitContest').value = "Create Contest";
+            document.querySelector('#contestActive').checked = true;
+            document.querySelector('#contestActive').disabled = true;
+            document.querySelector('#contestRulesDropdown').disabled = true;
+        }
+    });
+    document.querySelector('#ruleNameDropdown').addEventListener('change', function (event) {
+        if (event.target.value !== '0') {
+            document.querySelector('#createEditRuleHeader').textContent = "Edit Rule";
+            document.querySelector('#submitRule').value = "Edit Rule";
+            document.querySelector('#contestRule').value = document.querySelector('#ruleNameDropdown').selectedOptions[0].text;
+        } else {
+            document.querySelector('#createEditRuleHeader').textContent = "Create Rule";
+            document.querySelector('#submitRule').value = "Create Rule";
+        }
+    });
+}
+if (document.querySelector('#adminPanel') !== null) {
+    document.querySelector('#adminPanel').addEventListener('click', function (event) {
+        document.getElementById("adminDropdown").classList.toggle("show");
+    });
+}
+if (window.location.pathname === '/contest/vote/') {
+    document.querySelectorAll('.jump-to-icon').forEach(function (element) {
+        element.addEventListener('click', function (event) {
+            var tempString = '#contestSubmission' + document.querySelector('#' + event.target.id.toString().replace('Btn', '')).value;
+            document.querySelector(tempString).scrollIntoView();
+        });
+    });
+}
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _UnassignedRole = __webpack_require__(4);
+
+var _UnassignedRole2 = _interopRequireDefault(_UnassignedRole);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var onload = function onload() {
+    var unassignedRoles = '<h1>Page Currently Under Construction!</h1>';
+    document.querySelector('#collabsDiv').innerHTML = unassignedRoles;
+};
+
+exports.default = onload;
+
+/***/ }),
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -309,7 +410,266 @@ var UnassignedRole = function () {
 exports.default = UnassignedRole;
 
 /***/ }),
-/* 3 */
+/* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _ContestOption = __webpack_require__(6);
+
+var _ContestOption2 = _interopRequireDefault(_ContestOption);
+
+var _ContestRule = __webpack_require__(7);
+
+var _ContestRule2 = _interopRequireDefault(_ContestRule);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var onload = function onload() {
+    fetch('/api/contest/names/all', { credentials: 'include' }).then(function (res) {
+        return res.json();
+    }).then(function (resJson) {
+        resJson[0].forEach(function (contest) {
+            var node = new _ContestOption2.default(contest.contest_ID, contest.Name).getContestOption();
+            document.querySelector('#contestNameDropdown').appendChild(node);
+        });
+    }).catch(function (error) {
+        console.error(error);
+    });
+
+    fetch('/api/contest/rules', { credentials: 'include' }).then(function (res) {
+        return res.json();
+    }).then(function (resJson) {
+        resJson[0].forEach(function (rule) {
+            var node = new _ContestRule2.default(rule.contest_rule_ID, rule.rule).getRuleOption();
+            document.querySelector('#ruleNameDropdown').appendChild(node);
+            document.querySelector('#contestRulesDropdown').appendChild(node.cloneNode(true));
+        });
+    }).catch(function (error) {
+        console.error(error);
+    });
+    //Display to user that contest was updated successfully
+    if (document.URL.indexOf('result=success') !== -1) {
+        document.querySelector('#showErrorSuccess').innerHTML = '<h1 class="success-notification">Contest updated successfully.</h1>';
+    }
+};
+
+exports.default = onload;
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var ContestOption = function () {
+    function ContestOption(contest_ID, Name) {
+        _classCallCheck(this, ContestOption);
+
+        this._contest_ID = contest_ID;
+        this._Name = Name;
+    }
+
+    _createClass(ContestOption, [{
+        key: "getContestOption",
+        value: function getContestOption() {
+            var node = document.createElement("OPTION");
+            node.value = this._contest_ID;
+            var textnode = document.createTextNode(this._Name);
+            node.appendChild(textnode);
+            return node;
+        }
+    }, {
+        key: "contest_ID",
+        set: function set(contest_ID) {
+            this._contest_ID = contest_ID;
+        },
+        get: function get() {
+            return this._contest_ID;
+        }
+    }, {
+        key: "Name",
+        set: function set(Name) {
+            this._Name = Name;
+        },
+        get: function get() {
+            return this._Name;
+        }
+    }]);
+
+    return ContestOption;
+}();
+
+exports.default = ContestOption;
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var ContestRule = function () {
+    function ContestRule(contest_rule_ID, rule) {
+        _classCallCheck(this, ContestRule);
+
+        this._contest_rule_ID = contest_rule_ID;
+        this._rule = rule;
+    }
+
+    _createClass(ContestRule, [{
+        key: "getRuleOption",
+        value: function getRuleOption() {
+            var node = document.createElement("OPTION");
+            node.value = this._contest_rule_ID;
+            var textnode = document.createTextNode(this._rule);
+            node.appendChild(textnode);
+            return node;
+        }
+    }, {
+        key: "contest_rule_ID",
+        set: function set(contest_rule_ID) {
+            this._contest_rule_ID = contest_rule_ID;
+        },
+        get: function get() {
+            return this._contest_rule_ID;
+        }
+    }, {
+        key: "rule",
+        set: function set(rule) {
+            this._rule = rule;
+        },
+        get: function get() {
+            return this._rule;
+        }
+    }]);
+
+    return ContestRule;
+}();
+
+exports.default = ContestRule;
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _Contest = __webpack_require__(9);
+
+var _Contest2 = _interopRequireDefault(_Contest);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var onload = function onload() {
+    //If user is on contest page, load the oldest active contest and pull all rules associated with that contest. Store all info in an object and call
+    //call provided function to create HTML visual of data
+    //NOTE: Cookies are not sent with fetch() by default, therefore {credentials} are supplied to server to authenticate fetch() request
+    fetch('/api/contest/all/active', { credentials: 'include' }).then(function (res) {
+        return res.json();
+        //Return res in JSON form to next then()
+    }).then(function (resJson) {
+        if (typeof resJson[0][0] !== 'undefined') {
+            var subStart = new Date(resJson[0][0].SubmissionStartDate);
+            var offset = 7;
+            subStart.setHours(subStart.getHours() - offset);
+
+            var subEnd = new Date(resJson[0][0].SubmissionEndDate);
+            subEnd.setHours(subEnd.getHours() - offset);
+
+            var voteStart = new Date(resJson[0][0].VoteStartDate);
+            voteStart.setHours(voteStart.getHours() - offset);
+
+            var voteEnd = new Date(resJson[0][0].VoteEndDate);
+            voteEnd.setHours(voteEnd.getHours() - offset);
+
+            var activeContest = new _Contest2.default(resJson[0][0].contest_ID, resJson[0][0].Name, subStart, subEnd, voteStart, voteEnd, resJson[0][0].Description, null);
+            return activeContest;
+        } else {
+            return {};
+        }
+        //Create obj and return to next then()
+    }).then(function (contestObj) {
+        if (contestObj.hasOwnProperty('_contest_ID')) {
+            //Check if user has submitted to contest
+            fetch('/api/contest/submission/check/' + contestObj.contest_ID, { credentials: 'include' }).then(function (res) {
+                return res.json();
+            }).then(function (resJson) {
+                contestObj.submitted = resJson.submitted;
+            }).then(function () {
+                //Fetch rules associated with contest_ID
+                fetch('/api/contest/rules/' + contestObj.contest_ID, { credentials: 'include' }).then(function (res) {
+                    return res.json();
+                }).then(function (resJson) {
+                    contestObj.rules = resJson[0];
+                    document.querySelector('#activeContest').innerHTML = contestObj.activeContestDiv();
+                    document.querySelector('#submitEntrySection').innerHTML = contestObj.entryOrVote();
+                    document.querySelector('#contestIDHidden').value = contestObj.contest_ID;
+                }).catch(function (error) {
+                    return console.error(error);
+                });
+            }).catch(function (error) {
+                return console.error(error);
+            });
+        } else {
+            var tempString = '';
+            tempString += '<form action="/contest/judge/" method="post" class="contestVotingForm">';
+            tempString += '<input type="hidden" id="contestIDHidden" name="contestID">';
+            tempString += '<input type="submit" alt="Go To Judging Page" value="See Contest Results">';
+            tempString += '</form>';
+            document.querySelector('#activeContest').innerHTML = '<h2>Community voting has ended.  Be sure to check out Twitch for live updates regarding judging results and future contest.</h2>' + '<a href="https://www.twitch.tv/r3ddragons" target="_blank"><img src="img/twitch_purple_combo.svg"></a>';
+            document.querySelector('#submitEntrySection').innerHTML = tempString;
+        }
+    }).catch(function (error) {
+        return console.error(error);
+    });
+
+    if (document.URL.indexOf('result=subsuccess') !== -1) {
+        document.querySelector('#showErrorSuccess').innerHTML = '<h1 class="success-notification">Contest entry successfully submitted. Thank you for participating in the contest!</h1>';
+    } else if (document.URL.indexOf('result=badurl') !== -1) {
+        document.querySelector('#showErrorSuccess').innerHTML = '<h1 class="error-notification">The workshop link entered is not a valid workshop link. Please fix any issues with the link and try submitting again.</h1>';
+    } else if (document.URL.indexOf('result=noterms') !== -1) {
+        document.querySelector('#showErrorSuccess').innerHTML = '<h1 class="error-notification">You must agree to the terms of the contest by ticking the box at the bottom of the page. ' + 'Failure to agree to the terms will result in your submission not being entered.</h1>';
+    } else if (document.URL.indexOf('result=votesuccess') !== -1) {
+        document.querySelector('#showErrorSuccess').innerHTML = '<h1 class="success-notification">Your contest votes have been successfully submitted. Thank you for participating in the voting process!</h1>';
+    } else if (document.URL.indexOf('result=votefail') !== -1) {
+        document.querySelector('#showErrorSuccess').innerHTML = '<h1 class="error-notification">Oops! Something went wrong with your voting selections. Please visit the voting page and try again.</h1>';
+    } else if (document.URL.indexOf('result=voteduplicate') !== -1) {
+        document.querySelector('#showErrorSuccess').innerHTML = '<h1 class="error-notification">You cannot vote for the same submission more than once. Please visit the voting page and try again.</h1>';
+    }
+};
+
+exports.default = onload;
+
+/***/ }),
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -324,7 +684,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var Contest = function () {
-    function Contest(contest_ID, Name, SubmissionStartDate, SubmissionEndDate, VoteStartDate, VoteEndDate, Description, rules) {
+    function Contest(contest_ID, Name, SubmissionStartDate, SubmissionEndDate, VoteStartDate, VoteEndDate, Description, rules, submitted) {
         _classCallCheck(this, Contest);
 
         this._contest_ID = contest_ID;
@@ -335,10 +695,12 @@ var Contest = function () {
         this._VoteEndDate = VoteEndDate;
         this._Description = Description;
         this._rules = rules;
+        this._submitted = submitted;
     }
 
     _createClass(Contest, [{
         key: "activeContestDiv",
+
 
         //Builds Contest Div using object
         value: function activeContestDiv() {
@@ -369,6 +731,51 @@ var Contest = function () {
             tempString += "</div>";
             tempString += "<br>";
             return tempString;
+        }
+    }, {
+        key: "entryOrVote",
+        value: function entryOrVote() {
+            if (this.VoteStartDate < Date.now()) {
+                var tempString = '';
+                tempString += '<form action="/contest/vote/" method="post" class="contestVotingForm">';
+                tempString += '<input type="hidden" id="contestIDHidden" name="contestID">';
+                tempString += '<input type="submit" alt="Go To Voting Page" value="Vote On Contest">';
+                tempString += '</form>';
+                return tempString;
+            } else if (this.submitted !== 1 && this.SubmissionEndDate > Date.now()) {
+                var _tempString = "";
+                _tempString += '<h2 id="submissionHeader">Contest Entry</h2>';
+                _tempString += '<form action="/api/contest/submit/" method="post" class="contestSubmissionForm">';
+                _tempString += '<input type="hidden" id="contestIDHidden" name="contestID">';
+                _tempString += '<input type="url" id="submissionURL" name="submissionURL" placeholder="https://steamcommunity.com/sharedfiles/filedetails/?id=XXXXXXXXXX" required/>';
+                _tempString += '<br>';
+                _tempString += '<br>';
+                _tempString += '<span>';
+                _tempString += '<input type="checkbox" id="verifySubmissionCB" name="verifySubmissionCB" required> By ticking this box and clicking the button("Submit Entry"), I agree and acknowledge that this is my own work';
+                _tempString += ' and is associated with this Steam&#174; account. Violating these terms will result in the immediate and irrevocable termination of my privileges on this website.<br>';
+                _tempString += '<br>';
+                _tempString += '<input type="submit" id="submitContestUser" alt="Submit To Contest" value="Submit Entry">';
+                _tempString += '</span>';
+                _tempString += '</form>';
+                return _tempString;
+            } else if (this.submitted === 1 && this.SubmissionEndDate > Date.now()) {
+                var _tempString2 = "";
+                _tempString2 += '<h2 id="submissionHeader" class="success-notification">Awesome!<br>We have your submission!</h2>';
+                _tempString2 += '<input type="hidden" id="contestIDHidden" name="contestID">';
+                return _tempString2;
+            } else if (this.SubmissionEndDate < Date.now() && this.VoteStartDate > Date.now()) {
+                var _tempString3 = "";
+                _tempString3 += '<input type="hidden" id="contestIDHidden" name="contestID">';
+                var hoursUntil = Math.round((this.VoteStartDate.getTime() - Date.now()) / 1000 / 60 / 60);
+                if (hoursUntil > 0) {
+                    hoursUntil += ' hour(s)';
+                } else {
+                    hoursUntil = Math.round((this.VoteStartDate.getTime() - Date.now()) / 1000 / 60) + ' minute(s)';
+                }
+                _tempString3 += '<h2 id="submissionHeader">Community voting for this contest will begin in ' + hoursUntil + '.<br>Be sure to check out the stream to see all the contest submissions before the voting goes live!</h2>';
+                _tempString3 += '<a href="https://www.twitch.tv/r3ddragons" target="_blank"><img src="img/twitch_purple_combo.svg"></a>';
+                return _tempString3;
+            }
         }
     }, {
         key: "Name",
@@ -434,6 +841,14 @@ var Contest = function () {
         get: function get() {
             return this._rules;
         }
+    }, {
+        key: "submitted",
+        set: function set(submitted) {
+            this._submitted = submitted;
+        },
+        get: function get() {
+            return this._submitted;
+        }
     }]);
 
     return Contest;
@@ -442,7 +857,7 @@ var Contest = function () {
 exports.default = Contest;
 
 /***/ }),
-/* 4 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -452,178 +867,240 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+var _ContestSubmission = __webpack_require__(11);
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+var _ContestSubmission2 = _interopRequireDefault(_ContestSubmission);
 
-var ContestOption = function () {
-    function ContestOption(contest_ID, Name) {
-        _classCallCheck(this, ContestOption);
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-        this._contest_ID = contest_ID;
-        this._Name = Name;
-    }
-
-    _createClass(ContestOption, [{
-        key: "getContestOption",
-        value: function getContestOption() {
-            var node = document.createElement("OPTION");
-            node.value = this._contest_ID;
-            var textnode = document.createTextNode(this._Name);
-            node.appendChild(textnode);
-            return node;
-        }
-    }, {
-        key: "contest_ID",
-        set: function set(contest_ID) {
-            this._contest_ID = contest_ID;
-        },
-        get: function get() {
-            return this._contest_ID;
-        }
-    }, {
-        key: "Name",
-        set: function set(Name) {
-            this._Name = Name;
-        },
-        get: function get() {
-            return this._Name;
-        }
-    }]);
-
-    return ContestOption;
-}();
-
-exports.default = ContestOption;
-
-/***/ }),
-/* 5 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var ContestRule = function () {
-    function ContestRule(contest_rule_ID, rule) {
-        _classCallCheck(this, ContestRule);
-
-        this._contest_rule_ID = contest_rule_ID;
-        this._rule = rule;
-    }
-
-    _createClass(ContestRule, [{
-        key: "getRuleOption",
-        value: function getRuleOption() {
-            var node = document.createElement("OPTION");
-            node.value = this._contest_rule_ID;
-            var textnode = document.createTextNode(this._rule);
-            node.appendChild(textnode);
-            return node;
-        }
-    }, {
-        key: "contest_rule_ID",
-        set: function set(contest_rule_ID) {
-            this._contest_rule_ID = contest_rule_ID;
-        },
-        get: function get() {
-            return this._contest_rule_ID;
-        }
-    }, {
-        key: "rule",
-        set: function set(rule) {
-            this._rule = rule;
-        },
-        get: function get() {
-            return this._rule;
-        }
-    }]);
-
-    return ContestRule;
-}();
-
-exports.default = ContestRule;
-
-/***/ }),
-/* 6 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-if (window.location.pathname === '/admin/contest') {
-    //When admin selects contest from dropdown list
-    document.querySelector('#contestNameDropdown').addEventListener('change', function (event) {
-        if (event.target.value !== '0') {
-            fetch('/api/contest/all/' + event.target.value, { credentials: 'include' }).then(function (res) {
-                return res.json();
-            }).then(function (resJson) {
-                var temp = resJson[0][0];
-
-                document.querySelector('#contestName').value = temp.Name;
-                document.querySelector('#contestSubmissionStart').value = temp.SubmissionStartDate.toString().replace('Z', '');
-                document.querySelector('#contestSubmissionEnd').value = temp.SubmissionEndDate.toString().replace('Z', '');
-                document.querySelector('#contestVoteStart').value = temp.VoteStartDate.toString().replace('Z', '');
-                document.querySelector('#contestVoteEnd').value = temp.VoteEndDate.toString().replace('Z', '');
-                document.querySelector('#contestDescription').value = temp.Description;
-                document.querySelector('#createEditContestHeader').textContent = "Edit Contest";
-                document.querySelector('#submitContest').value = "Edit Contest";
-                document.querySelector('#contestActive').checked = temp.Active.data[0] ? true : false;
-                document.querySelector('#contestActive').disabled = false;
-                document.querySelector('#contestRulesDropdown').disabled = false;
-
-                //Fetch rules associated with contest_ID
-                fetch('/api/contest/rules/' + event.target.value, { credentials: 'include' }).then(function (res) {
-                    return res.json();
-                }).then(function (resJson) {
-                    var rules = resJson[0];
-                    if (rules !== null) {
-                        document.querySelector('#contestRulesDropdown').childNodes.forEach(function (tempOption) {
-                            rules.forEach(function (element) {
-                                if (tempOption.value == element.contest_rule_ID) {
-                                    tempOption.selected = true;
-                                    return;
-                                }
-                            });
-                        });
-                    }
-                }).catch(function (error) {
-                    return console.error(error);
-                });
-            }).catch(function (error) {
-                console.error(error);
+var onload = function onload() {
+    fetch('/api/contest/submissions', { credentials: 'include' }).then(function (res) {
+        return res.json();
+        //Return res in JSON form to next then()
+    }).then(function (resJson) {
+        if (typeof resJson[0][0] !== 'undefined') {
+            var allSubRes = resJson[0];
+            var allSubHtml = '<h1>Submissions</h1>';
+            allSubRes.forEach(function (submission) {
+                var tempSub = new _ContestSubmission2.default(submission.contest_submission_ID, submission.workshop_URL, submission.personaname, submission.avatarfull);
+                allSubHtml += tempSub.getSubmissionDiv();
+                var node = tempSub.getSubmissionOption();
+                document.querySelector('#firstPick').appendChild(node);
+                document.querySelector('#secondPick').appendChild(node.cloneNode(true));
+                document.querySelector('#thirdPick').appendChild(node.cloneNode(true));
+                document.querySelector('#fourthPick').appendChild(node.cloneNode(true));
+                document.querySelector('#fifthPick').appendChild(node.cloneNode(true));
             });
-        } else {
-            document.querySelector('#createEditContestHeader').textContent = "Create Contest";
-            document.querySelector('#submitContest').value = "Create Contest";
-            document.querySelector('#contestActive').checked = true;
-            document.querySelector('#contestActive').disabled = true;
-            document.querySelector('#contestRulesDropdown').disabled = true;
+            document.querySelector('#contestSubmissionContainer').innerHTML = allSubHtml;
         }
+    }).catch(function (error) {
+        return console.error(error);
     });
-    document.querySelector('#ruleNameDropdown').addEventListener('change', function (event) {
-        if (event.target.value !== '0') {
-            document.querySelector('#createEditRuleHeader').textContent = "Edit Rule";
-            document.querySelector('#submitRule').value = "Edit Rule";
-            document.querySelector('#contestRule').value = document.querySelector('#ruleNameDropdown').selectedOptions[0].text;
-        } else {
-            document.querySelector('#createEditRuleHeader').textContent = "Create Rule";
-            document.querySelector('#submitRule').value = "Create Rule";
+};
+
+exports.default = onload;
+
+/***/ }),
+/* 11 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var ContestSubmission = function () {
+    function ContestSubmission(contest_submission_ID, workshop_URL, personaname, avatarfull) {
+        _classCallCheck(this, ContestSubmission);
+
+        this._contest_submission_ID = contest_submission_ID;
+        this._workshop_URL = workshop_URL;
+        this._personaname = personaname;
+        this._avatarfull = avatarfull;
+    }
+
+    _createClass(ContestSubmission, [{
+        key: 'getSubmissionDiv',
+        value: function getSubmissionDiv() {
+            var tempString = "";
+            tempString += '<div class="contest-submission" id="contestSubmission' + this._contest_submission_ID + '">';
+            tempString += '<span class="steaminfo"><img src="' + this._avatarfull + '" class="submission-avatar" />&nbsp;' + this._personaname + '</span>';
+            tempString += '<br>';
+            tempString += '<a href="' + this._workshop_URL + '" target="_blank" class="contest-submission-url">Submission Link</a>';
+            tempString += '</div>';
+
+            return tempString;
         }
-    });
-}
-if (document.querySelector('#adminPanel') !== null) {
-    document.querySelector('#adminPanel').addEventListener('click', function (event) {
-        document.getElementById("adminDropdown").classList.toggle("show");
-    });
-}
+    }, {
+        key: 'getSubmissionOption',
+        value: function getSubmissionOption() {
+            var node = document.createElement("OPTION");
+            node.value = this._contest_submission_ID;
+            var textnode = document.createTextNode(this._personaname);
+            node.appendChild(textnode);
+            return node;
+        }
+    }, {
+        key: 'contest_submission_ID',
+        set: function set(contest_submission_ID) {
+            this._contest_submission_ID = contest_submission_ID;
+        },
+        get: function get() {
+            return this._contest_submission_ID;
+        }
+    }, {
+        key: 'workshop_URL',
+        set: function set(workshop_URL) {
+            this._workshop_URL = workshop_URL;
+        },
+        get: function get() {
+            return this._workshop_URL;
+        }
+    }, {
+        key: 'personaname',
+        set: function set(personaname) {
+            this._personaname = personaname;
+        },
+        get: function get() {
+            return this._personaname;
+        }
+    }, {
+        key: 'avatarfull',
+        set: function set(avatarfull) {
+            this._avatarfull = avatarfull;
+        },
+        get: function get() {
+            return this._avatarfull;
+        }
+    }]);
+
+    return ContestSubmission;
+}();
+
+exports.default = ContestSubmission;
+
+/***/ }),
+/* 12 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _ContestCriteria = __webpack_require__(13);
+
+var _ContestCriteria2 = _interopRequireDefault(_ContestCriteria);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var onload = function onload() {
+    if (document.querySelector('#judgeTable') !== null) {
+
+        fetch('/api/contest/judge/criteria', { credentials: 'include' }).then(function (res) {
+            return res.json();
+            //Return res in JSON form to next then()
+        }).then(function (resJson) {
+            resJson[0].forEach(function (obj) {
+                var tempCriteria = new _ContestCriteria2.default(obj.contest_criteria, obj.contest_criteria_assoc_ID, obj.contest_criteria_description);
+                document.querySelector('#judgeTable').appendChild(tempCriteria.getTableHeader());
+                document.querySelector('#judgingRubric').appendChild(tempCriteria.getListItem());
+            });
+        }).catch(function (error) {
+            return console.error(error);
+        });
+
+        fetch('/api/contest/judge/topsub', { credentials: 'include' }).then(function (res) {
+            return res.json();
+            //Return res in JSON form to next then()
+        }).then(function (resJson) {
+            console.log(resJson.result);
+        }).catch(function (error) {
+            return console.error(error);
+        });
+    }
+};
+
+exports.default = onload;
+
+/***/ }),
+/* 13 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var ContestCriteria = function () {
+    function ContestCriteria(contest_criteria, contest_criteria_assoc_ID, contest_criteria_description) {
+        _classCallCheck(this, ContestCriteria);
+
+        this._contest_criteria = contest_criteria;
+        this._contest_criteria_assoc_ID = contest_criteria_assoc_ID;
+        this._contest_criteria_description = contest_criteria_description;
+    }
+
+    _createClass(ContestCriteria, [{
+        key: "getTableHeader",
+        value: function getTableHeader() {
+            var node = document.createElement("TH");
+            var textnode = document.createTextNode(this._contest_criteria);
+            node.appendChild(textnode);
+            return node;
+        }
+    }, {
+        key: "getListItem",
+        value: function getListItem() {
+            var node = document.createElement("LI");
+            var textnode = document.createTextNode(this._contest_criteria_description);
+            node.appendChild(textnode);
+            return node;
+        }
+    }, {
+        key: "contest_criteria",
+        set: function set(contest_criteria) {
+            this._contest_criteria = contest_criteria;
+        },
+        get: function get() {
+            return this._contest_criteria;
+        }
+    }, {
+        key: "contest_criteria_assoc_ID",
+        set: function set(contest_criteria_assoc_ID) {
+            this._contest_criteria_assoc_ID = contest_criteria_assoc_ID;
+        },
+        get: function get() {
+            return this._contest_criteria_assoc_ID;
+        }
+    }, {
+        key: "contest_criteria_description",
+        set: function set(contest_criteria_description) {
+            this._contest_criteria_description = contest_criteria_description;
+        },
+        get: function get() {
+            return this._contest_criteria_description;
+        }
+    }]);
+
+    return ContestCriteria;
+}();
+
+exports.default = ContestCriteria;
 
 /***/ })
 /******/ ]);

@@ -10,12 +10,36 @@
     font-size: 16px; }
   body {
     max-width: 50em;
-    margin: 0 auto;
-    padding-bottom: 10vh; }
+    margin: 0 auto; }
+  footer {
+    text-align: center;
+    width: 100%;
+    background: darkslategray;
+    color: oldlace;
+    padding: 5%; }
+  #backToTop {
+    display: none;
+    bottom: 1%;
+    right: 1%;
+    position: fixed;
+    float: right;
+    height: 2rem;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    background-color: #c83232;
+    color: white; }
   .italic {
     font-style: italic !important; }
   .bold {
     font-weight: bold !important; }
+  .success-notification {
+    background-color: rgba(24, 143, 24, 0.5); }
+  .error-notification {
+    background-color: rgba(196, 11, 11, 0.5); }
+  .jump-to-icon {
+    background: url("img/forward.png");
+    background-size: 100% 100%; }
   /*
 ********************NAVBAR*******************
 */
@@ -72,11 +96,13 @@
     color: whitesmoke;
     height: 15vh;
     padding-top: 5vh; }
-  .steaminfo span {
+  .steaminfo {
+    width: 50%;
     display: flex;
     align-content: center;
-    justify-content: center; }
+    justify-content: right; }
   .steaminfo img {
+    width: auto;
     height: 1.8rem; }
   .controlPanel {
     float: right;
@@ -101,7 +127,7 @@
     max-width: 35%; }
   .loginBtn, .logoutBtn {
     width: 75%;
-    margin: 1rem auto; }
+    margin: 0 auto; }
   .loginBtn {
     width: 100%; }
   .loginBtn input, .logoutBtn input {
@@ -187,7 +213,7 @@
   /*
 **********************ACTIVE CONTEST PAGE*******************
 */
-  #activeContest, #submitOrVoteSection {
+  #activeContest, #submitEntrySection, #howItWorkSection, #showErrorSuccess {
     text-align: center;
     font-size: 1rem;
     background-color: #3c3c3c;
@@ -196,6 +222,10 @@
   #activeContest h1, #activeContest h2 {
     font-family: 'MedievalSharp', cursive;
     font-weight: bold; }
+  #activeContest h1 {
+    font-size: 2.5rem; }
+  #activeContest img {
+    width: 100%; }
   #activeContest .contest-banner-container {
     background: url("img/contest_banner.png");
     background-size: 100% 100%;
@@ -219,14 +249,86 @@
   #activeContest #rulesDiv .rule {
     font-size: 1.5rem;
     margin-top: 5%; }
-  #submitOrVoteSection {
-    padding: 2.5%; }
-  #submitOrVoteSection h2 {
+  #howItWorkSection a {
+    text-decoration: none;
+    color: darkgoldenrod; }
+  #howItWorkSection h3 {
+    color: #2368ff;
+    letter-spacing: 0.1rem; }
+  #submitEntrySection, #howItWorkSection {
+    padding: 5%; }
+  #submitEntrySection h2 {
     font-size: 1.5rem; }
-  #submitOrVoteSection #submissionURL {
+  #submitEntrySection #submissionURL {
     width: 100%; }
-  #submitOrVoteSection #submitContestUser {
-    padding: 0.5rem; } }
+  #submitEntrySection #submitContestUser {
+    padding: 0.5rem; }
+  #submitEntrySection img {
+    width: 50%; }
+  .contestVotingForm input[type='submit'] {
+    font-size: 1.2rem;
+    padding: 5%;
+    background-color: #0f81df;
+    color: #f8f2f2;
+    border-radius: 5%; }
+  /*
+**********************ACTIVE CONTEST VOTING PAGE*******************
+*/
+  #contestVotingContainer {
+    padding: 5%;
+    width: 100%;
+    font-size: 1rem;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    background-color: #ff8800; }
+  #contestVotingContainer form {
+    width: 100%; }
+  #contestVotingContainer table {
+    width: 100%; }
+  #contestVotingContainer td {
+    padding: 0.5rem 0; }
+  #contestVotingContainer h1 {
+    text-align: center; }
+  #contestVotingContainer .votingPick {
+    width: 8rem; }
+  #contestVotingContainer input[type="button"] {
+    background-color: transparent;
+    border: none;
+    width: 2rem; }
+  #contestVotingContainer form input[type="submit"] {
+    margin: 5% 25%;
+    font-size: 1.5rem; }
+  #contestSubmissionContainer {
+    text-align: center;
+    padding: 5%; }
+  #contestSubmissionContainer .contest-submission {
+    background-color: darkslategray;
+    margin: 0 0 5% 0;
+    width: 100%;
+    align-content: center;
+    padding: 3%; }
+  #contestSubmissionContainer .contest-submission .steaminfo {
+    margin: 0 auto;
+    background-color: inherit;
+    height: auto;
+    padding: 0;
+    font-size: 1.5rem; }
+  #contestSubmissionContainer .contest-submission .steaminfo > img {
+    height: 1.5rem; }
+  #contestSubmissionContainer .contest-submission a.contest-submission-url:link, #contestSubmissionContainer .contest-submission a.contest-submission-url:visited {
+    color: white;
+    text-decoration: none;
+    font-size: 1.5rem; }
+  /*
+**********************ACTIVE CONTEST JUDGING PAGE*******************
+*/
+  #submissionTable {
+    font-family: Georgia, 'Times New Roman', Times, serif; }
+  #submissionTable h1 {
+    text-align: center; }
+  #submissionTable table {
+    width: 100%; }
+  #submissionTable table th {
+    background: lightgrey; } }
 
 /* Large Mobile Devices */
 /* Extra-Large Mobile Devices */

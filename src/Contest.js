@@ -1,5 +1,5 @@
 class Contest {
-    constructor(contest_ID, Name, SubmissionStartDate, SubmissionEndDate, VoteStartDate, VoteEndDate, Description, rules) {
+    constructor(contest_ID, Name, SubmissionStartDate, SubmissionEndDate, VoteStartDate, VoteEndDate, Description, rules, submitted) {
         this._contest_ID = contest_ID;
         this._Name = Name;
         this._SubmissionStartDate = SubmissionStartDate;
@@ -8,6 +8,7 @@ class Contest {
         this._VoteEndDate = VoteEndDate;
         this._Description = Description;
         this._rules = rules;
+        this._submitted = submitted;
     }
 
     set Name(Name){
@@ -65,6 +66,14 @@ class Contest {
     get rules(){
         return this._rules;
     }
+
+    set submitted(submitted){
+        this._submitted = submitted;
+    }
+    get submitted(){
+        return this._submitted;
+    }
+
     //Builds Contest Div using object
     activeContestDiv(){
         let tempString = "";
@@ -94,6 +103,50 @@ class Contest {
         tempString += "</div>";
         tempString += "<br>";
         return tempString;
+    }
+    entryOrVote(){
+        if(this.VoteStartDate < Date.now()){
+            let tempString = '';
+                tempString += '<form action="/contest/vote/" method="post" class="contestVotingForm">';
+                    tempString += '<input type="hidden" id="contestIDHidden" name="contestID">';
+                    tempString += '<input type="submit" alt="Go To Voting Page" value="Vote On Contest">';
+                tempString += '</form>';
+            return tempString;
+
+        } else if(this.submitted !== 1 && this.SubmissionEndDate > Date.now()){
+            let tempString = "";
+            tempString += '<h2 id="submissionHeader">Contest Entry</h2>';
+            tempString += '<form action="/api/contest/submit/" method="post" class="contestSubmissionForm">';
+                tempString += '<input type="hidden" id="contestIDHidden" name="contestID">';
+                tempString += '<input type="url" id="submissionURL" name="submissionURL" placeholder="https://steamcommunity.com/sharedfiles/filedetails/?id=XXXXXXXXXX" required/>';
+                tempString += '<br>';
+                tempString += '<br>';
+                tempString += '<span>';
+                    tempString += '<input type="checkbox" id="verifySubmissionCB" name="verifySubmissionCB" required> By ticking this box and clicking the button("Submit Entry"), I agree and acknowledge that this is my own work';
+                    tempString += ' and is associated with this Steam&#174; account. Violating these terms will result in the immediate and irrevocable termination of my privileges on this website.<br>';
+                    tempString += '<br>';
+                    tempString += '<input type="submit" id="submitContestUser" alt="Submit To Contest" value="Submit Entry">';
+                tempString += '</span>';
+            tempString += '</form>';
+            return tempString;
+        } else if(this.submitted === 1 && this.SubmissionEndDate > Date.now()){
+            let tempString = "";
+            tempString += '<h2 id="submissionHeader" class="success-notification">Awesome!<br>We have your submission!</h2>';
+            tempString += '<input type="hidden" id="contestIDHidden" name="contestID">';
+            return tempString;
+        } else if(this.SubmissionEndDate < Date.now() && this.VoteStartDate > Date.now()){
+            let tempString = "";
+            tempString += '<input type="hidden" id="contestIDHidden" name="contestID">';
+            let hoursUntil = Math.round((((this.VoteStartDate.getTime() - Date.now()) / 1000) / 60) / 60);
+            if(hoursUntil > 0){
+                hoursUntil += ' hour(s)';
+            } else {
+                hoursUntil = Math.round(((this.VoteStartDate.getTime() - Date.now()) / 1000) / 60) + ' minute(s)';
+            }
+            tempString += '<h2 id="submissionHeader">Community voting for this contest will begin in ' + hoursUntil + '.<br>Be sure to check out the stream to see all the contest submissions before the voting goes live!</h2>';
+            tempString += '<a href="https://www.twitch.tv/r3ddragons" target="_blank"><img src="img/twitch_purple_combo.svg"></a>';
+            return tempString;
+        }
     }
 }
 

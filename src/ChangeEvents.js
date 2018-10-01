@@ -8,12 +8,25 @@ if(window.location.pathname === '/admin/contest'){
             })
             .then(resJson => {
                 let temp = resJson[0][0];
+                
+                let subStart = new Date(temp.SubmissionStartDate.toString());
+                let offset = 14;
+                subStart.setHours(subStart.getHours() - offset);
+
+                let subEnd = new Date(temp.SubmissionEndDate.toString());
+                subEnd.setHours(subEnd.getHours() - offset);
+
+                let voteStart = new Date(temp.VoteStartDate.toString());
+                voteStart.setHours(voteStart.getHours() - offset);
+
+                let voteEnd = new Date(temp.VoteEndDate.toString());
+                voteEnd.setHours(voteEnd.getHours() - offset);
 
                 document.querySelector('#contestName').value = temp.Name;
-                document.querySelector('#contestSubmissionStart').value = temp.SubmissionStartDate.toString().replace('Z','');
-                document.querySelector('#contestSubmissionEnd').value = temp.SubmissionEndDate.toString().replace('Z','');
-                document.querySelector('#contestVoteStart').value = temp.VoteStartDate.toString().replace('Z','');
-                document.querySelector('#contestVoteEnd').value = temp.VoteEndDate.toString().replace('Z','');
+                document.querySelector('#contestSubmissionStart').value = subStart.toISOString().replace('Z','');
+                document.querySelector('#contestSubmissionEnd').value = subEnd.toISOString().replace('Z','');
+                document.querySelector('#contestVoteStart').value = voteStart.toISOString().replace('Z','');
+                document.querySelector('#contestVoteEnd').value = voteEnd.toISOString().replace('Z','');
                 document.querySelector('#contestDescription').value = temp.Description;
                 document.querySelector('#createEditContestHeader').textContent = "Edit Contest";
                 document.querySelector('#submitContest').value = "Edit Contest";
@@ -38,7 +51,6 @@ if(window.location.pathname === '/admin/contest'){
                         });
                     }
                 }).catch(error => console.error(error));
-
             })
             .catch(error => {console.error(error)});
 
@@ -64,6 +76,14 @@ if(window.location.pathname === '/admin/contest'){
 if(document.querySelector('#adminPanel') !== null){
     document.querySelector('#adminPanel').addEventListener('click', (event)=>{
         document.getElementById("adminDropdown").classList.toggle("show");
+    });
+}
+if(window.location.pathname === '/contest/vote/') {
+    document.querySelectorAll('.jump-to-icon').forEach((element)=>{
+        element.addEventListener('click', (event) => {
+            let tempString = '#contestSubmission' + document.querySelector('#' + event.target.id.toString().replace('Btn','')).value;
+            document.querySelector(tempString).scrollIntoView();
+        });
     });
 }
 

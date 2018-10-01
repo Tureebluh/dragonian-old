@@ -10,6 +10,7 @@ import sassMiddleware from 'node-sass-middleware';
 import path from 'path';
 import passport from './steampassport';
 import helmet from 'helmet';
+import rateLimit from 'express-rate-limit';
 
 const server = express();
 
@@ -23,6 +24,15 @@ if(config.nodeEnv === 'production'){
     };
     server.use(forceSsl);
     server.use(helmet());
+
+    //Add rate limiter to api, auth, and admin api routes
+    const rateLimiter = rateLimit({
+        windowMs: 10 * 60 * 1000,
+        max: 100
+    });
+    server.use('/api', rateLimiter);
+    server.use('/auth', rateLimiter);
+    server.use('/admin', rateLimiter);
 }
 
 //Middleware to convert SASS to CSS
@@ -32,7 +42,7 @@ server.use(sassMiddleware({
 }));
 
 //Middleware to easily get json data from endpoints
-server.use(bodyParser.urlencoded({extended: true}));
+server.use(bodyParser.urlencoded({limit: '100kb', extended: true}));
 
 //Middleware to use express sessions and load session store
 server.use(session({
@@ -62,6 +72,11 @@ server.get('/', (req, res) => {
     res.render('index');
 });
 
+//Default route to render homepage
+server.get('/terms-of-use', (req, res) => {
+    res.render('terms');
+});
+
 //Routes to render collab & contest page respectively. Authentication REQUIRED otherwise redirect to login endpoint
 server.get('/collabs', (req, res) => {
     if(req.isAuthenticated()){
@@ -73,6 +88,56 @@ server.get('/collabs', (req, res) => {
 server.get('/contest', (req, res) => {
     if(req.isAuthenticated()){
         res.render('contest');
+    } else {
+        res.redirect('/auth/login');
+    }
+});
+
+//Sends the user to the voting page for the specified contest
+server.post('/contest/vote/', (req, res) => {
+    if(req.isAuthenticated()){
+        if(typeof req.body.contestID !== 'undefined'){
+            res.render('user/contestVote', {contestID: req.body.contestID});
+        } else {
+            res.redirect('/contest');
+        }
+    } else {
+        res.redirect('/auth/login');
+    }
+});
+//Typed into URL - redirect to Contest page
+server.get('/contest/vote/', (req, res) => {
+    if(req.isAuthenticated()){
+        if(typeof req.body.contestID !== 'undefined'){
+            res.render('user/contestVote', {contestID: req.body.contestID});
+        } else {
+            res.redirect('/contest');
+        }
+    } else {
+        res.redirect('/auth/login');
+    }
+});
+
+//Sends the user to the judging page for the specified contest
+server.post('/contest/judge/', (req, res) => {
+    if(req.isAuthenticated()){
+        if(typeof req.body.contestID !== 'undefined' && req.user.roles.includes('Judge')) {
+            res.render('user/contestJudge', {contestID: req.body.contestID});
+        } else {
+            res.render('user/contestJudgeViewer', {contestID: req.body.contestID});
+        }
+    } else {
+        res.redirect('/auth/login');
+    }
+});
+//Sends the user to the judging page for the specified contest
+server.get('/contest/judge/', (req, res) => {
+    if(req.isAuthenticated()){
+        if(typeof req.body.contestID !== 'undefined' && req.user.roles.includes('Judge')) {
+            res.render('user/contestJudge', {contestID: req.body.contestID});
+        } else {
+            res.render('user/contestJudgeViewer', {contestID: req.body.contestID});
+        }
     } else {
         res.redirect('/auth/login');
     }

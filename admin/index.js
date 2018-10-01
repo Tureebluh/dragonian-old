@@ -15,13 +15,22 @@ router.get('/contest', (req, res) => {
 router.post('/create/contest', (req, res) => {
     if(req.isAuthenticated() && req.user.roles.includes('Administrator')){
         dbpool.getConnection( (err, connection) => {
+
+            let subStart = new Date(req.body.contestSubmissionStart.toString());
+
+            let subEnd = new Date(req.body.contestSubmissionEnd.toString());
+
+            let voteStart = new Date(req.body.contestVoteStart.toString());
+
+            let voteEnd = new Date(req.body.contestVoteEnd.toString());
+
             if(req.body.contestID > 0) {
                 connection.query('CALL Upsert_Contest(' + dbpool.escape(req.body.contestID) +
                                                             ',' + dbpool.escape(req.body.contestName) +
-                                                            ',' + dbpool.escape(req.body.contestSubmissionStart.replace('T',' ')) +
-                                                            ',' + dbpool.escape(req.body.contestSubmissionEnd.replace('T',' ')) +
-                                                            ',' + dbpool.escape(req.body.contestVoteStart.replace('T',' ')) +
-                                                            ',' + dbpool.escape(req.body.contestVoteEnd.replace('T',' ')) +
+                                                            ',' + dbpool.escape(subStart.toISOString().replace('T', ' ')) +
+                                                            ',' + dbpool.escape(subEnd.toISOString().replace('T', ' ')) +
+                                                            ',' + dbpool.escape(voteStart.toISOString().replace('T', ' ')) +
+                                                            ',' + dbpool.escape(voteEnd.toISOString().replace('T', ' ')) +
                                                             ',' + dbpool.escape(req.body.contestDescription) + ',' +
                                                         null + 
                                                         ',' + ((typeof req.body.contestActive === 'undefined') ? 0 : 1) +
@@ -48,10 +57,10 @@ router.post('/create/contest', (req, res) => {
                 let insertID = 0;
                 connection.query('CALL Upsert_Contest(' + null + 
                                                         ',' + dbpool.escape(req.body.contestName) + 
-                                                        ',' + dbpool.escape(req.body.contestSubmissionStart.replace('T',' ')) + 
-                                                        ',' + dbpool.escape(req.body.contestSubmissionEnd.replace('T',' ')) + 
-                                                        ',' + dbpool.escape(req.body.contestVoteStart.replace('T',' ')) + 
-                                                        ',' + dbpool.escape(req.body.contestVoteEnd.replace('T',' ')) + 
+                                                        ',' + dbpool.escape(subStart.toISOString().replace('T', ' ')) +
+                                                        ',' + dbpool.escape(subEnd.toISOString().replace('T', ' ')) +
+                                                        ',' + dbpool.escape(voteStart.toISOString().replace('T', ' ')) +
+                                                        ',' + dbpool.escape(voteEnd.toISOString().replace('T', ' ')) +
                                                         ',' + dbpool.escape(req.body.contestDescription) + ',' + 
                                                         null + 
                                                         ',' + ((typeof req.body.contestActive === 'undefined') ? 0 : 1) +
