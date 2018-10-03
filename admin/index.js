@@ -34,6 +34,7 @@ router.post('/create/contest', (req, res) => {
                                                             ',' + dbpool.escape(req.body.contestDescription) + ',' +
                                                         null + 
                                                         ',' + ((typeof req.body.contestActive === 'undefined') ? 0 : 1) +
+                                                        ',' + ((typeof req.body.contestJudged === 'undefined') ? 0 : 1) +
                                                         ',@insertID);',
                 (error, results, fields) => {
                     if (error) throw error;
@@ -64,6 +65,7 @@ router.post('/create/contest', (req, res) => {
                                                         ',' + dbpool.escape(req.body.contestDescription) + ',' + 
                                                         null + 
                                                         ',' + ((typeof req.body.contestActive === 'undefined') ? 0 : 1) +
+                                                        ',' + ((typeof req.body.contestJudged === 'undefined') ? 0 : 1) +
                                                         ',@insertID);', 
                 (error, results, fields) => {
                     if (error) throw error;

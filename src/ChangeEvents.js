@@ -32,6 +32,8 @@ if(window.location.pathname === '/admin/contest'){
                 document.querySelector('#submitContest').value = "Edit Contest";
                 document.querySelector('#contestActive').checked = temp.Active.data[0] ? true : false;
                 document.querySelector('#contestActive').disabled = false;
+                document.querySelector('#contestJudged').checked = temp.Judged.data[0] ? true : false;
+                document.querySelector('#contestJudged').disabled = false;
                 document.querySelector('#contestRulesDropdown').disabled = false;
 
                 //Fetch rules associated with contest_ID
@@ -59,6 +61,8 @@ if(window.location.pathname === '/admin/contest'){
             document.querySelector('#submitContest').value = "Create Contest";
             document.querySelector('#contestActive').checked = true;
             document.querySelector('#contestActive').disabled = true;
+            document.querySelector('#contestJudged').checked = true;
+            document.querySelector('#contestJudged').disabled = true;
             document.querySelector('#contestRulesDropdown').disabled = true;
         }
     });

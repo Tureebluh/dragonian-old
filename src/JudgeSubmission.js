@@ -30,13 +30,13 @@ class JudgeSubmission {
         for(let i = 0; i < this._criteriaList.length; i++){
             tempTD = document.createElement("TD");
             let numberInput = document.createElement("INPUT");
+            numberInput.setAttribute("id", this._criteriaList[i]);
             numberInput.setAttribute("type", "number");
             numberInput.setAttribute("step", '0.5');
             numberInput.setAttribute("min", '1');
             numberInput.setAttribute("max", '5');
-            numberInput.setAttribute("value", '1');
-            numberInput.attributes.required = true; //Doesn't work
-            numberInput.setAttribute("id", this._criteriaList[i]);
+            numberInput.setAttribute("value", '3');
+            numberInput.required = true;
             tempTD.appendChild(numberInput);
             node.appendChild(tempTD);
         }
