@@ -40,7 +40,6 @@ class JudgeSubmission {
             tempTD.appendChild(numberInput);
             node.appendChild(tempTD);
         }
-
         return node;
     }
 }

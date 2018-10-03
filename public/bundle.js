@@ -1041,6 +1041,11 @@ var onload = function onload() {
                     var tempSub = new _JudgeSubmission2.default(obj.contest_submission_ID, criteriaObj.criteriaList);
                     document.querySelector('#judgeTable').appendChild(tempSub.getSubmissionTR());
                 });
+                var node = document.createElement("INPUT");
+                node.setAttribute("id", "submitScores");
+                node.setAttribute("type", "submit");
+                node.setAttribute("value", "Submit Scores");
+                document.querySelector('#submitBtnContainer').appendChild(node);
             }).catch(function (error) {
                 return console.error(error);
             });
@@ -1170,7 +1175,6 @@ var JudgeSubmission = function () {
                 tempTD.appendChild(numberInput);
                 node.appendChild(tempTD);
             }
-
             return node;
         }
     }, {

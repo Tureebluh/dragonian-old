@@ -2,11 +2,16 @@
 <%- include('../navbar') -%>
 <%- include('../userbanner') -%>
 <section id="showErrorSuccess"></section>
-<section id="submissionTable">
-    <input type="hidden" id="contestIDHidden" name="contestID" value="<%= contestID %>">
+<section id="contestRubric">
     <h1>Scoring Rubric</h1>
     <ul id="judgingRubric"></ul>
-    <table id="judgeTable"></table>
 </section>
+<form action="/api/contest/judge/submit" method="POST" id="judgeSubmitForm">
+    <section id="submissionTable">
+        <input type="hidden" id="contestIDHidden" name="contestID" value="<%= contestID %>">
+        <table id="judgeTable"></table>
+    </section>
+    <span id="submitBtnContainer"></span>
+</form>
 <%- include('../backToTop') -%>
 <%- include('../bodyend') -%>

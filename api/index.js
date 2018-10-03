@@ -222,6 +222,23 @@ router.get("/contest/judge/criteria", (req, res) => {
     }
 });
 
+//Returns back all the criteria for the active contest
+router.post("/contest/judge/submit", (req, res) => {
+    if(req.isAuthenticated() && req.user.roles.includes('Judge')){
+        // dbpool.getConnection( (err, connection) => {
+        //     if (err) throw err;
+        //     connection.query('CALL Get_Active_Contest_Criteria();', (error, results, fields) => {
+        //         connection.release();
+        //         if (error) throw error;
+        //         res.send(results);
+        //     });
+        // });
+        res.send(req.body);
+    } else {
+        res.send('Unauthorized Access');
+    }
+});
+
 /*
 *
 *                                       COLLABORATION

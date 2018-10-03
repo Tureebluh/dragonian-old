@@ -41,6 +41,11 @@ var onload = () => {
                     );
                     document.querySelector('#judgeTable').appendChild(tempSub.getSubmissionTR());
                 });
+                let node = document.createElement("INPUT");
+                node.setAttribute("id", "submitScores");
+                node.setAttribute("type", "submit");
+                node.setAttribute("value", "Submit Scores");
+                document.querySelector('#submitBtnContainer').appendChild(node);
             }).catch(error => console.error(error));
         }).catch(error => console.error(error));
     }
