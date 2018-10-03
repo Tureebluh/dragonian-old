@@ -226,6 +226,8 @@
     font-size: 2.5rem; }
   #activeContest img {
     width: 100%; }
+  #activeContest #twitchImg {
+    width: 40%; }
   #activeContest .contest-banner-container {
     background: url("img/contest_banner.png");
     background-size: 100% 100%;
@@ -328,7 +330,15 @@
   #submissionTable table {
     width: 100%; }
   #submissionTable table th {
-    background: lightgrey; } }
+    background: lightgrey; }
+  #submissionTable table td {
+    padding: 0.5rem 0;
+    border-bottom: 1px black solid;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-weight: bold;
+    text-align: center; }
+  #submissionTable table td > input {
+    width: 40%; } }
 
 /* Large Mobile Devices */
 /* Extra-Large Mobile Devices */

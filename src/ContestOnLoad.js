@@ -65,7 +65,7 @@ var onload = () => {
                     tempString += '<input type="submit" alt="Go To Judging Page" value="See Contest Results">';
                 tempString += '</form>';
             document.querySelector('#activeContest').innerHTML = '<h2>Community voting has ended.  Be sure to check out Twitch for live updates regarding judging results and future contest.</h2>' + 
-                                                                '<a href="https://www.twitch.tv/r3ddragons" target="_blank"><img src="img/twitch_purple_combo.svg"></a>';
+                                                                '<a href="https://www.twitch.tv/r3ddragons" target="_blank"><img id="twitchImg" src="img/twitch_purple_combo.svg"></a>';
             document.querySelector('#submitEntrySection').innerHTML = tempString;
         }
     }).catch(error => console.error(error));

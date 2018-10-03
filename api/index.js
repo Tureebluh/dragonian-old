@@ -191,17 +191,16 @@ router.get("/contest/submissions", (req, res) => {
 });
 
 //Returns back the top community voted submissions for the active contest
-router.get("/contest/judge/topsub", (req, res) => {
+router.get("/contest/judge/topsubs", (req, res) => {
     if(req.isAuthenticated() && req.user.roles.includes('Judge')){
-        // dbpool.getConnection( (err, connection) => {
-        //     if (err) throw err;
-        //     connection.query('CALL Get_Top_Contest_Submissions();', (error, results, fields) => {
-        //         connection.release();
-        //         if (error) throw error;
-        //         res.send(results);
-        //     });
-        // });
-        res.send('Nice');
+        dbpool.getConnection( (err, connection) => {
+            if (err) throw err;
+            connection.query('CALL Get_Top_Contest_Submissions();', (error, results, fields) => {
+                connection.release();
+                if (error) throw error;
+                res.send(results);
+            });
+        });
     } else {
         res.send('Unauthorized Access');
     }
