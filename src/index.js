@@ -12,35 +12,35 @@ window.onload = function(){
     /******************************************************** 
                             COLLAB
     *********************************************************/
-    if(window.location.pathname === "/collabs"){
+    if(window.location.pathname === "/collabs/" || window.location.pathname === "/collabs"){
         CollabOnLoad();
     }
 
     /******************************************************** 
                         ADMIN-CONTEST
     *********************************************************/
-    if(window.location.pathname === '/admin/contest'){
+    if(window.location.pathname === '/admin/contest/' || window.location.pathname === '/admin/contest'){
         AdminContestOnLoad();
     }
 
     /******************************************************** 
                             CONTEST
     *********************************************************/
-    if(window.location.pathname === '/contest'){
+    if(window.location.pathname === '/contest/' || window.location.pathname === '/contest'){
         ContestOnLoad();
     }
 
     /******************************************************** 
                         CONTEST-VOTING
     *********************************************************/
-    if(window.location.pathname === '/contest/vote/'){
+    if(window.location.pathname === '/contest/vote/' || window.location.pathname === '/contest/vote'){
         ContestVoteOnLoad();
     }
 
     /******************************************************** 
                         CONTEST-JUDGING
     *********************************************************/
-    if(window.location.pathname === '/contest/judge/'){
+    if(window.location.pathname === '/contest/judge/' || window.location.pathname === '/contest/judge'){
         ContestJudgeOnLoad();
     }
 }

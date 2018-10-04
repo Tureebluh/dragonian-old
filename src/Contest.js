@@ -107,7 +107,7 @@ class Contest {
     entryOrVote(){
         if(this.VoteStartDate < Date.now()){
             let tempString = '';
-                tempString += '<form action="/contest/vote/" method="post" class="contestVotingForm">';
+                tempString += '<form action="/contest/vote/" method="get" class="contestVotingForm">';
                     tempString += '<input type="hidden" id="contestIDHidden" name="contestID">';
                     tempString += '<input type="submit" alt="Go To Voting Page" value="Vote On Contest">';
                 tempString += '</form>';
@@ -129,6 +129,7 @@ class Contest {
                 tempString += '</span>';
             tempString += '</form>';
             return tempString;
+            
         } else if(this.submitted === 1 && this.SubmissionEndDate > Date.now()){
             let tempString = "";
             tempString += '<h2 id="submissionHeader" class="success-notification">Awesome!<br>We have your submission!</h2>';

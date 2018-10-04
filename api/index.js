@@ -177,6 +177,54 @@ router.get("/contest/rules/", (req, res) => {
     }
 });
 
+//Returns back all the criteria_ID's and names
+router.get("/contest/criteria/", (req, res) => {
+    if(req.isAuthenticated()){
+        dbpool.getConnection( (err, connection) => {
+            if (err) throw err;
+            connection.query('CALL Get_All_Contest_Criteria();', (error, results, fields) => {
+                connection.release();
+                if (error) throw error;
+                res.send(results);
+            });
+        });
+    } else {
+        res.send('Unauthorized Access');
+    }
+});
+
+//Returns back all criteria properties for criteria_ID
+router.post("/contest/criteria/id", (req, res) => {
+    if(req.isAuthenticated()){
+        dbpool.getConnection( (err, connection) => {
+            if (err) throw err;
+            connection.query('CALL Get_Contest_Criteria_By_ID(' + dbpool.escape(req.body.contest_criteria_ID) + ');', (error, results, fields) => {
+                connection.release();
+                if (error) throw error;
+                res.send(results);
+            });
+        });
+    } else {
+        res.send('Unauthorized Access');
+    }
+});
+
+//Returns back all criteria properties for criteria_ID
+router.post("/contest/criteria/contestid", (req, res) => {
+    if(req.isAuthenticated()){
+        dbpool.getConnection( (err, connection) => {
+            if (err) throw err;
+            connection.query('CALL Get_Criteria_By_Contest_ID(' + dbpool.escape(req.body.contest_ID) + ');', (error, results, fields) => {
+                connection.release();
+                if (error) throw error;
+                res.send(results);
+            });
+        });
+    } else {
+        res.send('Unauthorized Access');
+    }
+});
+
 //Returns back all the contest submissions for active contest
 router.get("/contest/submissions", (req, res) => {
     if(req.isAuthenticated()){
@@ -225,7 +273,7 @@ router.get("/contest/judge/criteria", (req, res) => {
     }
 });
 
-//Returns back all the criteria for the active contest
+//Insert/Update Contest Judge Score for each criteria dynamically
 router.post("/contest/judge/submit", (req, res) => {
     if(req.isAuthenticated() && req.user.roles.includes('Judge')){
         dbpool.getConnection( (err, connection) => {

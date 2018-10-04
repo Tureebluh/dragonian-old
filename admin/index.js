@@ -11,6 +11,7 @@ router.get('/contest', (req, res) => {
         res.redirect('/contest');
     }
 });
+
 //Administrators can POST to this endpoint for contest creation
 router.post('/create/contest', (req, res) => {
     if(req.isAuthenticated() && req.user.roles.includes('Administrator')){
@@ -40,16 +41,30 @@ router.post('/create/contest', (req, res) => {
                     if (error) throw error;
                 });
                 if(typeof req.body.contestRules !== 'undefined'){
-                    connection.query('CALL Delete_Contest_Rule_Assoc(' + req.body.contestID + ');', (error, results, fields) => {
+                    connection.query('CALL Delete_Contest_Rule_Assoc(' + dbpool.escape(req.body.contestID) + ');', (error, results, fields) => {
                         if (error) throw error;
                     });
                     req.body.contestRules.forEach(rule => {
-                        connection.query('CALL Insert_Contest_Rule_Assoc(' + req.body.contestID + ',' + dbpool.escape(rule) + ');', (error, results, fields) => {
+                        connection.query('CALL Insert_Contest_Rule_Assoc(' + dbpool.escape(req.body.contestID) + ',' + dbpool.escape(rule) + ');', (error, results, fields) => {
                             if (error) throw error;
                         });
                     });
                 } else {
-                    connection.query('CALL Delete_Contest_Rule_Assoc(' + req.body.contestID + ');', (error, results, fields) => {
+                    connection.query('CALL Delete_Contest_Rule_Assoc(' + dbpool.escape(req.body.contestID) + ');', (error, results, fields) => {
+                        if (error) throw error;
+                    });
+                }
+                if(typeof req.body.contestCriteria !== 'undefined'){
+                    connection.query('CALL Delete_Contest_Criteria_Assoc(' + dbpool.escape(req.body.contestID) + ');', (error, results, fields) => {
+                        if (error) throw error;
+                    });
+                    req.body.contestCriteria.forEach(criteria => {
+                        connection.query('CALL Insert_Contest_Criteria_Assoc(' + dbpool.escape(req.body.contestID) + ',' + dbpool.escape(criteria) + ');', (error, results, fields) => {
+                            if (error) throw error;
+                        });
+                    });
+                } else {
+                    connection.query('CALL Delete_Contest_Criteria_Assoc(' + dbpool.escape(req.body.contestID) + ');', (error, results, fields) => {
                         if (error) throw error;
                     });
                 }
@@ -80,6 +95,7 @@ router.post('/create/contest', (req, res) => {
         res.send('Unauthorized Access');
     }
 });
+
 //Administrators can POST to this endpoint for rule creation
 router.post('/create/rule', (req, res) => {
     if(req.isAuthenticated() && req.user.roles.includes('Administrator')){
@@ -93,6 +109,43 @@ router.post('/create/rule', (req, res) => {
                 });
             } else {
                 connection.query('CALL Upsert_Rule(' + null + ',' + dbpool.escape(req.body.contestRule) + ');',
+                (error, results, fields) => {
+                    connection.release();
+                    if (error) throw error;
+                    res.redirect('/admin/contest' + '?result=success');
+                });
+            }
+            
+            if(err) throw err;
+        });
+    } else {
+        res.send('Unauthorized Access');
+    }
+});
+
+//Administrators can POST to this endpoint for rule creation
+router.post('/create/criteria', (req, res) => {
+    if(req.isAuthenticated() && req.user.roles.includes('Administrator')){
+        dbpool.getConnection( (err, connection) => {
+            if(req.body.criteriaID > 0) {
+                connection.query('CALL Upsert_Criteria('
+                                                     + dbpool.escape(req.body.criteriaID) +
+                                                    ',' + dbpool.escape(req.body.contestCriteria) +
+                                                    ',' + dbpool.escape(req.body.contestCriteriaDescription) +
+                                                    ',' + dbpool.escape(req.body.contestCriteriaWeight) +
+                                                    ');', 
+                (error, results, fields) => {
+                    connection.release();
+                    if (error) throw error;
+                    res.redirect('/admin/contest' + '?result=success');
+                });
+            } else {
+                connection.query('CALL Upsert_Criteria('
+                                                     + null +
+                                                    ',' + dbpool.escape(req.body.contestCriteria) +
+                                                    ',' + dbpool.escape(req.body.contestCriteriaDescription) +
+                                                    ',' + dbpool.escape(req.body.contestCriteriaWeight) +
+                                                    ');',
                 (error, results, fields) => {
                     connection.release();
                     if (error) throw error;

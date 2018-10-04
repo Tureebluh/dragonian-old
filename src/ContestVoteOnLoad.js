@@ -24,6 +24,7 @@ var onload = () => {
                 document.querySelector('#fourthPick').appendChild(node.cloneNode(true));
                 document.querySelector('#fifthPick').appendChild(node.cloneNode(true));
             });
+            document.querySelector('#contestIDHidden').value = resJson[0][0].contest_ID;
             document.querySelector('#contestSubmissionContainer').innerHTML = allSubHtml;
         }
     }).catch(error => console.error(error));    

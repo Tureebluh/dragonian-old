@@ -60,7 +60,7 @@ var onload = () => {
             }).catch(error => console.error(error));
         } else {
             let tempString = '';
-                tempString += '<form action="/contest/judge/" method="post" class="contestVotingForm">';
+                tempString += '<form action="/contest/results/" method="post" class="contestVotingForm">';
                     tempString += '<input type="hidden" id="contestIDHidden" name="contestID">';
                     tempString += '<input type="submit" alt="Go To Judging Page" value="See Contest Results">';
                 tempString += '</form>';

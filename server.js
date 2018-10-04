@@ -26,6 +26,7 @@ if(config.nodeEnv === 'production'){
     server.use(helmet());
 
     //Add rate limiter to api, auth, and admin api routes
+    //10(mins) * 60(secs) * 1000(ms)
     const rateLimiter = rateLimit({
         windowMs: 10 * 60 * 1000,
         max: 100
@@ -78,7 +79,8 @@ server.get('/terms-of-use', (req, res) => {
     res.render('terms');
 });
 
-//Routes to render collab & contest page respectively. Authentication REQUIRED otherwise redirect to login endpoint
+//Authentication REQUIRED otherwise redirect to login endpoint
+//Render collab page
 server.get('/collabs', (req, res) => {
     if(req.isAuthenticated()){
         res.render('collabs');
@@ -86,6 +88,7 @@ server.get('/collabs', (req, res) => {
         res.redirect('/auth/login');
     }
 });
+//Render contest page
 server.get('/contest', (req, res) => {
     if(req.isAuthenticated()){
         res.render('contest');
@@ -93,51 +96,21 @@ server.get('/contest', (req, res) => {
         res.redirect('/auth/login');
     }
 });
-
-//Sends the user to the voting page for the specified contest
-server.post('/contest/vote/', (req, res) => {
-    if(req.isAuthenticated()){
-        if(typeof req.body.contestID !== 'undefined'){
-            res.render('user/contestVote', {contestID: req.body.contestID});
-        } else {
-            res.redirect('/contest');
-        }
-    } else {
-        res.redirect('/auth/login');
-    }
-});
-//Typed into URL - redirect to Contest page
+//Render voting page for active contest
 server.get('/contest/vote/', (req, res) => {
     if(req.isAuthenticated()){
-        if(typeof req.body.contestID !== 'undefined'){
-            res.render('user/contestVote', {contestID: req.body.contestID});
-        } else {
-            res.redirect('/contest');
-        }
+        res.render('user/contestVote');
     } else {
         res.redirect('/auth/login');
     }
 });
-
-//Sends the user to the judging page for the specified contest
-server.post('/contest/judge/', (req, res) => {
-    if(req.isAuthenticated()){
-        if(typeof req.body.contestID !== 'undefined' && req.user.roles.includes('Judge')) {
-            res.render('user/contestJudge', {contestID: req.body.contestID});
-        } else {
-            res.render('user/contestJudgeViewer', {contestID: req.body.contestID});
-        }
-    } else {
-        res.redirect('/auth/login');
-    }
-});
-//Sends the user to the judging page for the specified contest
+//Renders judging page for the active contest
 server.get('/contest/judge/', (req, res) => {
     if(req.isAuthenticated()){
-        if(typeof req.body.contestID !== 'undefined' && req.user.roles.includes('Judge')) {
-            res.render('user/contestJudge', {contestID: req.body.contestID});
+        if(req.user.roles.includes('Judge')) {
+            res.render('user/contestJudge');
         } else {
-            res.render('user/contestJudgeViewer', {contestID: req.body.contestID});
+            res.redirect('/contest/results/');
         }
     } else {
         res.redirect('/auth/login');

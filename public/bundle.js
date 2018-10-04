@@ -129,35 +129,35 @@ window.onload = function () {
     /******************************************************** 
                             COLLAB
     *********************************************************/
-    if (window.location.pathname === "/collabs") {
+    if (window.location.pathname === "/collabs/" || window.location.pathname === "/collabs") {
         (0, _CollabOnLoad2.default)();
     }
 
     /******************************************************** 
                         ADMIN-CONTEST
     *********************************************************/
-    if (window.location.pathname === '/admin/contest') {
+    if (window.location.pathname === '/admin/contest/' || window.location.pathname === '/admin/contest') {
         (0, _AdminContestOnLoad2.default)();
     }
 
     /******************************************************** 
                             CONTEST
     *********************************************************/
-    if (window.location.pathname === '/contest') {
+    if (window.location.pathname === '/contest/' || window.location.pathname === '/contest') {
         (0, _ContestOnLoad2.default)();
     }
 
     /******************************************************** 
                         CONTEST-VOTING
     *********************************************************/
-    if (window.location.pathname === '/contest/vote/') {
+    if (window.location.pathname === '/contest/vote/' || window.location.pathname === '/contest/vote') {
         (0, _ContestVoteOnLoad2.default)();
     }
 
     /******************************************************** 
                         CONTEST-JUDGING
     *********************************************************/
-    if (window.location.pathname === '/contest/judge/') {
+    if (window.location.pathname === '/contest/judge/' || window.location.pathname === '/contest/judge') {
         (0, _ContestJudgeOnLoad2.default)();
     }
 };
@@ -227,6 +227,7 @@ if (window.location.pathname === '/admin/contest') {
                 document.querySelector('#contestJudged').checked = temp.Judged.data[0] ? true : false;
                 document.querySelector('#contestJudged').disabled = false;
                 document.querySelector('#contestRulesDropdown').disabled = false;
+                document.querySelector('#contestCriteriaDropdown').disabled = false;
 
                 //Fetch rules associated with contest_ID
                 fetch('/api/contest/rules/' + event.target.value, { credentials: 'include' }).then(function (res) {
@@ -237,6 +238,37 @@ if (window.location.pathname === '/admin/contest') {
                         document.querySelector('#contestRulesDropdown').childNodes.forEach(function (tempOption) {
                             rules.forEach(function (element) {
                                 if (tempOption.value == element.contest_rule_ID) {
+                                    tempOption.selected = true;
+                                    return;
+                                }
+                            });
+                        });
+                    }
+                }).catch(function (error) {
+                    return console.error(error);
+                });
+
+                //Fetch criteria associated with contest_ID
+                var payload = {
+                    contest_ID: event.target.value
+                };
+
+                fetch('/api/contest/criteria/contestid', {
+                    credentials: 'include',
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(payload)
+                }).then(function (res) {
+                    return res.json();
+                }).then(function (resJson) {
+                    var criteria = resJson[0];
+                    if (criteria !== null) {
+                        document.querySelector('#contestCriteriaDropdown').childNodes.forEach(function (tempOption) {
+                            criteria.forEach(function (element) {
+                                if (tempOption.value == element.contest_criteria_ID) {
                                     tempOption.selected = true;
                                     return;
                                 }
@@ -257,8 +289,10 @@ if (window.location.pathname === '/admin/contest') {
             document.querySelector('#contestJudged').checked = true;
             document.querySelector('#contestJudged').disabled = true;
             document.querySelector('#contestRulesDropdown').disabled = true;
+            document.querySelector('#contestCriteriaDropdown').disabled = true;
         }
     });
+
     document.querySelector('#ruleNameDropdown').addEventListener('change', function (event) {
         if (event.target.value !== '0') {
             document.querySelector('#createEditRuleHeader').textContent = "Edit Rule";
@@ -267,6 +301,39 @@ if (window.location.pathname === '/admin/contest') {
         } else {
             document.querySelector('#createEditRuleHeader').textContent = "Create Rule";
             document.querySelector('#submitRule').value = "Create Rule";
+        }
+    });
+
+    document.querySelector('#criteriaNameDropdown').addEventListener('change', function (event) {
+        if (event.target.value !== '0') {
+
+            var payload = {
+                contest_criteria_ID: event.target.value
+            };
+
+            fetch('/api/contest/criteria/id', {
+                credentials: 'include',
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(payload)
+            }).then(function (res) {
+                return res.json();
+            }).then(function (resJson) {
+                document.querySelector('#contestCriteriaDescription').value = resJson[0][0].contest_criteria_description;
+                document.querySelector('#contestCriteriaWeight').value = resJson[0][0].contest_criteria_weight;
+            }).catch(function (error) {
+                return console.error(error);
+            });
+
+            document.querySelector('#createEditCriteriaHeader').textContent = "Edit Criteria";
+            document.querySelector('#submitCriteria').value = "Edit Criteria";
+            document.querySelector('#contestCriteria').value = document.querySelector('#criteriaNameDropdown').selectedOptions[0].text;
+        } else {
+            document.querySelector('#createEditCriteriaHeader').textContent = "Create Criteria";
+            document.querySelector('#submitCriteria').value = "Create Criteria";
         }
     });
 }
@@ -432,6 +499,10 @@ var _ContestRule = __webpack_require__(7);
 
 var _ContestRule2 = _interopRequireDefault(_ContestRule);
 
+var _ContestCriteriaOption = __webpack_require__(15);
+
+var _ContestCriteriaOption2 = _interopRequireDefault(_ContestCriteriaOption);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var onload = function onload() {
@@ -446,7 +517,7 @@ var onload = function onload() {
         console.error(error);
     });
 
-    fetch('/api/contest/rules', { credentials: 'include' }).then(function (res) {
+    fetch('/api/contest/rules/', { credentials: 'include' }).then(function (res) {
         return res.json();
     }).then(function (resJson) {
         resJson[0].forEach(function (rule) {
@@ -457,6 +528,19 @@ var onload = function onload() {
     }).catch(function (error) {
         console.error(error);
     });
+
+    fetch('/api/contest/criteria/', { credentials: 'include' }).then(function (res) {
+        return res.json();
+    }).then(function (resJson) {
+        resJson[0].forEach(function (criteria) {
+            var node = new _ContestCriteriaOption2.default(criteria.contest_criteria_ID, criteria.contest_criteria).getCriteriaOption();
+            document.querySelector('#criteriaNameDropdown').appendChild(node);
+            document.querySelector('#contestCriteriaDropdown').appendChild(node.cloneNode(true));
+        });
+    }).catch(function (error) {
+        console.error(error);
+    });
+
     //Display to user that contest was updated successfully
     if (document.URL.indexOf('result=success') !== -1) {
         document.querySelector('#showErrorSuccess').innerHTML = '<h1 class="success-notification">Contest updated successfully.</h1>';
@@ -644,7 +728,7 @@ var onload = function onload() {
             });
         } else {
             var tempString = '';
-            tempString += '<form action="/contest/judge/" method="post" class="contestVotingForm">';
+            tempString += '<form action="/contest/results/" method="post" class="contestVotingForm">';
             tempString += '<input type="hidden" id="contestIDHidden" name="contestID">';
             tempString += '<input type="submit" alt="Go To Judging Page" value="See Contest Results">';
             tempString += '</form>';
@@ -741,7 +825,7 @@ var Contest = function () {
         value: function entryOrVote() {
             if (this.VoteStartDate < Date.now()) {
                 var tempString = '';
-                tempString += '<form action="/contest/vote/" method="post" class="contestVotingForm">';
+                tempString += '<form action="/contest/vote/" method="get" class="contestVotingForm">';
                 tempString += '<input type="hidden" id="contestIDHidden" name="contestID">';
                 tempString += '<input type="submit" alt="Go To Voting Page" value="Vote On Contest">';
                 tempString += '</form>';
@@ -895,6 +979,7 @@ var onload = function onload() {
                 document.querySelector('#fourthPick').appendChild(node.cloneNode(true));
                 document.querySelector('#fifthPick').appendChild(node.cloneNode(true));
             });
+            document.querySelector('#contestIDHidden').value = resJson[0][0].contest_ID;
             document.querySelector('#contestSubmissionContainer').innerHTML = allSubHtml;
         }
     }).catch(function (error) {
@@ -1251,6 +1336,61 @@ var JudgeSubmission = function () {
 }();
 
 exports.default = JudgeSubmission;
+
+/***/ }),
+/* 15 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var ContestCriteriaOption = function () {
+    function ContestCriteriaOption(contest_criteria_ID, contest_criteria) {
+        _classCallCheck(this, ContestCriteriaOption);
+
+        this._contest_criteria_ID = contest_criteria_ID;
+        this._contest_criteria = contest_criteria;
+    }
+
+    _createClass(ContestCriteriaOption, [{
+        key: "getCriteriaOption",
+        value: function getCriteriaOption() {
+            var node = document.createElement("OPTION");
+            node.value = this._contest_criteria_ID;
+            var textnode = document.createTextNode(this._contest_criteria);
+            node.appendChild(textnode);
+            return node;
+        }
+    }, {
+        key: "contest_criteria",
+        set: function set(contest_criteria) {
+            this._contest_criteria = contest_criteria;
+        },
+        get: function get() {
+            return this._contest_criteria;
+        }
+    }, {
+        key: "contest_criteria_ID",
+        set: function set(contest_criteria_ID) {
+            this._contest_criteria_ID = contest_criteria_ID;
+        },
+        get: function get() {
+            return this._contest_criteria_ID;
+        }
+    }]);
+
+    return ContestCriteriaOption;
+}();
+
+exports.default = ContestCriteriaOption;
 
 /***/ })
 /******/ ]);

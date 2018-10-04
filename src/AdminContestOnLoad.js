@@ -1,5 +1,6 @@
 import ContestOption from './ContestOption';
 import ContestRule from './ContestRule';
+import ContestCriteriaOption from './ContestCriteriaOption';
 
 var onload = () => {
     fetch('/api/contest/names/all', {credentials: 'include'})
@@ -13,7 +14,7 @@ var onload = () => {
         });
     }).catch(error => {console.error(error)});
 
-    fetch('/api/contest/rules', {credentials: 'include'})
+    fetch('/api/contest/rules/', {credentials: 'include'})
     .then(res => {
         return res.json();
     })
@@ -24,6 +25,19 @@ var onload = () => {
             document.querySelector('#contestRulesDropdown').appendChild(node.cloneNode(true));
         });
     }).catch(error => {console.error(error)});
+
+    fetch('/api/contest/criteria/', {credentials: 'include'})
+    .then(res => {
+        return res.json();
+    })
+    .then(resJson => {
+        resJson[0].forEach(criteria => {
+            let node = new ContestCriteriaOption(criteria.contest_criteria_ID, criteria.contest_criteria).getCriteriaOption();
+            document.querySelector('#criteriaNameDropdown').appendChild(node);
+            document.querySelector('#contestCriteriaDropdown').appendChild(node.cloneNode(true));
+        });
+    }).catch(error => {console.error(error)});
+
     //Display to user that contest was updated successfully
     if(document.URL.indexOf('result=success') !== -1){
         document.querySelector('#showErrorSuccess').innerHTML = 

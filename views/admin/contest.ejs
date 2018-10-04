@@ -20,6 +20,34 @@
     <br>
     <br>
 
+    <h1 id="createEditCriteriaHeader">Create Judging Criteria</h1>
+    <form action="/admin/create/criteria" method="post" class="contest-creation-form">
+        <select name="criteriaID" id="criteriaNameDropdown">
+            <option value="0">Create New...</option>
+        </select>
+        <br>
+        <br>
+
+        <label for="contestCriteria">Criteria:<br>(MAX 45 Characters)</label><br>
+        <input type="text" alt="Enter criteria" id="contestCriteria" name="contestCriteria" required/><br>
+        <br>
+        <br>
+
+        <label for="contestCriteriaDescription">Criteria Description:<br>(MAX 300 Characters)</label><br>
+        <textarea alt="Enter criteria description" id="contestCriteriaDescription" name="contestCriteriaDescription" required></textarea><br>
+        <br>
+        <br>
+
+        <label for="contestCriteriaWeight">Criteria Weight:<br>(10-50)</label><br>
+        <input type="number" max="50" min="10" value="20" step="5" alt="Enter criteria weight" id="contestCriteriaWeight" name="contestCriteriaWeight" required/><br>
+        <br>
+        <br>
+        
+        <input type="submit" id="submitCriteria" alt="Create Criteria" value="Create Criteria" />
+    </form>
+    <br>
+    <br>
+
     <h1 id="createEditContestHeader">Create Contest</h1>
     <form action="/admin/create/contest" method="post" class="contest-creation-form">
 
@@ -61,6 +89,11 @@
 
         <label for="contestRules">Rules:<br>(Select Multiple)</label><br>
         <select name="contestRules" id="contestRulesDropdown" size="10" disabled multiple></select>
+        <br>
+        <br>
+
+        <label for="contestRules">Judging Criteria:<br>(Select Multiple)</label><br>
+        <select name="contestCriteria" id="contestCriteriaDropdown" size="10" disabled multiple></select>
         <br>
         <br>
         

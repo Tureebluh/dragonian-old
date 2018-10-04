@@ -35,6 +35,7 @@ if(window.location.pathname === '/admin/contest'){
                 document.querySelector('#contestJudged').checked = temp.Judged.data[0] ? true : false;
                 document.querySelector('#contestJudged').disabled = false;
                 document.querySelector('#contestRulesDropdown').disabled = false;
+                document.querySelector('#contestCriteriaDropdown').disabled = false;
 
                 //Fetch rules associated with contest_ID
                 fetch('/api/contest/rules/' + event.target.value, {credentials: 'include'})
@@ -53,6 +54,36 @@ if(window.location.pathname === '/admin/contest'){
                         });
                     }
                 }).catch(error => console.error(error));
+
+                //Fetch criteria associated with contest_ID
+                let payload = {
+                    contest_ID: event.target.value
+                };
+
+                fetch('/api/contest/criteria/contestid', {
+                    credentials: 'include',
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(payload)
+                }).then(res => {
+                    return res.json();
+                }).then(resJson => {
+                    let criteria = resJson[0];
+                    if(criteria !== null){
+                        document.querySelector('#contestCriteriaDropdown').childNodes.forEach(tempOption => {
+                            criteria.forEach(element => {
+                                if(tempOption.value == element.contest_criteria_ID){
+                                    tempOption.selected = true;
+                                    return;
+                                }
+                            });
+                        });
+                    }
+                }).catch(error => console.error(error));                
+
             })
             .catch(error => {console.error(error)});
 
@@ -64,8 +95,10 @@ if(window.location.pathname === '/admin/contest'){
             document.querySelector('#contestJudged').checked = true;
             document.querySelector('#contestJudged').disabled = true;
             document.querySelector('#contestRulesDropdown').disabled = true;
+            document.querySelector('#contestCriteriaDropdown').disabled = true;
         }
     });
+
     document.querySelector('#ruleNameDropdown').addEventListener('change', (event) => {
         if(event.target.value !== '0') {
             document.querySelector('#createEditRuleHeader').textContent = "Edit Rule";
@@ -74,6 +107,38 @@ if(window.location.pathname === '/admin/contest'){
         } else {
             document.querySelector('#createEditRuleHeader').textContent = "Create Rule";
             document.querySelector('#submitRule').value = "Create Rule";
+        }
+    });
+
+    document.querySelector('#criteriaNameDropdown').addEventListener('change', (event) => {
+        if(event.target.value !== '0') {
+            
+            let payload = {
+                contest_criteria_ID: event.target.value
+            };
+            
+            fetch('/api/contest/criteria/id', {
+                credentials: 'include',
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(payload)
+            }).then(res => {
+                return res.json();
+            }).then(resJson => {
+                document.querySelector('#contestCriteriaDescription').value = resJson[0][0].contest_criteria_description;
+                document.querySelector('#contestCriteriaWeight').value = resJson[0][0].contest_criteria_weight;
+            }).catch(error => console.error(error));
+
+            document.querySelector('#createEditCriteriaHeader').textContent = "Edit Criteria";
+            document.querySelector('#submitCriteria').value = "Edit Criteria";
+            document.querySelector('#contestCriteria').value = document.querySelector('#criteriaNameDropdown').selectedOptions[0].text;
+
+        } else {
+            document.querySelector('#createEditCriteriaHeader').textContent = "Create Criteria";
+            document.querySelector('#submitCriteria').value = "Create Criteria";
         }
     });
 }
