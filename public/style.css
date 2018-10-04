@@ -345,6 +345,8 @@
     text-align: center; }
   #submissionTable table td > input {
     width: 2.5rem; }
+  #submissionTable table select {
+    width: 3rem; }
   #submitBtnContainer input[type="submit"] {
     margin: 1rem 25%;
     width: 50%;

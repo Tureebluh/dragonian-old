@@ -1,14 +1,14 @@
 class JudgeSubmission {
-    constructor(contest_submission_ID, criteriaList) {
-        this._contest_submission_ID = contest_submission_ID;
+    constructor(contest_submission_IDs, criteriaList) {
+        this._contest_submission_IDs = contest_submission_IDs;
         this._criteriaList = criteriaList;
     }
 
-    set contest_submission_ID(contest_submission_ID){
-        this._contest_submission_ID = contest_submission_ID;
+    set contest_submission_IDs(contest_submission_IDs){
+        this._contest_submission_IDs = contest_submission_IDs;
     }
-    get contest_submission_ID(){
-        return this._contest_submission_ID;
+    get contest_submission_IDs(){
+        return this._contest_submission_IDs;
     }
 
     set criteriaList(criteriaList){
@@ -20,22 +20,30 @@ class JudgeSubmission {
 
     getSubmissionTR(){
         let node = document.createElement("TR");
-        node.setAttribute("ID", this._contest_submission_ID);
-
         let tempTD = document.createElement("TD");
-        let textNode = document.createTextNode(this._contest_submission_ID);
-        tempTD.appendChild(textNode);
+        let tempSelect = document.createElement("SELECT");
+        tempSelect.setAttribute("id", "judgeSubmissionID");
+        tempSelect.setAttribute("name", "contest_submission_ID");
+
+        this._contest_submission_IDs.forEach((obj)=>{
+            let tempOption = document.createElement("OPTION");
+            let textnode = document.createTextNode(obj);
+            tempOption.appendChild(textnode);
+            tempSelect.appendChild(tempOption);
+        });
+
+        tempTD.appendChild(tempSelect);
         node.appendChild(tempTD);
 
         for(let i = 0; i < this._criteriaList.length; i++){
             tempTD = document.createElement("TD");
             let numberInput = document.createElement("INPUT");
-            numberInput.setAttribute("id", this._criteriaList[i]);
+            numberInput.setAttribute("id", 'contestCriteria_' + this._criteriaList[i]);
             numberInput.setAttribute("type", "number");
-            numberInput.setAttribute("step", '0.5');
+            numberInput.setAttribute("step", '1');
             numberInput.setAttribute("min", '1');
-            numberInput.setAttribute("max", '5');
-            numberInput.setAttribute("value", '3');
+            numberInput.setAttribute("max", '10');
+            numberInput.setAttribute("value", '5');
             numberInput.required = true;
             tempTD.appendChild(numberInput);
             node.appendChild(tempTD);

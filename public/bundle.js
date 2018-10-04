@@ -1028,6 +1028,7 @@ var onload = function onload() {
             resJson[0].forEach(function (obj) {
                 var tempCriteria = new _ContestCriteria2.default(obj.contest_criteria, obj.contest_criteria_assoc_ID, obj.contest_criteria_description);
                 criteriaList.push(obj.contest_criteria_assoc_ID);
+                document.querySelector('#contestIDHidden').value = obj.contest_ID;
                 document.querySelector('#tableHeaders').appendChild(tempCriteria.getTableHeader());
                 document.querySelector('#judgingRubric').appendChild(tempCriteria.getListItem());
             });
@@ -1037,15 +1038,58 @@ var onload = function onload() {
                 return res.json();
                 //Return res in JSON form to next then()
             }).then(function (resJson) {
+                var submissionIDs = [];
                 resJson[0].forEach(function (obj) {
-                    var tempSub = new _JudgeSubmission2.default(obj.contest_submission_ID, criteriaObj.criteriaList);
-                    document.querySelector('#judgeTable').appendChild(tempSub.getSubmissionTR());
+                    submissionIDs.push(obj.contest_submission_ID);
                 });
+
+                var judgeSubmission = new _JudgeSubmission2.default(submissionIDs, criteriaObj.criteriaList);
+                document.querySelector('#judgeTable').appendChild(judgeSubmission.getSubmissionTR());
+
                 var node = document.createElement("INPUT");
                 node.setAttribute("id", "submitScores");
                 node.setAttribute("type", "submit");
                 node.setAttribute("value", "Submit Scores");
                 document.querySelector('#submitBtnContainer').appendChild(node);
+
+                document.querySelector('#submitScores').addEventListener('click', function (event) {
+                    if (!document.querySelector('#judgeSubmitForm').checkValidity()) {
+                        return;
+                    } else {
+                        event.preventDefault();
+                        var payload = {
+                            contestID: document.querySelector('#contestIDHidden').value,
+                            contest_submission_ID: document.querySelector('#judgeSubmissionID').value
+                        };
+
+                        criteriaObj.criteriaList.forEach(function (element) {
+                            payload['contestCriteria_' + element] = document.querySelector('#contestCriteria_' + element).value;
+                        });
+
+                        fetch('/api/contest/judge/submit', {
+                            credentials: 'include',
+                            method: 'POST',
+                            headers: {
+                                'Accept': 'application/json',
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(payload)
+                        }).then(function (res) {
+                            return res.json();
+                        }).then(function (resJson) {
+                            if (resJson.result === 'Success') {
+                                document.querySelector('#showErrorSuccess').innerHTML = '<h1 class="success-notification">Scores successfully recorded for submission ID #' + payload.contest_submission_ID + '</h1>';
+                            } else {
+                                document.querySelector('#showErrorSuccess').innerHTML = '<h1 class="error-notification">Error recording scores for submission ID #' + payload.contest_submission_ID + '</h1>';
+                            }
+                            setTimeout(function () {
+                                document.querySelector('#showErrorSuccess').innerHTML = "";
+                            }, 10000);
+                        }).catch(function (error) {
+                            return console.error(error);
+                        });
+                    }
+                });
             }).catch(function (error) {
                 return console.error(error);
             });
@@ -1144,10 +1188,10 @@ var _createClass = function () { function defineProperties(target, props) { for 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var JudgeSubmission = function () {
-    function JudgeSubmission(contest_submission_ID, criteriaList) {
+    function JudgeSubmission(contest_submission_IDs, criteriaList) {
         _classCallCheck(this, JudgeSubmission);
 
-        this._contest_submission_ID = contest_submission_ID;
+        this._contest_submission_IDs = contest_submission_IDs;
         this._criteriaList = criteriaList;
     }
 
@@ -1155,22 +1199,30 @@ var JudgeSubmission = function () {
         key: "getSubmissionTR",
         value: function getSubmissionTR() {
             var node = document.createElement("TR");
-            node.setAttribute("ID", this._contest_submission_ID);
-
             var tempTD = document.createElement("TD");
-            var textNode = document.createTextNode(this._contest_submission_ID);
-            tempTD.appendChild(textNode);
+            var tempSelect = document.createElement("SELECT");
+            tempSelect.setAttribute("id", "judgeSubmissionID");
+            tempSelect.setAttribute("name", "contest_submission_ID");
+
+            this._contest_submission_IDs.forEach(function (obj) {
+                var tempOption = document.createElement("OPTION");
+                var textnode = document.createTextNode(obj);
+                tempOption.appendChild(textnode);
+                tempSelect.appendChild(tempOption);
+            });
+
+            tempTD.appendChild(tempSelect);
             node.appendChild(tempTD);
 
             for (var i = 0; i < this._criteriaList.length; i++) {
                 tempTD = document.createElement("TD");
                 var numberInput = document.createElement("INPUT");
-                numberInput.setAttribute("id", this._criteriaList[i]);
+                numberInput.setAttribute("id", 'contestCriteria_' + this._criteriaList[i]);
                 numberInput.setAttribute("type", "number");
-                numberInput.setAttribute("step", '0.5');
+                numberInput.setAttribute("step", '1');
                 numberInput.setAttribute("min", '1');
-                numberInput.setAttribute("max", '5');
-                numberInput.setAttribute("value", '3');
+                numberInput.setAttribute("max", '10');
+                numberInput.setAttribute("value", '5');
                 numberInput.required = true;
                 tempTD.appendChild(numberInput);
                 node.appendChild(tempTD);
@@ -1178,12 +1230,12 @@ var JudgeSubmission = function () {
             return node;
         }
     }, {
-        key: "contest_submission_ID",
-        set: function set(contest_submission_ID) {
-            this._contest_submission_ID = contest_submission_ID;
+        key: "contest_submission_IDs",
+        set: function set(contest_submission_IDs) {
+            this._contest_submission_IDs = contest_submission_IDs;
         },
         get: function get() {
-            return this._contest_submission_ID;
+            return this._contest_submission_IDs;
         }
     }, {
         key: "criteriaList",

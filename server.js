@@ -43,6 +43,7 @@ server.use(sassMiddleware({
 
 //Middleware to easily get json data from endpoints
 server.use(bodyParser.urlencoded({limit: '100kb', extended: true}));
+server.use(bodyParser.json());
 
 //Middleware to use express sessions and load session store
 server.use(session({

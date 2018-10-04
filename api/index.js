@@ -86,11 +86,14 @@ router.get('/contest/submission/check/:contestID', (req, res) => {
         if(typeof req.params.contestID !== 'undefined'){
             dbpool.getConnection( (err, connection) => {
                 if (err) throw err;
-                connection.query('CALL Get_Contest_Submitted(' + dbpool.escape(req.params.contestID) + ',' + dbpool.escape(req.user.steamid) + ');', (error, results, fields) => {
-                    connection.release();
-                    if (error) throw error;
-                    let tempJson = {submitted: results[0][0]['COUNT(1)']};
-                    res.send(tempJson);
+                connection.query('CALL Get_Contest_Submitted(' + dbpool.escape(req.params.contestID) +
+                                                            ',' + dbpool.escape(req.user.steamid) +
+                                                            ');',
+                    (error, results, fields) => {
+                        connection.release();
+                        if (error) throw error;
+                        let tempJson = {submitted: results[0][0]['COUNT(1)']};
+                        res.send(tempJson);
                 });
             });
         }
@@ -225,15 +228,23 @@ router.get("/contest/judge/criteria", (req, res) => {
 //Returns back all the criteria for the active contest
 router.post("/contest/judge/submit", (req, res) => {
     if(req.isAuthenticated() && req.user.roles.includes('Judge')){
-        // dbpool.getConnection( (err, connection) => {
-        //     if (err) throw err;
-        //     connection.query('CALL Get_Active_Contest_Criteria();', (error, results, fields) => {
-        //         connection.release();
-        //         if (error) throw error;
-        //         res.send(results);
-        //     });
-        // });
-        res.send(req.body);
+        dbpool.getConnection( (err, connection) => {
+            if (err) throw err;
+            for(let prop in req.body){
+                if(prop.includes('contestCriteria_')){
+                    connection.query('CALL Upsert_Contest_Judge_Score(' + dbpool.escape(req.user.steamid) +
+                                                                        ',' + dbpool.escape(req.body.contest_submission_ID) +
+                                                                        ',' + dbpool.escape(prop.substr(16)) +
+                                                                        ',' + dbpool.escape(req.body[prop]) +
+                                                                        ');',
+                        (error, results, fields) => {
+                            if (error) throw error;
+                    });
+                }
+            }
+            connection.release();
+            res.send({result:'Success'});
+        });
     } else {
         res.send('Unauthorized Access');
     }

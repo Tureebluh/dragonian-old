@@ -52,7 +52,6 @@ router.post('/create/contest', (req, res) => {
                     connection.query('CALL Delete_Contest_Rule_Assoc(' + req.body.contestID + ');', (error, results, fields) => {
                         if (error) throw error;
                     });
-                    console.log(req.body.contestID);
                 }
             } else {
                 let insertID = 0;
