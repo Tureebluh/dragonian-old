@@ -60,8 +60,7 @@ var onload = () => {
             }).catch(error => console.error(error));
         } else {
             let tempString = '';
-                tempString += '<form action="/contest/results/" method="post" class="contestVotingForm">';
-                    tempString += '<input type="hidden" id="contestIDHidden" name="contestID">';
+                tempString += '<form action="/contest/results/" method="get" class="contestVotingForm">';
                     tempString += '<input type="submit" alt="Go To Judging Page" value="See Contest Results">';
                 tempString += '</form>';
             document.querySelector('#activeContest').innerHTML = '<h2>Community voting has ended.  Be sure to check out Twitch for live updates regarding judging results and future contest.</h2>' + 

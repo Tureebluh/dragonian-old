@@ -6,9 +6,9 @@ const router = express.Router();
 //Send Administrator to contest administration page for CRUD operation on contest
 router.get('/contest', (req, res) => {
     if(req.isAuthenticated() && req.user.roles.includes('Administrator')){
-        res.render('admin/contest');
+        res.render('admin/contest/contest');
     } else {
-        res.redirect('/contest');
+        res.redirect('user/contest/contest');
     }
 });
 

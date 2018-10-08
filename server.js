@@ -13,12 +13,12 @@ import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
 
 const server = express();
-
+//CHANGE BACK TO (301)
 //If server is running in production all request will be permanently(301) routed to https
 if(config.nodeEnv === 'production'){
     let forceSsl = function (req, res, next) {
         if (req.headers['x-forwarded-proto'] !== 'https') {
-            return res.redirect(301, ['https://', req.get('Host'), req.url].join(''));
+            return res.redirect(302, ['https://', req.get('Host'), req.url].join(''));
         }
         return next();
     };
@@ -76,14 +76,14 @@ server.get('/', (req, res) => {
 
 //Default route to render homepage
 server.get('/terms-of-use', (req, res) => {
-    res.render('terms');
+    res.render('app/terms');
 });
 
 //Authentication REQUIRED otherwise redirect to login endpoint
 //Render collab page
 server.get('/collabs', (req, res) => {
     if(req.isAuthenticated()){
-        res.render('collabs');
+        res.render('user/collab/collabs');
     } else {
         res.redirect('/auth/login');
     }
@@ -91,7 +91,7 @@ server.get('/collabs', (req, res) => {
 //Render contest page
 server.get('/contest', (req, res) => {
     if(req.isAuthenticated()){
-        res.render('contest');
+        res.render('user/contest/contest');
     } else {
         res.redirect('/auth/login');
     }
@@ -99,7 +99,7 @@ server.get('/contest', (req, res) => {
 //Render voting page for active contest
 server.get('/contest/vote/', (req, res) => {
     if(req.isAuthenticated()){
-        res.render('user/contestVote');
+        res.render('user/contest/contestVote');
     } else {
         res.redirect('/auth/login');
     }
@@ -108,10 +108,18 @@ server.get('/contest/vote/', (req, res) => {
 server.get('/contest/judge/', (req, res) => {
     if(req.isAuthenticated()){
         if(req.user.roles.includes('Judge')) {
-            res.render('user/contestJudge');
+            res.render('user/contest/contestJudge');
         } else {
             res.redirect('/contest/results/');
         }
+    } else {
+        res.redirect('/auth/login');
+    }
+});
+//Renders results page for the active contest
+server.get('/contest/results/', (req, res) => {
+    if(req.isAuthenticated()){
+        res.render('user/contest/contestResults');
     } else {
         res.redirect('/auth/login');
     }

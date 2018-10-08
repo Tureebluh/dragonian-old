@@ -110,15 +110,15 @@ var _AdminContestOnLoad = __webpack_require__(5);
 
 var _AdminContestOnLoad2 = _interopRequireDefault(_AdminContestOnLoad);
 
-var _ContestOnLoad = __webpack_require__(8);
+var _ContestOnLoad = __webpack_require__(9);
 
 var _ContestOnLoad2 = _interopRequireDefault(_ContestOnLoad);
 
-var _ContestVoteOnLoad = __webpack_require__(10);
+var _ContestVoteOnLoad = __webpack_require__(11);
 
 var _ContestVoteOnLoad2 = _interopRequireDefault(_ContestVoteOnLoad);
 
-var _ContestJudgeOnLoad = __webpack_require__(12);
+var _ContestJudgeOnLoad = __webpack_require__(13);
 
 var _ContestJudgeOnLoad2 = _interopRequireDefault(_ContestJudgeOnLoad);
 
@@ -499,7 +499,7 @@ var _ContestRule = __webpack_require__(7);
 
 var _ContestRule2 = _interopRequireDefault(_ContestRule);
 
-var _ContestCriteriaOption = __webpack_require__(15);
+var _ContestCriteriaOption = __webpack_require__(8);
 
 var _ContestCriteriaOption2 = _interopRequireDefault(_ContestCriteriaOption);
 
@@ -670,7 +670,62 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _Contest = __webpack_require__(9);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var ContestCriteriaOption = function () {
+    function ContestCriteriaOption(contest_criteria_ID, contest_criteria) {
+        _classCallCheck(this, ContestCriteriaOption);
+
+        this._contest_criteria_ID = contest_criteria_ID;
+        this._contest_criteria = contest_criteria;
+    }
+
+    _createClass(ContestCriteriaOption, [{
+        key: "getCriteriaOption",
+        value: function getCriteriaOption() {
+            var node = document.createElement("OPTION");
+            node.value = this._contest_criteria_ID;
+            var textnode = document.createTextNode(this._contest_criteria);
+            node.appendChild(textnode);
+            return node;
+        }
+    }, {
+        key: "contest_criteria",
+        set: function set(contest_criteria) {
+            this._contest_criteria = contest_criteria;
+        },
+        get: function get() {
+            return this._contest_criteria;
+        }
+    }, {
+        key: "contest_criteria_ID",
+        set: function set(contest_criteria_ID) {
+            this._contest_criteria_ID = contest_criteria_ID;
+        },
+        get: function get() {
+            return this._contest_criteria_ID;
+        }
+    }]);
+
+    return ContestCriteriaOption;
+}();
+
+exports.default = ContestCriteriaOption;
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _Contest = __webpack_require__(10);
 
 var _Contest2 = _interopRequireDefault(_Contest);
 
@@ -728,8 +783,7 @@ var onload = function onload() {
             });
         } else {
             var tempString = '';
-            tempString += '<form action="/contest/results/" method="post" class="contestVotingForm">';
-            tempString += '<input type="hidden" id="contestIDHidden" name="contestID">';
+            tempString += '<form action="/contest/results/" method="get" class="contestVotingForm">';
             tempString += '<input type="submit" alt="Go To Judging Page" value="See Contest Results">';
             tempString += '</form>';
             document.querySelector('#activeContest').innerHTML = '<h2>Community voting has ended.  Be sure to check out Twitch for live updates regarding judging results and future contest.</h2>' + '<a href="https://www.twitch.tv/r3ddragons" target="_blank"><img id="twitchImg" src="img/twitch_purple_combo.svg"></a>';
@@ -757,7 +811,7 @@ var onload = function onload() {
 exports.default = onload;
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -945,7 +999,7 @@ var Contest = function () {
 exports.default = Contest;
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -955,7 +1009,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _ContestSubmission = __webpack_require__(11);
+var _ContestSubmission = __webpack_require__(12);
 
 var _ContestSubmission2 = _interopRequireDefault(_ContestSubmission);
 
@@ -990,7 +1044,7 @@ var onload = function onload() {
 exports.default = onload;
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1075,7 +1129,7 @@ var ContestSubmission = function () {
 exports.default = ContestSubmission;
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1085,11 +1139,11 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _ContestCriteria = __webpack_require__(13);
+var _ContestCriteria = __webpack_require__(14);
 
 var _ContestCriteria2 = _interopRequireDefault(_ContestCriteria);
 
-var _JudgeSubmission = __webpack_require__(14);
+var _JudgeSubmission = __webpack_require__(15);
 
 var _JudgeSubmission2 = _interopRequireDefault(_JudgeSubmission);
 
@@ -1187,7 +1241,7 @@ var onload = function onload() {
 exports.default = onload;
 
 /***/ }),
-/* 13 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1258,7 +1312,7 @@ var ContestCriteria = function () {
 exports.default = ContestCriteria;
 
 /***/ }),
-/* 14 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1336,61 +1390,6 @@ var JudgeSubmission = function () {
 }();
 
 exports.default = JudgeSubmission;
-
-/***/ }),
-/* 15 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var ContestCriteriaOption = function () {
-    function ContestCriteriaOption(contest_criteria_ID, contest_criteria) {
-        _classCallCheck(this, ContestCriteriaOption);
-
-        this._contest_criteria_ID = contest_criteria_ID;
-        this._contest_criteria = contest_criteria;
-    }
-
-    _createClass(ContestCriteriaOption, [{
-        key: "getCriteriaOption",
-        value: function getCriteriaOption() {
-            var node = document.createElement("OPTION");
-            node.value = this._contest_criteria_ID;
-            var textnode = document.createTextNode(this._contest_criteria);
-            node.appendChild(textnode);
-            return node;
-        }
-    }, {
-        key: "contest_criteria",
-        set: function set(contest_criteria) {
-            this._contest_criteria = contest_criteria;
-        },
-        get: function get() {
-            return this._contest_criteria;
-        }
-    }, {
-        key: "contest_criteria_ID",
-        set: function set(contest_criteria_ID) {
-            this._contest_criteria_ID = contest_criteria_ID;
-        },
-        get: function get() {
-            return this._contest_criteria_ID;
-        }
-    }]);
-
-    return ContestCriteriaOption;
-}();
-
-exports.default = ContestCriteriaOption;
 
 /***/ })
 /******/ ]);

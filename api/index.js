@@ -10,7 +10,7 @@ const router = express.Router();
 *                                       CONTEST
 *
 */
-
+                                                //Add restriction for admins and judges submitting
 //Enters the user into the specified contest by ID
 router.post('/contest/submit/', (req, res) => {
     if(req.isAuthenticated()){
