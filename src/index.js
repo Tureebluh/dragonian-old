@@ -1,9 +1,8 @@
-import ChangeEvents from './ChangeEvents';
-import CollabOnLoad from './CollabOnLoad';
-import AdminContestOnLoad from './AdminContestOnLoad';
-import ContestOnLoad from './ContestOnLoad';
-import ContestVoteOnLoad from './ContestVoteOnLoad';
-import ContestJudgeOnLoad from './ContestJudgeOnLoad';
+import CollabOnLoad from './collab/CollabOnLoad';
+import AdminContestOnLoad from './contest/AdminContestOnLoad';
+import ContestOnLoad from './contest/ContestOnLoad';
+import ContestVoteOnLoad from './contest/ContestVoteOnLoad';
+import ContestJudgeOnLoad from './contest/ContestJudgeOnLoad';
 
 
 
@@ -66,4 +65,11 @@ window.onscroll = function() {
             document.getElementById("backToTop").style.display = "none";
         }
     }
+}
+
+//If user is an admin
+if(document.querySelector('#adminPanel') !== null){
+    document.querySelector('#adminPanel').addEventListener('click', (event)=>{
+        document.getElementById("adminDropdown").classList.toggle("show");
+    });
 }

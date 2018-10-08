@@ -168,9 +168,9 @@
   /*
 **********************COLLAB PAGE*******************
 */
-  #divCollabs {
+  #collabsDiv {
     text-align: center;
-    background-color: red;
+    background-color: darkred;
     color: white; }
   /*
 **********************CONTEST CREATION*******************

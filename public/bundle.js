@@ -98,11 +98,7 @@ module.exports = __webpack_require__(1);
 "use strict";
 
 
-var _ChangeEvents = __webpack_require__(2);
-
-var _ChangeEvents2 = _interopRequireDefault(_ChangeEvents);
-
-var _CollabOnLoad = __webpack_require__(3);
+var _CollabOnLoad = __webpack_require__(2);
 
 var _CollabOnLoad2 = _interopRequireDefault(_CollabOnLoad);
 
@@ -185,6 +181,13 @@ window.onscroll = function () {
     }
 };
 
+//If user is an admin
+if (document.querySelector('#adminPanel') !== null) {
+    document.querySelector('#adminPanel').addEventListener('click', function (event) {
+        document.getElementById("adminDropdown").classList.toggle("show");
+    });
+}
+
 /***/ }),
 /* 2 */
 /***/ (function(module, exports, __webpack_require__) {
@@ -192,7 +195,195 @@ window.onscroll = function () {
 "use strict";
 
 
-if (window.location.pathname === '/admin/contest') {
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _UnassignedRole = __webpack_require__(3);
+
+var _UnassignedRole2 = _interopRequireDefault(_UnassignedRole);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var onload = function onload() {
+    var unassignedRoles = '<h1>Page Currently Under Construction!</h1>';
+    document.querySelector('#collabsDiv').innerHTML = unassignedRoles;
+};
+
+exports.default = onload;
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var UnassignedRole = function () {
+    function UnassignedRole(Name, personaname, avatarfull, collab_role_assoc_ID, collab_role, comment, CreatedDate) {
+        _classCallCheck(this, UnassignedRole);
+
+        this._Name = Name;
+        this._personaname = personaname;
+        this._avatarfull = avatarfull;
+        this._collab_role_assoc_ID = collab_role_assoc_ID;
+        this._collab_role = collab_role;
+        this._comment = comment;
+        this._CreatedDate = CreatedDate;
+    }
+
+    _createClass(UnassignedRole, [{
+        key: "unassignedRoleDiv",
+        value: function unassignedRoleDiv() {
+            var tempString = "";
+            tempString += "<div class=\"unassignedRole\" data-collab_role_assoc_ID=\"" + this._collab_role_assoc_ID + "\">";
+            tempString += "<span class=\"Name\">" + this._Name + "</span>";
+            tempString += "<span class=\"personaname\">" + this._personaname + "<img src=\"" + this._avatarfull + "\" alt=\"Steam Profile Picture\" />" + "</span>";
+            tempString += "<span class=\"collab_role\">" + this._collab_role + "</span>";
+            tempString += "<span class=\"comment\">" + this._comment + "</span>";
+            tempString += "<span class=\"CreatedDate\">" + this._CreatedDate + "</span>";
+            tempString += "<input class=\"btn_apply_role\" type=\"button\" value=\"submit\" />";
+            tempString += "</div>";
+            return tempString;
+        }
+    }, {
+        key: "Name",
+        set: function set(Name) {
+            this._Name = Name;
+        },
+        get: function get() {
+            return this._Name;
+        }
+    }, {
+        key: "personaname",
+        set: function set(personaname) {
+            this._personaname = personaname;
+        },
+        get: function get() {
+            return this._personaname;
+        }
+    }, {
+        key: "avatarfull",
+        set: function set(avatarfull) {
+            this._avatarfull = avatarfull;
+        },
+        get: function get() {
+            return this._avatarfull;
+        }
+    }, {
+        key: "collab_role_assoc_ID",
+        set: function set(collab_role_assoc_ID) {
+            this._collab_role_assoc_ID = collab_role_assoc_ID;
+        },
+        get: function get() {
+            return this._collab_role_assoc_ID;
+        }
+    }, {
+        key: "collab_role",
+        set: function set(collab_role) {
+            this._collab_role = collab_role;
+        },
+        get: function get() {
+            return this._collab_role;
+        }
+    }, {
+        key: "comment",
+        set: function set(comment) {
+            this._comment = comment;
+        },
+        get: function get() {
+            return this._comment;
+        }
+    }, {
+        key: "CreatedDate",
+        set: function set(CreatedDate) {
+            this._CreatedDate = CreatedDate;
+        },
+        get: function get() {
+            return this._CreatedDate;
+        }
+    }]);
+
+    return UnassignedRole;
+}();
+
+exports.default = UnassignedRole;
+
+/***/ }),
+/* 4 */,
+/* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _ContestOption = __webpack_require__(6);
+
+var _ContestOption2 = _interopRequireDefault(_ContestOption);
+
+var _ContestRule = __webpack_require__(7);
+
+var _ContestRule2 = _interopRequireDefault(_ContestRule);
+
+var _ContestCriteriaOption = __webpack_require__(8);
+
+var _ContestCriteriaOption2 = _interopRequireDefault(_ContestCriteriaOption);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var onload = function onload() {
+    fetch('/api/contest/names/all', { credentials: 'include' }).then(function (res) {
+        return res.json();
+    }).then(function (resJson) {
+        resJson[0].forEach(function (contest) {
+            var node = new _ContestOption2.default(contest.contest_ID, contest.Name).getContestOption();
+            document.querySelector('#contestNameDropdown').appendChild(node);
+        });
+    }).catch(function (error) {
+        console.error(error);
+    });
+
+    fetch('/api/contest/rules/', { credentials: 'include' }).then(function (res) {
+        return res.json();
+    }).then(function (resJson) {
+        resJson[0].forEach(function (rule) {
+            var node = new _ContestRule2.default(rule.contest_rule_ID, rule.rule).getRuleOption();
+            document.querySelector('#ruleNameDropdown').appendChild(node);
+            document.querySelector('#contestRulesDropdown').appendChild(node.cloneNode(true));
+        });
+    }).catch(function (error) {
+        console.error(error);
+    });
+
+    fetch('/api/contest/criteria/', { credentials: 'include' }).then(function (res) {
+        return res.json();
+    }).then(function (resJson) {
+        resJson[0].forEach(function (criteria) {
+            var node = new _ContestCriteriaOption2.default(criteria.contest_criteria_ID, criteria.contest_criteria).getCriteriaOption();
+            document.querySelector('#criteriaNameDropdown').appendChild(node);
+            document.querySelector('#contestCriteriaDropdown').appendChild(node.cloneNode(true));
+        });
+    }).catch(function (error) {
+        console.error(error);
+    });
+
+    //Display to user that contest was updated successfully
+    if (document.URL.indexOf('result=success') !== -1) {
+        document.querySelector('#showErrorSuccess').innerHTML = '<h1 class="success-notification">Contest updated successfully.</h1>';
+    }
+
     //When admin selects contest from dropdown list
     document.querySelector('#contestNameDropdown').addEventListener('change', function (event) {
         if (event.target.value !== '0') {
@@ -336,215 +527,6 @@ if (window.location.pathname === '/admin/contest') {
             document.querySelector('#submitCriteria').value = "Create Criteria";
         }
     });
-}
-if (document.querySelector('#adminPanel') !== null) {
-    document.querySelector('#adminPanel').addEventListener('click', function (event) {
-        document.getElementById("adminDropdown").classList.toggle("show");
-    });
-}
-if (window.location.pathname === '/contest/vote/') {
-    document.querySelectorAll('.jump-to-icon').forEach(function (element) {
-        element.addEventListener('click', function (event) {
-            var tempString = '#contestSubmission' + document.querySelector('#' + event.target.id.toString().replace('Btn', '')).value;
-            document.querySelector(tempString).scrollIntoView();
-        });
-    });
-}
-
-/***/ }),
-/* 3 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _UnassignedRole = __webpack_require__(4);
-
-var _UnassignedRole2 = _interopRequireDefault(_UnassignedRole);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var onload = function onload() {
-    var unassignedRoles = '<h1>Page Currently Under Construction!</h1>';
-    document.querySelector('#collabsDiv').innerHTML = unassignedRoles;
-};
-
-exports.default = onload;
-
-/***/ }),
-/* 4 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var UnassignedRole = function () {
-    function UnassignedRole(Name, personaname, avatarfull, collab_role_assoc_ID, collab_role, comment, CreatedDate) {
-        _classCallCheck(this, UnassignedRole);
-
-        this._Name = Name;
-        this._personaname = personaname;
-        this._avatarfull = avatarfull;
-        this._collab_role_assoc_ID = collab_role_assoc_ID;
-        this._collab_role = collab_role;
-        this._comment = comment;
-        this._CreatedDate = CreatedDate;
-    }
-
-    _createClass(UnassignedRole, [{
-        key: "unassignedRoleDiv",
-        value: function unassignedRoleDiv() {
-            var tempString = "";
-            tempString += "<div class=\"unassignedRole\" data-collab_role_assoc_ID=\"" + this._collab_role_assoc_ID + "\">";
-            tempString += "<span class=\"Name\">" + this._Name + "</span>";
-            tempString += "<span class=\"personaname\">" + this._personaname + "<img src=\"" + this._avatarfull + "\" alt=\"Steam Profile Picture\" />" + "</span>";
-            tempString += "<span class=\"collab_role\">" + this._collab_role + "</span>";
-            tempString += "<span class=\"comment\">" + this._comment + "</span>";
-            tempString += "<span class=\"CreatedDate\">" + this._CreatedDate + "</span>";
-            tempString += "<input class=\"btn_apply_role\" type=\"button\" value=\"submit\" />";
-            tempString += "</div>";
-            return tempString;
-        }
-    }, {
-        key: "Name",
-        set: function set(Name) {
-            this._Name = Name;
-        },
-        get: function get() {
-            return this._Name;
-        }
-    }, {
-        key: "personaname",
-        set: function set(personaname) {
-            this._personaname = personaname;
-        },
-        get: function get() {
-            return this._personaname;
-        }
-    }, {
-        key: "avatarfull",
-        set: function set(avatarfull) {
-            this._avatarfull = avatarfull;
-        },
-        get: function get() {
-            return this._avatarfull;
-        }
-    }, {
-        key: "collab_role_assoc_ID",
-        set: function set(collab_role_assoc_ID) {
-            this._collab_role_assoc_ID = collab_role_assoc_ID;
-        },
-        get: function get() {
-            return this._collab_role_assoc_ID;
-        }
-    }, {
-        key: "collab_role",
-        set: function set(collab_role) {
-            this._collab_role = collab_role;
-        },
-        get: function get() {
-            return this._collab_role;
-        }
-    }, {
-        key: "comment",
-        set: function set(comment) {
-            this._comment = comment;
-        },
-        get: function get() {
-            return this._comment;
-        }
-    }, {
-        key: "CreatedDate",
-        set: function set(CreatedDate) {
-            this._CreatedDate = CreatedDate;
-        },
-        get: function get() {
-            return this._CreatedDate;
-        }
-    }]);
-
-    return UnassignedRole;
-}();
-
-exports.default = UnassignedRole;
-
-/***/ }),
-/* 5 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _ContestOption = __webpack_require__(6);
-
-var _ContestOption2 = _interopRequireDefault(_ContestOption);
-
-var _ContestRule = __webpack_require__(7);
-
-var _ContestRule2 = _interopRequireDefault(_ContestRule);
-
-var _ContestCriteriaOption = __webpack_require__(8);
-
-var _ContestCriteriaOption2 = _interopRequireDefault(_ContestCriteriaOption);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var onload = function onload() {
-    fetch('/api/contest/names/all', { credentials: 'include' }).then(function (res) {
-        return res.json();
-    }).then(function (resJson) {
-        resJson[0].forEach(function (contest) {
-            var node = new _ContestOption2.default(contest.contest_ID, contest.Name).getContestOption();
-            document.querySelector('#contestNameDropdown').appendChild(node);
-        });
-    }).catch(function (error) {
-        console.error(error);
-    });
-
-    fetch('/api/contest/rules/', { credentials: 'include' }).then(function (res) {
-        return res.json();
-    }).then(function (resJson) {
-        resJson[0].forEach(function (rule) {
-            var node = new _ContestRule2.default(rule.contest_rule_ID, rule.rule).getRuleOption();
-            document.querySelector('#ruleNameDropdown').appendChild(node);
-            document.querySelector('#contestRulesDropdown').appendChild(node.cloneNode(true));
-        });
-    }).catch(function (error) {
-        console.error(error);
-    });
-
-    fetch('/api/contest/criteria/', { credentials: 'include' }).then(function (res) {
-        return res.json();
-    }).then(function (resJson) {
-        resJson[0].forEach(function (criteria) {
-            var node = new _ContestCriteriaOption2.default(criteria.contest_criteria_ID, criteria.contest_criteria).getCriteriaOption();
-            document.querySelector('#criteriaNameDropdown').appendChild(node);
-            document.querySelector('#contestCriteriaDropdown').appendChild(node.cloneNode(true));
-        });
-    }).catch(function (error) {
-        console.error(error);
-    });
-
-    //Display to user that contest was updated successfully
-    if (document.URL.indexOf('result=success') !== -1) {
-        document.querySelector('#showErrorSuccess').innerHTML = '<h1 class="success-notification">Contest updated successfully.</h1>';
-    }
 };
 
 exports.default = onload;
@@ -1039,6 +1021,13 @@ var onload = function onload() {
     }).catch(function (error) {
         return console.error(error);
     });
+
+    document.querySelectorAll('.jump-to-icon').forEach(function (element) {
+        element.addEventListener('click', function (event) {
+            var tempString = '#contestSubmission' + document.querySelector('#' + event.target.id.toString().replace('Btn', '')).value;
+            document.querySelector(tempString).scrollIntoView();
+        });
+    });
 };
 
 exports.default = onload;
@@ -1143,9 +1132,9 @@ var _ContestCriteria = __webpack_require__(14);
 
 var _ContestCriteria2 = _interopRequireDefault(_ContestCriteria);
 
-var _JudgeSubmission = __webpack_require__(15);
+var _ContestJudgeSubmission = __webpack_require__(15);
 
-var _JudgeSubmission2 = _interopRequireDefault(_JudgeSubmission);
+var _ContestJudgeSubmission2 = _interopRequireDefault(_ContestJudgeSubmission);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -1182,7 +1171,7 @@ var onload = function onload() {
                     submissionIDs.push(obj.contest_submission_ID);
                 });
 
-                var judgeSubmission = new _JudgeSubmission2.default(submissionIDs, criteriaObj.criteriaList);
+                var judgeSubmission = new _ContestJudgeSubmission2.default(submissionIDs, criteriaObj.criteriaList);
                 document.querySelector('#judgeTable').appendChild(judgeSubmission.getSubmissionTR());
 
                 var node = document.createElement("INPUT");

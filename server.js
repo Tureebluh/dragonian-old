@@ -60,7 +60,7 @@ server.use(session({
 server.use(passport.initialize());
 server.use(passport.session());
 
-//Sets the req.user object to a global instance that EJS has access to, check views/contestbanner.ejs for an example
+//Sets the req.user object to a global instance that EJS has access to
 server.use((req,res,next) => {
     res.locals.user = req.user;
     next();
