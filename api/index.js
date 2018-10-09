@@ -241,12 +241,44 @@ router.get("/contest/submissions", (req, res) => {
     }
 });
 
+//Returns back number of voters in Judged contest
+router.get("/contest/voters/judged", (req, res) => {
+    if(req.isAuthenticated()){
+        dbpool.getConnection( (err, connection) => {
+            if (err) throw err;
+            connection.query('CALL Get_Contest_Voter_Amount(null);', (error, results, fields) => {
+                connection.release();
+                if (error) throw error;
+                res.send(results);
+            });
+        });
+    } else {
+        res.send('Unauthorized Access');
+    }
+});
+
+//Returns back number of voters in active contest
+router.get("/contest/judged/scores", (req, res) => {
+    if(req.isAuthenticated()){
+        dbpool.getConnection( (err, connection) => {
+            if (err) throw err;
+            connection.query('CALL Get_Contest_Judge_Scores(null);', (error, results, fields) => {
+                connection.release();
+                if (error) throw error;
+                res.send(results);
+            });
+        });
+    } else {
+        res.send('Unauthorized Access');
+    }
+});
+
 //Returns back the top community voted submissions for the active contest
 router.get("/contest/judge/topsubs", (req, res) => {
     if(req.isAuthenticated() && req.user.roles.includes('Judge')){
         dbpool.getConnection( (err, connection) => {
             if (err) throw err;
-            connection.query('CALL Get_Top_Contest_Submissions();', (error, results, fields) => {
+            connection.query('CALL Get_Top_Contest_Submissions(null);', (error, results, fields) => {
                 connection.release();
                 if (error) throw error;
                 res.send(results);

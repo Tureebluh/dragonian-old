@@ -350,7 +350,30 @@
   #submitBtnContainer input[type="submit"] {
     margin: 1rem 25%;
     width: 50%;
-    padding: 1rem; } }
+    padding: 1rem; }
+  /*
+**********************ACTIVE CONTEST RESULTS PAGE*******************
+*/
+  #contestResultsContainer {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    overflow-x: auto;
+    white-space: nowrap;
+    text-align: center; }
+  #contestResultsTable {
+    width: 100%; }
+  #contestResultsTable th {
+    background: lightgrey;
+    padding: 1rem; }
+  #contestResultsTable td {
+    padding: 0.5rem;
+    border-bottom: 1px black solid;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-weight: bold;
+    text-align: center; }
+  #contestResultsTable td span {
+    line-height: 2rem; }
+  #contestResultsTable td span > img {
+    height: 2rem; } }
 
 /* Large Mobile Devices */
 /* Extra-Large Mobile Devices */

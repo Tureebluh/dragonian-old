@@ -3,6 +3,7 @@ import AdminContestOnLoad from './contest/AdminContestOnLoad';
 import ContestOnLoad from './contest/ContestOnLoad';
 import ContestVoteOnLoad from './contest/ContestVoteOnLoad';
 import ContestJudgeOnLoad from './contest/ContestJudgeOnLoad';
+import ContestResultsOnLoad from './contest/ContestResultsOnLoad';
 
 
 
@@ -42,6 +43,14 @@ window.onload = function(){
     if(window.location.pathname === '/contest/judge/' || window.location.pathname === '/contest/judge'){
         ContestJudgeOnLoad();
     }
+
+    /******************************************************** 
+                        CONTEST-RESULTS
+    *********************************************************/
+    if(window.location.pathname === '/contest/results/' || window.location.pathname === '/contest/results'){
+        ContestResultsOnLoad();
+    }
+
 }
 
 // Close the dropdown if the user clicks outside of it
