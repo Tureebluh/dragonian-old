@@ -106,23 +106,23 @@ var _AdminContestOnLoad = __webpack_require__(4);
 
 var _AdminContestOnLoad2 = _interopRequireDefault(_AdminContestOnLoad);
 
-var _AdminRolesOnLoad = __webpack_require__(17);
+var _AdminRolesOnLoad = __webpack_require__(8);
 
 var _AdminRolesOnLoad2 = _interopRequireDefault(_AdminRolesOnLoad);
 
-var _ContestOnLoad = __webpack_require__(8);
+var _ContestOnLoad = __webpack_require__(10);
 
 var _ContestOnLoad2 = _interopRequireDefault(_ContestOnLoad);
 
-var _ContestVoteOnLoad = __webpack_require__(10);
+var _ContestVoteOnLoad = __webpack_require__(12);
 
 var _ContestVoteOnLoad2 = _interopRequireDefault(_ContestVoteOnLoad);
 
-var _ContestJudgeOnLoad = __webpack_require__(12);
+var _ContestJudgeOnLoad = __webpack_require__(14);
 
 var _ContestJudgeOnLoad2 = _interopRequireDefault(_ContestJudgeOnLoad);
 
-var _ContestResultsOnLoad = __webpack_require__(15);
+var _ContestResultsOnLoad = __webpack_require__(17);
 
 var _ContestResultsOnLoad2 = _interopRequireDefault(_ContestResultsOnLoad);
 
@@ -414,7 +414,7 @@ var onload = function onload() {
                 var temp = resJson[0][0];
 
                 var subStart = new Date(temp.SubmissionStartDate.toString());
-                var offset = 14;
+                var offset = 0;
                 subStart.setHours(subStart.getHours() - offset);
 
                 var subEnd = new Date(temp.SubmissionEndDate.toString());
@@ -728,7 +728,120 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _Contest = __webpack_require__(9);
+var _UserOption = __webpack_require__(9);
+
+var _UserOption2 = _interopRequireDefault(_UserOption);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var onload = function onload() {
+
+    document.querySelector('#searchUsers').addEventListener('input', function (event) {
+        var payload = {
+            search: event.target.value.trim().toLowerCase()
+        };
+        fetch('/admin/roles/judges', {
+            credentials: 'include',
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(payload)
+        }).then(function (res) {
+            return res.json();
+        }).then(function (resJson) {
+            document.querySelector('#userNameDropdown').innerHTML = '';
+            if (resJson[0] !== undefined) {
+                resJson[0].forEach(function (element) {
+                    var user = new _UserOption2.default(element.SteamID, element.personaname);
+                    document.querySelector('#userNameDropdown').appendChild(user.getUserOption());
+                });
+            }
+        }).catch(function (error) {
+            console.error(error);
+        });
+    });
+
+    document.querySelector('#submitJudges').addEventListener('click', function (event) {
+        if (!document.querySelector('#addJudgeForm').checkValidity()) {
+            return;
+        } else {
+            event.preventDefault();
+            console.log(document.querySelector('#userNameDropdown').value);
+        }
+    });
+};
+
+exports.default = onload;
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var UserOption = function () {
+    function UserOption(SteamID, personaname) {
+        _classCallCheck(this, UserOption);
+
+        this._SteamID = SteamID;
+        this._personaname = personaname;
+    }
+
+    _createClass(UserOption, [{
+        key: "getUserOption",
+        value: function getUserOption() {
+            var node = document.createElement("OPTION");
+            node.value = this._SteamID;
+            var textnode = document.createTextNode(this._personaname);
+            node.appendChild(textnode);
+            return node;
+        }
+    }, {
+        key: "SteamID",
+        set: function set(SteamID) {
+            this._SteamID = SteamID;
+        },
+        get: function get() {
+            return this._SteamID;
+        }
+    }, {
+        key: "personaname",
+        set: function set(personaname) {
+            this._personaname = personaname;
+        },
+        get: function get() {
+            return this._personaname;
+        }
+    }]);
+
+    return UserOption;
+}();
+
+exports.default = UserOption;
+
+/***/ }),
+/* 10 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _Contest = __webpack_require__(11);
 
 var _Contest2 = _interopRequireDefault(_Contest);
 
@@ -814,7 +927,7 @@ var onload = function onload() {
 exports.default = onload;
 
 /***/ }),
-/* 9 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1002,7 +1115,7 @@ var Contest = function () {
 exports.default = Contest;
 
 /***/ }),
-/* 10 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1012,7 +1125,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _ContestSubmission = __webpack_require__(11);
+var _ContestSubmission = __webpack_require__(13);
 
 var _ContestSubmission2 = _interopRequireDefault(_ContestSubmission);
 
@@ -1054,7 +1167,7 @@ var onload = function onload() {
 exports.default = onload;
 
 /***/ }),
-/* 11 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1139,7 +1252,7 @@ var ContestSubmission = function () {
 exports.default = ContestSubmission;
 
 /***/ }),
-/* 12 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1149,11 +1262,11 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _ContestCriteria = __webpack_require__(13);
+var _ContestCriteria = __webpack_require__(15);
 
 var _ContestCriteria2 = _interopRequireDefault(_ContestCriteria);
 
-var _ContestJudgeSubmission = __webpack_require__(14);
+var _ContestJudgeSubmission = __webpack_require__(16);
 
 var _ContestJudgeSubmission2 = _interopRequireDefault(_ContestJudgeSubmission);
 
@@ -1251,7 +1364,7 @@ var onload = function onload() {
 exports.default = onload;
 
 /***/ }),
-/* 13 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1322,7 +1435,7 @@ var ContestCriteria = function () {
 exports.default = ContestCriteria;
 
 /***/ }),
-/* 14 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1402,7 +1515,7 @@ var JudgeSubmission = function () {
 exports.default = JudgeSubmission;
 
 /***/ }),
-/* 15 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1412,7 +1525,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _ContestResults = __webpack_require__(16);
+var _ContestResults = __webpack_require__(18);
 
 var _ContestResults2 = _interopRequireDefault(_ContestResults);
 
@@ -1474,7 +1587,7 @@ var onload = function onload() {
 exports.default = onload;
 
 /***/ }),
-/* 16 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1616,119 +1729,6 @@ var ContestResults = function () {
 }();
 
 exports.default = ContestResults;
-
-/***/ }),
-/* 17 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _UserOption = __webpack_require__(18);
-
-var _UserOption2 = _interopRequireDefault(_UserOption);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var onload = function onload() {
-
-    document.querySelector('#searchUsers').addEventListener('input', function (event) {
-        var payload = {
-            search: event.target.value.trim().toLowerCase()
-        };
-        fetch('/admin/roles/judges', {
-            credentials: 'include',
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(payload)
-        }).then(function (res) {
-            return res.json();
-        }).then(function (resJson) {
-            document.querySelector('#userNameDropdown').innerHTML = '';
-            if (resJson[0] !== undefined) {
-                resJson[0].forEach(function (element) {
-                    var user = new _UserOption2.default(element.SteamID, element.personaname);
-                    document.querySelector('#userNameDropdown').appendChild(user.getUserOption());
-                });
-            }
-        }).catch(function (error) {
-            console.error(error);
-        });
-    });
-
-    document.querySelector('#submitJudges').addEventListener('click', function (event) {
-        if (!document.querySelector('#addJudgeForm').checkValidity()) {
-            return;
-        } else {
-            event.preventDefault();
-            console.log(document.querySelector('#userNameDropdown').value);
-        }
-    });
-};
-
-exports.default = onload;
-
-/***/ }),
-/* 18 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var UserOption = function () {
-    function UserOption(SteamID, personaname) {
-        _classCallCheck(this, UserOption);
-
-        this._SteamID = SteamID;
-        this._personaname = personaname;
-    }
-
-    _createClass(UserOption, [{
-        key: "getUserOption",
-        value: function getUserOption() {
-            var node = document.createElement("OPTION");
-            node.value = this._SteamID;
-            var textnode = document.createTextNode(this._personaname);
-            node.appendChild(textnode);
-            return node;
-        }
-    }, {
-        key: "SteamID",
-        set: function set(SteamID) {
-            this._SteamID = SteamID;
-        },
-        get: function get() {
-            return this._SteamID;
-        }
-    }, {
-        key: "personaname",
-        set: function set(personaname) {
-            this._personaname = personaname;
-        },
-        get: function get() {
-            return this._personaname;
-        }
-    }]);
-
-    return UserOption;
-}();
-
-exports.default = UserOption;
 
 /***/ })
 /******/ ]);
