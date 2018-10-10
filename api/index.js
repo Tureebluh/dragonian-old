@@ -13,7 +13,7 @@ const router = express.Router();
                                                 //Add restriction for admins and judges submitting
 //Enters the user into the specified contest by ID
 router.post('/contest/submit/', (req, res) => {
-    if(req.isAuthenticated()){
+    if(req.isAuthenticated() ){
         if(typeof req.body.verifySubmissionCB !== 'undefined'){
             if(req.body.contestID && req.body.submissionURL.indexOf('https://steamcommunity.com/sharedfiles/filedetails/?id=') === 0){
                 dbpool.getConnection( (err, connection) => {
