@@ -11,7 +11,7 @@ var onload = () => {
     }).then(resJson =>{
         if(typeof resJson[0][0] !== 'undefined'){
             let subStart = new Date(resJson[0][0].SubmissionStartDate);
-            let offset = 7;
+            let offset = 0;
             subStart.setHours(subStart.getHours() - offset);
 
             let subEnd = new Date(resJson[0][0].SubmissionEndDate);

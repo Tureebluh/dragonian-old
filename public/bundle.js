@@ -857,7 +857,7 @@ var onload = function onload() {
     }).then(function (resJson) {
         if (typeof resJson[0][0] !== 'undefined') {
             var subStart = new Date(resJson[0][0].SubmissionStartDate);
-            var offset = 7;
+            var offset = 0;
             subStart.setHours(subStart.getHours() - offset);
 
             var subEnd = new Date(resJson[0][0].SubmissionEndDate);
