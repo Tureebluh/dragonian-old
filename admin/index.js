@@ -8,7 +8,38 @@ router.get('/contest', (req, res) => {
     if(req.isAuthenticated() && req.user.roles.includes('Administrator')){
         res.render('admin/contest/contest');
     } else {
-        res.redirect('user/contest/contest');
+        res.redirect('/contest');
+    }
+});
+
+//Send Administrator to contest administration page for CRUD operation on contest
+router.get('/roles', (req, res) => {
+    if(req.isAuthenticated() && req.user.roles.includes('Administrator')){
+        res.render('admin/manageroles');
+    } else {
+        res.redirect('/');
+    }
+});
+
+//Send Administrator to contest administration page for CRUD operation on contest
+router.post('/roles/judges', (req, res) => {
+    if(req.isAuthenticated() && req.user.roles.includes('Administrator')){
+        dbpool.getConnection( (err, connection) => {
+            if(err) throw err;
+
+            if(req.body.search !== '') {
+                connection.query('CALL Search_Users(' + dbpool.escape(req.body.search) + ');', 
+                (error, results, fields) => {
+                    connection.release();
+                    if (error) throw error;
+                    res.send(results);
+                });
+            } else {
+                res.send({});
+            }
+        });
+    } else {
+        res.redirect('/');
     }
 });
 

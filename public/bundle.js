@@ -106,6 +106,10 @@ var _AdminContestOnLoad = __webpack_require__(4);
 
 var _AdminContestOnLoad2 = _interopRequireDefault(_AdminContestOnLoad);
 
+var _AdminRolesOnLoad = __webpack_require__(17);
+
+var _AdminRolesOnLoad2 = _interopRequireDefault(_AdminRolesOnLoad);
+
 var _ContestOnLoad = __webpack_require__(8);
 
 var _ContestOnLoad2 = _interopRequireDefault(_ContestOnLoad);
@@ -138,6 +142,13 @@ window.onload = function () {
     *********************************************************/
     if (window.location.pathname === '/admin/contest/' || window.location.pathname === '/admin/contest') {
         (0, _AdminContestOnLoad2.default)();
+    }
+
+    /******************************************************** 
+                    ADMIN-ROLE MANAGEMENT
+    *********************************************************/
+    if (window.location.pathname === '/admin/roles/' || window.location.pathname === '/admin/roles') {
+        (0, _AdminRolesOnLoad2.default)();
     }
 
     /******************************************************** 
@@ -1440,13 +1451,13 @@ var onload = function onload() {
                                 resultsArray.push(contestResults);
                             }
                         });
-                        var sorted = resultsArray.sort(function (a, b) {
-                            return a.finalScore > b.finalScore ? 1 : -1;
-                        });
-                        sorted.forEach(function (obj) {
-                            var node = obj.getResultTR();
-                            document.querySelector('#contestResultsTable').appendChild(node);
-                        });
+                    });
+                    var sorted = resultsArray.sort(function (a, b) {
+                        return a.finalScore > b.finalScore ? -1 : 1;
+                    });
+                    sorted.forEach(function (obj) {
+                        var node = obj.getResultTR();
+                        document.querySelector('#contestResultsTable').appendChild(node);
                     });
                 }).catch(function (error) {
                     console.error(error);
@@ -1605,6 +1616,119 @@ var ContestResults = function () {
 }();
 
 exports.default = ContestResults;
+
+/***/ }),
+/* 17 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _UserOption = __webpack_require__(18);
+
+var _UserOption2 = _interopRequireDefault(_UserOption);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var onload = function onload() {
+
+    document.querySelector('#searchUsers').addEventListener('input', function (event) {
+        var payload = {
+            search: event.target.value.trim().toLowerCase()
+        };
+        fetch('/admin/roles/judges', {
+            credentials: 'include',
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(payload)
+        }).then(function (res) {
+            return res.json();
+        }).then(function (resJson) {
+            document.querySelector('#userNameDropdown').innerHTML = '';
+            if (resJson[0] !== undefined) {
+                resJson[0].forEach(function (element) {
+                    var user = new _UserOption2.default(element.SteamID, element.personaname);
+                    document.querySelector('#userNameDropdown').appendChild(user.getUserOption());
+                });
+            }
+        }).catch(function (error) {
+            console.error(error);
+        });
+    });
+
+    document.querySelector('#submitJudges').addEventListener('click', function (event) {
+        if (!document.querySelector('#addJudgeForm').checkValidity()) {
+            return;
+        } else {
+            event.preventDefault();
+            console.log(document.querySelector('#userNameDropdown').value);
+        }
+    });
+};
+
+exports.default = onload;
+
+/***/ }),
+/* 18 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var UserOption = function () {
+    function UserOption(SteamID, personaname) {
+        _classCallCheck(this, UserOption);
+
+        this._SteamID = SteamID;
+        this._personaname = personaname;
+    }
+
+    _createClass(UserOption, [{
+        key: "getUserOption",
+        value: function getUserOption() {
+            var node = document.createElement("OPTION");
+            node.value = this._SteamID;
+            var textnode = document.createTextNode(this._personaname);
+            node.appendChild(textnode);
+            return node;
+        }
+    }, {
+        key: "SteamID",
+        set: function set(SteamID) {
+            this._SteamID = SteamID;
+        },
+        get: function get() {
+            return this._SteamID;
+        }
+    }, {
+        key: "personaname",
+        set: function set(personaname) {
+            this._personaname = personaname;
+        },
+        get: function get() {
+            return this._personaname;
+        }
+    }]);
+
+    return UserOption;
+}();
+
+exports.default = UserOption;
 
 /***/ })
 /******/ ]);
