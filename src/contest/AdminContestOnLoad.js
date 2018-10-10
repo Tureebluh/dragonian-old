@@ -55,7 +55,7 @@ var onload = () => {
                 let temp = resJson[0][0];
                 
                 let subStart = new Date(temp.SubmissionStartDate.toString());
-                let offset = 14;
+                let offset = 0;
                 subStart.setHours(subStart.getHours() - offset);
 
                 let subEnd = new Date(temp.SubmissionEndDate.toString());
