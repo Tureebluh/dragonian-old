@@ -1,0 +1,16 @@
+<%- include('../app/header') -%>
+<%- include('../app/navbar') -%>
+<section id="showErrorSuccess"></section>
+<section id="manageJudgesContainer" class="contest-creation">
+    <form action="/admin/add/judges" method="post" class="contest-creation-form" id="addJudgeForm">
+        <h1 id="manageJudgesHeader">Add Judge</h1>
+        <input type="text" id="searchUsers" placeholder="Search users..."/>
+        <select name="users" id="userNameDropdown" size="10" required></select>
+        <br>
+        <br>
+        <input type="submit" id="submitJudges" alt="Submit Judges" value="Submit Judges" />
+    </form>
+    <br>
+    <br>
+</section>
+<%- include('../app/bodyend') -%>
