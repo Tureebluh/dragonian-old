@@ -44,6 +44,7 @@ router.post('/contest/submit/', (req, res) => {
 //Submits the users vote to the active contest
 router.post('/contest/vote/submit', (req, res) => {
     if(req.isAuthenticated()){
+        
         if(typeof req.body.firstPick !== 'undefined' && typeof req.body.secondPick !== 'undefined' && typeof req.body.thirdPick !== 'undefined' &&
          typeof req.body.fourthPick !== 'undefined' && typeof req.body.fifthPick !== 'undefined' && typeof req.body.contestID !== 'undefined'){
 

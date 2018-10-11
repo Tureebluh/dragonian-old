@@ -1,5 +1,6 @@
 import express from 'express';
 import dbpool from '../dbpool';
+import { connect } from 'http2';
 
 const router = express.Router();
 
@@ -38,6 +39,66 @@ router.post('/roles/judges', (req, res) => {
                 res.send({});
             }
         });
+    } else {
+        res.redirect('/');
+    }
+});
+
+//Send Administrator to contest administration page for CRUD operation on contest
+router.get('/roles/judges/all', (req, res) => {
+    if(req.isAuthenticated() && req.user.roles.includes('Administrator')){
+        dbpool.getConnection( (err, connection) => {
+            if(err) throw err;
+
+            connection.query('CALL Get_Users_By_Role(' + '"Judge"' + ');', 
+            (error, results, fields) => {
+                connection.release();
+                if (error) throw error;
+                res.send(results);
+            });
+        });
+    } else {
+        res.redirect('/');
+    }
+});
+
+//Send Administrator to contest administration page for CRUD operation on contest
+router.post('/roles/add/judge', (req, res) => {
+    if(req.isAuthenticated() && req.user.roles.includes('Administrator')){
+        dbpool.getConnection( (err, connection) => {
+            if(err) throw err;
+
+            if(req.body.steamid !== '') {
+                connection.query('CALL Insert_User_Role_Assoc(' + dbpool.escape(req.body.steamid) + ',' + '"Judge"' + ');', 
+                (error, results, fields) => {
+                    connection.release();
+                    if (error) throw error;
+                    res.send({result: 'Success'});
+                });
+            } else {
+                res.send({});
+            }
+        });
+    } else {
+        res.redirect('/');
+    }
+});
+
+//Send Administrator to contest administration page for CRUD operation on contest
+router.post('/roles/remove/judges', (req, res) => {
+    if(req.isAuthenticated() && req.user.roles.includes('Administrator')){
+            dbpool.getConnection( (err, connection) => {
+                if(err) throw err;
+                req.body.steamid.forEach(element => {
+                    console.log(element);
+                    connection.query('CALL Delete_User_Role_Assoc(' + dbpool.escape(element) + ',' + '"Judge"' + ');', 
+                    (error, results, fields) => {
+                        if (error) throw error;
+                    });
+                });
+            connection.release();
+            res.send({result: 'Success'});
+            });
     } else {
         res.redirect('/');
     }

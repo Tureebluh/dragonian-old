@@ -736,6 +736,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var onload = function onload() {
 
+    getAllJudges();
+
+    //Search database for usernames when user types
     document.querySelector('#searchUsers').addEventListener('input', function (event) {
         var payload = {
             search: event.target.value.trim().toLowerCase()
@@ -751,11 +754,11 @@ var onload = function onload() {
         }).then(function (res) {
             return res.json();
         }).then(function (resJson) {
-            document.querySelector('#userNameDropdown').innerHTML = '';
+            document.querySelector('#addJudgeDropdown').innerHTML = '';
             if (resJson[0] !== undefined) {
                 resJson[0].forEach(function (element) {
                     var user = new _UserOption2.default(element.SteamID, element.personaname);
-                    document.querySelector('#userNameDropdown').appendChild(user.getUserOption());
+                    document.querySelector('#addJudgeDropdown').appendChild(user.getUserOption());
                 });
             }
         }).catch(function (error) {
@@ -763,14 +766,100 @@ var onload = function onload() {
         });
     });
 
+    //Run validity checks and post steamID's to server
     document.querySelector('#submitJudges').addEventListener('click', function (event) {
         if (!document.querySelector('#addJudgeForm').checkValidity()) {
             return;
         } else {
             event.preventDefault();
-            console.log(document.querySelector('#userNameDropdown').value);
+            var payload = {
+                steamid: document.querySelector('#addJudgeDropdown').value
+            };
+            fetch('/admin/roles/add/judge', {
+                credentials: 'include',
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(payload)
+            }).then(function (res) {
+                return res.json();
+            }).then(function (resJson) {
+                console.log(resJson);
+                if (resJson.result === 'Success') {
+                    getAllJudges();
+                    document.querySelector('#showErrorSuccess').innerHTML = '<h1 class="success-notification">Judge added successfully.</h1>';
+                    setTimeout(function () {
+                        document.querySelector('#showErrorSuccess').innerHTML = "";
+                    }, 10000);
+                }
+            }).catch(function (error) {
+                console.error(error);
+            });
         }
     });
+
+    //Run validity checks and post steamID's to server
+    document.querySelector('#removeJudges').addEventListener('click', function (event) {
+        if (!document.querySelector('#removeJudgeForm').checkValidity()) {
+            return;
+        } else {
+            event.preventDefault();
+            var tempOptions = document.querySelectorAll('.removeJudgeOption');
+            var selectedOptions = [];
+            tempOptions.forEach(function (element) {
+                if (element.selected) {
+                    selectedOptions.push(element.value);
+                }
+            });
+
+            var payload = {
+                steamid: selectedOptions
+            };
+
+            fetch('/admin/roles/remove/judges', {
+                credentials: 'include',
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(payload)
+            }).then(function (res) {
+                return res.json();
+            }).then(function (resJson) {
+                if (resJson.result === 'Success') {
+                    getAllJudges();
+                    document.querySelector('#showErrorSuccess').innerHTML = '<h1 class="success-notification">Judge removed successfully.</h1>';
+                    setTimeout(function () {
+                        document.querySelector('#showErrorSuccess').innerHTML = "";
+                    }, 10000);
+                }
+            }).catch(function (error) {
+                console.error(error);
+            });
+        }
+    });
+
+    function getAllJudges() {
+        //Load current judges in remove judge panel
+        fetch('/admin/roles/judges/all', { credentials: 'include' }).then(function (res) {
+            return res.json();
+        }).then(function (resJson) {
+            document.querySelector('#removeJudgeDropdown').innerHTML = '';
+            if (typeof resJson[0] !== 'undefined') {
+                resJson[0].forEach(function (element) {
+                    var user = new _UserOption2.default(element.SteamID, element.personaname);
+                    var tempNode = user.getUserOption();
+                    tempNode.setAttribute('class', 'removeJudgeOption');
+                    document.querySelector('#removeJudgeDropdown').appendChild(tempNode);
+                });
+            }
+        }).catch(function (error) {
+            console.error(error);
+        });
+    }
 };
 
 exports.default = onload;
