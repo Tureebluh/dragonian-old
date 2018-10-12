@@ -8,7 +8,7 @@ class ContestResults {
         this._workshop_URL = workshop_URL;
         this._personaname = personaname;
         this._avatarfull = avatarfull;
-        this.finalScore = Math.round((this._judgesActual * (this._votersMax / this._judgesMax) + this._votersActual) * 100) / 100;
+        this._finalScore = Math.round((parseInt(this._judgesActual, 10) * (parseInt(this._votersMax, 10) / parseInt(this._judgesMax, 10)) + parseInt(this._votersActual, 10)) * 100) / 100;
     }
 
     set contestSubmissionID(contestSubmissionID){

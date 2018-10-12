@@ -4,6 +4,7 @@
   "description": "A website for the Dragon's Lair PlanCo community for collabs and contest.",
   "main": "server.js",
   "scripts": {
+    "build": "webpack --progress",
     "start": "babel-node server.js",
     "start-watch": "nodemon --exec babel-node server.js --ignore public/",
     "dev": "start npm run start-watch && start webpack --progress --colors --watch"
@@ -26,13 +27,14 @@
     "jsonwebtoken": "^8.3.0",
     "mysql": "^2.16.0",
     "node-fetch": "^2.2.0",
-	"node-sass-middleware": "^0.11.0",
+    "node-sass-middleware": "^0.11.0",
     "passport": "^0.4.0",
     "passport-openid": "^0.4.0"
   },
   "devDependencies": {
     "eslint": "^5.6.0",
     "nodemon": "^1.18.4",
+    "uglifyjs-webpack-plugin": "^2.0.1",
     "webpack": "^4.19.1",
     "webpack-cli": "^3.1.1"
   }

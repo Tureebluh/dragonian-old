@@ -8,7 +8,10 @@ router.get('/login', passport.authenticate('openid'));
 
 //Return endpoint after user has logged in. If login was unsuccessful, redirect to login route again.
 //If login was successful send user to homepage
-router.get('/login/return', passport.authenticate('openid', {successRedirect: '/', failureRedirect: '/auth/login'}));
+router.get('/login/return', passport.authenticate('openid', {
+  successRedirect: '/',
+  failureRedirect: '/auth/login'
+}));
 
 //Destroy the session and redirect to homepage
 router.get('/logout', (req, res) => {

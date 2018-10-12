@@ -1,3 +1,4 @@
 <span class="steaminfo">
     <img src="<%- user.avatarfull %>"/> &nbsp;<%- user.personaname %>
+    <%- (user) ? include('logoutbtn') : include('loginbtn') %>
 </span>

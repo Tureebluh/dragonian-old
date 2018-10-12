@@ -14,17 +14,17 @@
 
     html {
         font-size: 16px;
+        background-color: #3c3c3c;
     }
 
     body {
-        max-width: 50em;
+        max-width: 40em;
         margin: 0 auto;
         overflow-x: none;
     }
     footer {
         text-align: center;
         width: 100%;
-        background: darkslategray;
         color: oldlace;
         padding: 5%;
     }
@@ -56,6 +56,7 @@
     .jump-to-icon {
         background: url('img/forward.png');
         background-size: 100% 100%;
+        max-width: 50%;
     }
     
 /*
@@ -128,25 +129,36 @@
         font-size: 1.8rem;
         background-color: darkred;
         color: whitesmoke;
-        height: 15vh;
-        padding-top: 5vh;
     }
     .steaminfo {
-        width: 50%;
+        width: 100%;
         display: flex;
-        align-content: center;
-        justify-content: right;
+        line-height: 4rem;
     }
     .steaminfo img {
-        width: auto;
-        height: 1.8rem;
+        width: 4rem;
+        height: 4rem;
     }
 
-    .controlPanel {
+    .userbanner .controlPanel .steaminfo .logoutBtn {
         float: right;
-        height: 100%;
-        width: 55%;
-        align-content: center;
+    }
+    .userbanner {
+        background-color: darkred;
+        width: 100%;
+        padding: 1rem;
+        text-align: center;
+    }
+    .userbanner > img {
+        width: 50%;
+        margin: 5% 20% 0 20%;
+    }
+    .userbanner .controlPanel, .userbanner .controlPanel .logoutBtn {
+        width: 100%;
+        padding: 5% 0;
+    }
+    .userbanner .controlPanel, .userbanner .controlPanel .logoutBtn input{
+        float: right;
     }
     .userSubmitBtn {
         width: 75%;
@@ -159,39 +171,25 @@
         color: white;
         border-radius: 5px;
     }
+    
     .loginbanner {
         background-color: darkred;
         width: 100%;
-        height: 25vh!important;
         padding: 1rem;
     }
     .loginbanner img {
         max-width: 35%;
     }
-    
-    .loginBtn, .logoutBtn {
-        width: 75%;
-        margin: 0 auto;
-    }
-    .loginBtn {
-        width: 100%;
-    }
+
     .loginBtn input, .logoutBtn input {
-        width: 100%;
-        font-size: 0.8rem;
+        font-size: 1.2rem;
         background-color: darkslategrey;
         color: white;
-        border-radius: 5px;
     }
-    .logoutBtn input {
-        font-size: 1rem;
-    }
-/*
-**********************INFO PANELS*******************
-*/
+
     .infopanel {
         width: 100%;
-        padding: 1rem;
+        padding: 1rem 10%;
         line-height: 2rem;
         text-align: center;
         font-weight: bold;
@@ -203,14 +201,14 @@
         background-color: orange;
     }
     .discord img {
-        max-width: 80%;
+        max-width: 15rem;
     }
 
     .twitch {
         background-color: darkorange;
     }
     .twitch img{
-        max-width: 70%;
+        max-width: 10rem;
         margin-bottom: 1.5rem;
     }
 
@@ -221,7 +219,7 @@
         color: black;
     }
     .patreon img {
-        max-height: 50%;
+        max-height: 10rem;
     }
 /*
 **********************COLLAB PAGE*******************
@@ -234,33 +232,29 @@
 /*
 **********************ADMIN CONTEST CREATE/EDIT PAGE*******************
 */
-    .contestbanner, .collabbanner{
-        background-color: darkred;
-        width: 100%;
-        height: 25vh;
-        padding: 1rem;
-    }
-    .contestbanner img, .collabbanner img{
-        max-height: 100%;
-        width: 40%;
-        margin-left: 0 5% 0 0;
-    }
+    
     .contest-creation {
         width: 100%;
         padding: 3rem;
         background-color: #3c3c3c;
         color: antiquewhite;
     }
+    .contest-creation input[type="datetime-local"], .contest-creation select, .contest-creation input[type="text"],
+     .contest-creation input[type="submit"], .contest-creation input[type="reset"], .contest-creation input[type="number"]{
+        height: 2rem;
+        font-size: 1rem;
+    }
     .contest-creation h1 {
         text-align: center;
     }
     .contest-creation-form {
-        width: 100%;
+        width: 75%;
         margin: 5rem auto;
     }
     .contest-creation-form * {
         width: 100%;
     }
+    
     .contest-creation-form label {
         font-size: 1rem;
         font-weight: bold;
@@ -281,6 +275,10 @@
         width: 100%;
         height: 50vh;
     }
+    #contestCriteriaDropdown, #contestRulesDropdown, #addJudgeDropdown, #removeJudgeDropdown {
+        height: auto;
+    }
+    
 
 /*
 **********************ADMIN MANAGE ROLES PAGE*******************
@@ -291,6 +289,7 @@
 **********************ACTIVE CONTEST PAGE*******************
 */
     #activeContest, #submitEntrySection, #howItWorkSection, #showErrorSuccess {
+        padding: 5%;
         text-align: center;
         font-size: 1rem;
         background-color: #3c3c3c;
@@ -380,7 +379,7 @@
         width: 100%;
         font-size: 1rem;
         font-family: Georgia, 'Times New Roman', Times, serif;
-        background-color: rgb(255, 136, 0);
+        color: rgb(248, 242, 242);
     }
     #contestVotingContainer form {
         width: 100%;
@@ -426,7 +425,7 @@
         font-size: 1.5rem;
     }
     #contestSubmissionContainer .contest-submission .steaminfo > img {
-        height: 1.5rem;
+        height: 100%;
     }
     #contestSubmissionContainer .contest-submission a.contest-submission-url:link, #contestSubmissionContainer .contest-submission a.contest-submission-url:visited  {
         color: white;
@@ -529,7 +528,10 @@
     }
     
 }
-
+/* Large Mobile Devices */
+@media only screen and (min-width : 375px) {
+    
+}
 /* Large Mobile Devices */
 @media only screen and (min-width : 425px) {
     
@@ -542,12 +544,43 @@
 
 /* Small Devices, Tablets */
 @media only screen and (min-width : 768px) {
-    
+    html {
+        font-size: 22px;
+    }
+    .steaminfo {
+        height: auto;
+        line-height: 3rem;
+    }
+    .steaminfo img {
+        height: 3rem;
+    }
+    #howItWorkSection {
+        font-size: 1.3rem;
+    }
+    .loginbanner img{
+        width: 10rem;
+    }
+    .logoutBtn {
+        margin-top: 5%;
+    }
+    #contestVotingContainer form input[type="submit"] {
+        margin: 5% 30%;
+    }
+    #contestVotingContainer form {
+        width: 65%;
+        margin: 0 auto;
+    }
+    .userbanner .controlPanel, .userbanner .controlPanel .logoutBtn {
+        padding: 0.8rem 0;
+        margin: 0;
+    }
 }
 
 /* Medium Devices, Desktops - No minimum height */
 @media only screen and (min-width : 1000px){
-    
+    html {
+        font-size: 24px;
+    }
 }
 
 /* Large Devices, Wide Screens */
@@ -557,7 +590,9 @@
 
 /* Extra-Large Devices, Wide Screens */
 @media only screen and (min-width : 1300px) {
-    
+    html {
+        font-size: 20px;
+    }
 }
 
 
