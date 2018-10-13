@@ -1,5 +1,6 @@
 import CollabOnLoad from './collab/CollabOnLoad';
 import AdminContestOnLoad from './contest/AdminContestOnLoad';
+import AdminContestSubOnLoad from './contest/AdminContestSubOnLoad';
 import AdminRolesOnLoad from './AdminRolesOnLoad';
 import ContestOnLoad from './contest/ContestOnLoad';
 import ContestVoteOnLoad from './contest/ContestVoteOnLoad';
@@ -29,6 +30,13 @@ window.onload = function(){
     *********************************************************/
     if(window.location.pathname === '/admin/roles/' || window.location.pathname === '/admin/roles'){
         AdminRolesOnLoad();
+    }
+
+    /******************************************************** 
+                    ADMIN-CONTEST-SUBMISSIONS MANAGEMENT
+    *********************************************************/
+    if(window.location.pathname === '/admin/contest/submissions' || window.location.pathname === '/admin/contest/submissions/'){
+        AdminContestSubOnLoad();
     }
 
     /******************************************************** 

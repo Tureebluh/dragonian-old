@@ -14,6 +14,15 @@ router.get('/contest', (req, res) => {
 });
 
 //Send Administrator to contest administration page for CRUD operation on contest
+router.get('/contest/submissions', (req, res) => {
+    if(req.isAuthenticated() && req.user.roles.includes('Administrator')){
+        res.render('admin/contest/contestSubmissions');
+    } else {
+        res.redirect('/contest');
+    }
+});
+
+//Send Administrator to contest administration page for CRUD operation on contest
 router.get('/roles', (req, res) => {
     if(req.isAuthenticated() && req.user.roles.includes('Administrator')){
         res.render('admin/manageroles');
