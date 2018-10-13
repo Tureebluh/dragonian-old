@@ -18,11 +18,16 @@ var onload = () => {
                 );
                 allSubHtml += tempSub.getSubmissionDiv();
                 let node = tempSub.getSubmissionOption();
-                document.querySelector('#firstPick').appendChild(node);
+                let firstPick = document.querySelector('#firstPick');
+                firstPick.appendChild(node);
                 document.querySelector('#secondPick').appendChild(node.cloneNode(true));
+                document.querySelector('#secondPick').selectedIndex = Math.floor(Math.random() * Math.floor(firstPick.length));
                 document.querySelector('#thirdPick').appendChild(node.cloneNode(true));
+                document.querySelector('#thirdPick').selectedIndex = Math.floor(Math.random() * Math.floor(firstPick.length));
                 document.querySelector('#fourthPick').appendChild(node.cloneNode(true));
+                document.querySelector('#fourthPick').selectedIndex = Math.floor(Math.random() * Math.floor(firstPick.length));
                 document.querySelector('#fifthPick').appendChild(node.cloneNode(true));
+                document.querySelector('#fifthPick').selectedIndex = Math.floor(Math.random() * Math.floor(firstPick.length));
             });
             document.querySelector('#contestIDHidden').value = resJson[0][0].contest_ID;
             document.querySelector('#contestSubmissionContainer').innerHTML = allSubHtml;
