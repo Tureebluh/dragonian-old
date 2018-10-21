@@ -261,5 +261,10 @@ router.post('/create/criteria', (req, res) => {
     }
 });
 
+router.post('/update/contest/submission', (req, res) => {
+    if(req.isAuthenticated() && req.user.roles.includes('Administrator')){
+        res.send({result: 'success'});
+    }
+});
 
 export default router;

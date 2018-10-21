@@ -1,5 +1,22 @@
 <%- include('../../app/header') -%>
 <%- include('../../app/navbar') -%>
 <section id="showErrorSuccess"></section>
-
+<section id="submissionTable">
+    <input type="hidden" id="contestIDHidden" name="contestID">
+    <table id="adminTable">
+        <tr>
+            <th>Name</th>
+            <th>Picture</th>
+            <th>Submission URL</th>
+            <th>Valid?</th>
+        </tr>
+        <tr>
+            <td><select id="contestUserName" required></select></td>
+            <td><img src="#" id="contestUserPic"></td>
+            <td><a href="#" id="contestSubmissionURL"></a></td>
+            <td><input type="checkbox" required></td>
+        </tr>
+    </table>
+</section>
+</form>
 <%- include('../../app/bodyend') -%>

@@ -349,6 +349,8 @@
     margin: 1rem 25%;
     width: 50%;
     padding: 1rem; }
+  #submissionTable #adminTable td select {
+    width: 10rem; }
   /*
 **********************ACTIVE CONTEST RESULTS PAGE*******************
 */
@@ -424,11 +426,16 @@
 /* Medium Devices, Desktops - No minimum height */
 @media only screen and (min-width: 1000px) {
   html {
-    font-size: 24px; } }
+    font-size: 22px; } }
 
 /* Large Devices, Wide Screens */
 /* Extra-Large Devices, Wide Screens */
 @media only screen and (min-width: 1300px) {
+  html {
+    font-size: 18px; } }
+
+/* Extra-Large Devices, Wide Screens */
+@media only screen and (min-width: 2000px) {
   html {
     font-size: 20px; } }
 
