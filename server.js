@@ -12,10 +12,18 @@ import passport from './steampassport';
 import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
 
+
 const server = express();
 //CHANGE BACK TO (301)
 //If server is running in production all request will be permanently(301) routed to https
 if(config.nodeEnv === 'production'){
+    let forceSsl = function (req, res, next) {
+        if (req.headers['x-forwarded-proto'] !== 'https') {
+            return res.redirect(301, ['https://', req.get('Host'), req.url].join(''));
+        }
+        return next();
+    };
+    server.use(forceSsl);
     server.use(helmet());
 
     //Add rate limiter to api, auth, and admin api routes
