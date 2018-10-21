@@ -41,6 +41,15 @@
         background-color: rgb(200, 50, 50);
         color: white;
     }
+    .closed {
+        height: 4rem;
+        opacity: 0.4;
+        overflow: hidden;
+    }
+    .opened {
+        height: 100%!important;
+        opacity: 1!important;
+    }
     .italic {
         font-style: italic!important;
     }
@@ -288,6 +297,9 @@
 /*
 **********************ACTIVE CONTEST PAGE*******************
 */
+    //
+    //General Contest Stuff
+    //
     #activeContest, #submitEntrySection, #howItWorkSection, #showErrorSuccess {
         padding: 5%;
         text-align: center;
@@ -341,6 +353,22 @@
         font-size: 1.5rem;
         margin-top: 5%;
     }
+    //
+    //How It Works Section
+    //
+    #howItWorkSection #learnMore {
+        padding: 1rem;
+        border: 0.2rem solid rgb(27, 27, 27);
+        box-shadow: 0 0.6rem 1.5rem 0.1rem rgb(196, 177, 128);
+        border-top: none;
+        border-radius: 0 0 1rem 1rem;
+        margin: 0 auto 6rem auto;
+        width: 50%;
+        cursor: pointer;
+    }
+    #howItWorkSection #contestInDepth {
+        transition: opacity 1s ease;
+    }
     #howItWorkSection a {
         text-decoration: none;
         color: darkgoldenrod;
@@ -349,6 +377,9 @@
         color: rgb(35, 104, 255);
         letter-spacing: 0.1rem;
     }
+    //
+    //Submit Section
+    //
     #submitEntrySection, #howItWorkSection {
         padding: 5%;
     }
@@ -364,6 +395,9 @@
     #submitEntrySection img {
         width: 50%;
     }
+/*
+**********************ACTIVE CONTEST VOTING PAGE*******************
+*/
     .contestVotingForm input[type='submit']{
         font-size: 1.2rem;
         padding: 5%;
@@ -371,9 +405,7 @@
         color: rgb(248, 242, 242);
         border-radius: 5%;
     }
-/*
-**********************ACTIVE CONTEST VOTING PAGE*******************
-*/
+
     #contestVotingContainer {
         padding: 5%;
         width: 100%;

@@ -30,6 +30,13 @@
     outline: none;
     background-color: #c83232;
     color: white; }
+  .closed {
+    height: 4rem;
+    opacity: 0.4;
+    overflow: hidden; }
+  .opened {
+    height: 100% !important;
+    opacity: 1 !important; }
   .italic {
     font-style: italic !important; }
   .bold {
@@ -250,6 +257,17 @@
   #activeContest #rulesDiv .rule {
     font-size: 1.5rem;
     margin-top: 5%; }
+  #howItWorkSection #learnMore {
+    padding: 1rem;
+    border: 0.2rem solid #1b1b1b;
+    box-shadow: 0 0.6rem 1.5rem 0.1rem #c4b180;
+    border-top: none;
+    border-radius: 0 0 1rem 1rem;
+    margin: 0 auto 6rem auto;
+    width: 50%;
+    cursor: pointer; }
+  #howItWorkSection #contestInDepth {
+    transition: opacity 1s ease; }
   #howItWorkSection a {
     text-decoration: none;
     color: darkgoldenrod; }
@@ -266,15 +284,15 @@
     padding: 0.5rem; }
   #submitEntrySection img {
     width: 50%; }
+  /*
+**********************ACTIVE CONTEST VOTING PAGE*******************
+*/
   .contestVotingForm input[type='submit'] {
     font-size: 1.2rem;
     padding: 5%;
     background-color: #0f81df;
     color: #f8f2f2;
     border-radius: 5%; }
-  /*
-**********************ACTIVE CONTEST VOTING PAGE*******************
-*/
   #contestVotingContainer {
     padding: 5%;
     width: 100%;

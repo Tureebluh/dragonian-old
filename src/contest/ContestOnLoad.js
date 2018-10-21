@@ -89,6 +89,11 @@ var onload = () => {
         document.querySelector('#showErrorSuccess').innerHTML = 
             '<h1 class="error-notification">You cannot vote for the same submission more than once. Please visit the voting page and try again.</h1>';
     }
+    document.querySelector('#learnMore').addEventListener('click', (event) =>{
+        if(document.querySelector('#contestInDepth').classList.contains('closed')){
+            document.querySelector('#contestInDepth').classList.toggle('opened');
+        }
+    });
 }
 
 export default onload;

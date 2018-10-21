@@ -18,8 +18,7 @@ var onload = () => {
                 );
                 allSubHtml += tempSub.getSubmissionDiv();
                 let node = tempSub.getSubmissionOption();
-                let firstPick = document.querySelector('#firstPick');
-                firstPick.appendChild(node);
+                document.querySelector('#firstPick').appendChild(node);
                 document.querySelector('#secondPick').appendChild(node.cloneNode(true));
                 document.querySelector('#thirdPick').appendChild(node.cloneNode(true));
                 document.querySelector('#fourthPick').appendChild(node.cloneNode(true));
