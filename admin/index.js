@@ -37,6 +37,23 @@ router.get('/contest/submissions/all', (req, res) => {
         res.redirect('/contest');
     }
 });
+//Retrieve all invalid submissions from database
+router.post('/contest/submissions/update', (req, res) => {
+    if(req.isAuthenticated() && req.user.roles.includes('Administrator')){
+        dbpool.getConnection( (err, connection) => {
+            if(err) throw err;
+            connection.query('CALL Update_Contest_Validity(' + dbpool.escape(req.body.contestSubmissionID) + ',' + dbpool.escape(req.body.isValid) + ');', 
+            (error, results, fields) => {
+                connection.release();
+                if (error) throw error;
+                res.send({result: 'Success'});
+            });
+        });
+    } else {
+        res.redirect('/contest');
+    }
+});
+
 //Send Administrator to contest administration page for CRUD operation on contest
 router.get('/roles', (req, res) => {
     if(req.isAuthenticated() && req.user.roles.includes('Administrator')){

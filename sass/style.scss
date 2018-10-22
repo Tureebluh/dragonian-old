@@ -473,6 +473,10 @@
         white-space: nowrap;
         text-align: center;
     }
+    #submissionTable h1 {
+        color: whitesmoke;
+        padding: 1rem;
+    }
     #contestRubric h1 {
         text-align: center;
     }
@@ -496,6 +500,8 @@
     }
     #submissionTable table select {
         width: 3rem;
+        font-weight: bold;
+        font-size: 1rem;
     }
     #submitBtnContainer input[type="submit"] {
         margin: 1rem 25%;
@@ -503,8 +509,19 @@
         padding: 1rem;
     }
 
+/*
+**********************ACTIVE CONTEST SUBMISSIONS PAGE*******************
+*/
+
     #submissionTable #adminTable td select {
         width: 10rem;
+    }
+    #submissionTable #adminTable #contestUserPic {
+        width: 3rem;
+    }
+    #submissionTable #adminTable #contestSubmissionURL {
+        color: orangered;
+        text-decoration: none;
     }
 /*
 **********************ACTIVE CONTEST RESULTS PAGE*******************

@@ -2,6 +2,7 @@
 <%- include('../../app/navbar') -%>
 <section id="showErrorSuccess"></section>
 <section id="submissionTable">
+    <h1>Update Submission Validity</h1>
     <input type="hidden" id="contestIDHidden" name="contestID">
     <table id="adminTable">
         <tr>
@@ -13,8 +14,8 @@
         <tr>
             <td><select id="contestUserName" required></select></td>
             <td><img src="#" id="contestUserPic"></td>
-            <td><a href="#" id="contestSubmissionURL"></a></td>
-            <td><input type="checkbox" required></td>
+            <td><a href="#" id="contestSubmissionURL" target="_BLANK">Workshop Link</a></td>
+            <td><input id="contestSubmissionValid" type="checkbox" required></td>
         </tr>
     </table>
 </section>
