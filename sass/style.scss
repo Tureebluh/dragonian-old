@@ -28,6 +28,10 @@
         color: oldlace;
         padding: 5%;
     }
+    footer a {
+        text-decoration: none;
+        color: orangered;
+    }
     #backToTop {
         display: none;
         bottom: 1%;
@@ -66,6 +70,12 @@
         background: url('img/forward.png');
         background-size: 100% 100%;
         max-width: 50%;
+    }
+    #privacyPolicy, #termsOfUse {
+        color: whitesmoke;
+        text-align: center;
+        padding: 3%;
+        font-size: 1.3rem;
     }
     
 /*

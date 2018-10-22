@@ -75,9 +75,14 @@ server.get('/', (req, res) => {
     res.render('index');
 });
 
-//Default route to render homepage
+//Default route to render terms of service
 server.get('/terms-of-use', (req, res) => {
     res.render('app/terms');
+});
+
+//Default route to render privacy policy
+server.get('/privacy-policy', (req, res) => {
+    res.render('app/privacypolicy');
 });
 
 //Authentication REQUIRED otherwise redirect to login endpoint
