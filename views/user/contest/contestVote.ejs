@@ -2,6 +2,9 @@
 <%- include('../../app/navbar') -%>
 <%- include('../../app/userbanner') -%>
 <section id="showErrorSuccess"></section>
+
+<div class="disclaimer">Disclaimer:<br>Initial values are randomized for psychological fairness.<br>Duplicate picks will not be accepted by the system.</div>
+
 <section id="contestVotingContainer">
     <h1>Choose Your Top 5</h1>
     <form method="post" action="/api/contest/vote/submit" id="contestVoteForm">

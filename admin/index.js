@@ -21,7 +21,22 @@ router.get('/contest/submissions', (req, res) => {
         res.redirect('/contest');
     }
 });
-
+//Retrieve all invalid submissions from database
+router.get('/contest/submissions/all', (req, res) => {
+    if(req.isAuthenticated() && req.user.roles.includes('Administrator')){
+        dbpool.getConnection( (err, connection) => {
+            if(err) throw err;
+            connection.query('CALL Get_All_Contest_Submissions();', 
+            (error, results, fields) => {
+                connection.release();
+                if (error) throw error;
+                res.send(results);
+            });
+        });
+    } else {
+        res.redirect('/contest');
+    }
+});
 //Send Administrator to contest administration page for CRUD operation on contest
 router.get('/roles', (req, res) => {
     if(req.isAuthenticated() && req.user.roles.includes('Administrator')){
