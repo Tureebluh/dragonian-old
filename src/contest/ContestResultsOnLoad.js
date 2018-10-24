@@ -1,5 +1,5 @@
 import ContestResults from './ContestResults';
-
+//Adding a comment to force a rebuild
 var onload = () => {
     fetch('/api/contest/voters/judged', {credentials: 'include'})
     .then(res => {
@@ -25,7 +25,6 @@ var onload = () => {
                     document.querySelector('#contestResultsTable').appendChild(node);
                 });
                 fetch('/api/contest/judge/topsubs', {credentials: 'include'})
-                
                 .then(res => {
                     return res.json();
                 }).then(votesJson => {
