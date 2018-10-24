@@ -8,9 +8,9 @@ class ContestResults {
         this._workshop_URL = workshop_URL;
         this._personaname = personaname;
         this._avatarfull = avatarfull;
-        this._finalScore = Math.round((parseInt(this._judgesActual, 10) * (parseInt(this._votersMax, 10) / parseInt(this._judgesMax, 10)) + parseInt(this._votersActual, 10)) * 100) / 100;
+        this._finalScore = this.calculateFinalScore();
     }
-
+    
     set contestSubmissionID(contestSubmissionID){
         this._contestSubmissionID = contestSubmissionID;
     }
@@ -80,7 +80,14 @@ class ContestResults {
     get finalScore(){
         return this._finalScore;
     }
-
+    calculateFinalScore(){
+        let it1 = parseInt(this._judgesActual, 10) * parseInt(this._votersMax, 10);
+        let it2 = it1 / parseInt(this._judgesMax, 10);
+        let it3 = it2 + parseInt(this._votersActual, 10);
+        let it4 = Math.round(it3 * 100);
+        let final = it4 / 100;
+        return final;
+    }
     getResultTR(){
         let node = document.createElement("TR");
         let tempTD = document.createElement("TD");
