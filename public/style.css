@@ -57,6 +57,10 @@
     text-align: center;
     padding: 3%;
     font-size: 1.3rem; }
+  #failedLogin #steam-privacy {
+    display: block;
+    margin: 0 auto;
+    max-width: 100%; }
   /*
 ********************NAVBAR*******************
 */
