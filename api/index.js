@@ -276,7 +276,7 @@ router.get("/contest/judged/scores", (req, res) => {
 
 //Returns back the top community voted submissions for the active contest
 router.get("/contest/judge/topsubs", (req, res) => {
-    if(req.isAuthenticated() && req.user.roles.includes('Judge')){
+    if(req.isAuthenticated()){
         dbpool.getConnection( (err, connection) => {
             if (err) throw err;
             connection.query('CALL Get_Top_Contest_Submissions(null);', (error, results, fields) => {
