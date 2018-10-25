@@ -1,9 +1,53 @@
 import Contest from './Contest';
 
 var onload = () => {
-    //If user is on contest page, load the oldest active contest and pull all rules associated with that contest. Store all info in an object and call
-    //call provided function to create HTML visual of data
+    //If user is on contest page, load the oldest active contest and pull all rules associated with that contest.
+    //Store all info in an object and call provided function to create HTML visual of data
     //NOTE: Cookies are not sent with fetch() by default, therefore {credentials} are supplied to server to authenticate fetch() request
+
+    //Add judges with pictures to judgeSection
+    fetch('/api/contest/all/judges', {credentials: 'include'})
+    .then(res => {
+        return res.json();
+    }).then(resJson => {
+        let node = document.createElement('H1');
+        let text = document.createTextNode('Judges');
+        node.appendChild(text);
+        document.querySelector('#judgeSection').appendChild(node);
+        resJson[0].forEach(element => {
+            let tempSpan = document.createElement('SPAN');
+            tempSpan.setAttribute('class', 'steaminfo');
+            let tempImg = document.createElement('IMG');
+            tempSpan.appendChild(tempImg);
+            tempSpan.appendChild(document.createTextNode(element.personaname));
+            tempImg.setAttribute('src', element.avatarfull);
+
+            document.querySelector('#judgeSection').appendChild(tempSpan);
+        });
+        //Get contest criteria with weights to display to user
+        fetch('/api/contest/all/rubric', {credentials: 'include'})
+        .then(res => {
+            return res.json();
+        }).then(resJson => {
+            let node = document.createElement('H1');
+            let text = document.createTextNode('Scoring Rubric');
+            node.appendChild(text);
+            document.querySelector('#contestRubric').appendChild(node);
+
+            resJson[0].forEach(element => {
+                let node = document.createElement('H3');
+                let text = document.createTextNode(element['contest_criteria'] + ' - ' + (parseInt(element['contest_criteria_weight'], 10) * 10));
+                    node.appendChild(text);
+                document.querySelector('#contestRubric').appendChild(node);
+
+                node = document.createElement('P');
+                    text = document.createTextNode(element['contest_criteria_description']);
+                    node.appendChild(text);
+                document.querySelector('#contestRubric').appendChild(node);
+            });
+        }).catch(error => {console.error(error)});
+    }).catch(error => {console.error(error)});
+
     fetch('/api/contest/all/active', {credentials: 'include'})
     .then(res =>{
         return res.json();

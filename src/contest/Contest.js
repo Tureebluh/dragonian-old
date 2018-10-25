@@ -91,7 +91,7 @@ class Contest {
             tempString += "</div>";
         tempString += "</div>";
         tempString += "<br>";
-        tempString += "<div class=\"Description\"><h2>Summary</h2>" + this._Description + "</div>";
+        tempString += "<div class=\"Description\"><h1>Summary</h1>" + this._Description + "</div>";
         tempString += "<br>";
         tempString += "<h1>Rules</h1>";
         tempString += "<div id=\"rulesDiv\">";

@@ -14,28 +14,32 @@ const router = express.Router();
 //Enters the user into the specified contest by ID
 router.post('/contest/submit/', (req, res) => {
     if(req.isAuthenticated() ){
-        if(typeof req.body.verifySubmissionCB !== 'undefined'){
-            if(req.body.contestID && req.body.submissionURL.indexOf('https://steamcommunity.com/sharedfiles/filedetails/?id=') === 0){
-                dbpool.getConnection( (err, connection) => {
-                    if (err) throw err;
-                    
-                    connection.query('CALL Upsert_Contest_Submission(' + null + 
-                                                                    ',' + dbpool.escape(req.body.contestID) +
-                                                                    ',' + dbpool.escape(req.user.steamid) + 
-                                                                    ',' + dbpool.escape(req.body.submissionURL) + 
-                                                                    ',' + null + ');',
-                        (error, results, fields) => {
-                            res.redirect('/contest' + '?result=subsuccess');
-                            connection.release();
-                            if (error) throw error;
+        if(!req.user.roles.includes('Judge') && !req.user.roles.includes('Administrator')) {
+            if(typeof req.body.verifySubmissionCB !== 'undefined'){
+                if(req.body.contestID && req.body.submissionURL.indexOf('https://steamcommunity.com/sharedfiles/filedetails/?id=') === 0){
+                    dbpool.getConnection( (err, connection) => {
+                        if (err) throw err;
+                        
+                        connection.query('CALL Upsert_Contest_Submission(' + null + 
+                                                                        ',' + dbpool.escape(req.body.contestID) +
+                                                                        ',' + dbpool.escape(req.user.steamid) + 
+                                                                        ',' + dbpool.escape(req.body.submissionURL) + 
+                                                                        ',' + null + ');',
+                            (error, results, fields) => {
+                                res.redirect('/contest?result=subsuccess');
+                                connection.release();
+                                if (error) throw error;
+                        });
                     });
-                });
+                } else {
+                    res.redirect('/contest?result=badurl');
+                }
             } else {
-                res.redirect('/contest' + '?result=badurl');
+                res.redirect('/contest?result=noterms');
             }
         } else {
-            res.redirect('/contest' + '?result=noterms');
-        }
+            res.redirect('/contest?result=votefail');
+        }    
     } else {
         res.send('Unauthorized Access');
     }
@@ -44,34 +48,37 @@ router.post('/contest/submit/', (req, res) => {
 //Submits the users vote to the active contest
 router.post('/contest/vote/submit', (req, res) => {
     if(req.isAuthenticated()){
-        
-        if(typeof req.body.firstPick !== 'undefined' && typeof req.body.secondPick !== 'undefined' && typeof req.body.thirdPick !== 'undefined' &&
-         typeof req.body.fourthPick !== 'undefined' && typeof req.body.fifthPick !== 'undefined' && typeof req.body.contestID !== 'undefined'){
+        if(!req.user.roles.includes('Judge') && !req.user.roles.includes('Administrator')) {
+            if(typeof req.body.firstPick !== 'undefined' && typeof req.body.secondPick !== 'undefined' && typeof req.body.thirdPick !== 'undefined' &&
+            typeof req.body.fourthPick !== 'undefined' && typeof req.body.fifthPick !== 'undefined' && typeof req.body.contestID !== 'undefined'){
 
-            let tempPicks = [req.body.firstPick, req.body.secondPick, req.body.thirdPick, req.body.fourthPick, req.body.fifthPick];
-            let result = tempPicks.some((pick)=>{
-                return ((tempPicks.includes(tempPicks.shift())) ? true : false);
-            });
-
-            if(!result){
-                dbpool.getConnection( (err, connection) => {
-                    if (err) throw err;
-                    connection.query('CALL Upsert_Contest_Voting(' + dbpool.escape(req.body.contestID) +
-                                                                    ',' + dbpool.escape(req.user.steamid) + 
-                                                                    ',' + dbpool.escape(req.body.firstPick) +
-                                                                    ',' + dbpool.escape(req.body.secondPick) +
-                                                                    ',' + dbpool.escape(req.body.thirdPick) +
-                                                                    ',' + dbpool.escape(req.body.fourthPick) +
-                                                                    ',' + dbpool.escape(req.body.fifthPick) +
-                                                                    ');',
-                        (error, results, fields) => {
-                            res.redirect('/contest?result=votesuccess');
-                            connection.release();
-                            if (error) throw error;
-                    });
+                let tempPicks = [req.body.firstPick, req.body.secondPick, req.body.thirdPick, req.body.fourthPick, req.body.fifthPick];
+                let result = tempPicks.some((pick)=>{
+                    return ((tempPicks.includes(tempPicks.shift())) ? true : false);
                 });
+
+                if(!result){
+                    dbpool.getConnection( (err, connection) => {
+                        if (err) throw err;
+                        connection.query('CALL Upsert_Contest_Voting(' + dbpool.escape(req.body.contestID) +
+                                                                        ',' + dbpool.escape(req.user.steamid) + 
+                                                                        ',' + dbpool.escape(req.body.firstPick) +
+                                                                        ',' + dbpool.escape(req.body.secondPick) +
+                                                                        ',' + dbpool.escape(req.body.thirdPick) +
+                                                                        ',' + dbpool.escape(req.body.fourthPick) +
+                                                                        ',' + dbpool.escape(req.body.fifthPick) +
+                                                                        ');',
+                            (error, results, fields) => {
+                                res.redirect('/contest?result=votesuccess');
+                                connection.release();
+                                if (error) throw error;
+                        });
+                    });
+                } else {
+                    res.redirect('/contest?result=voteduplicate');
+                }
             } else {
-                res.redirect('/contest?result=voteduplicate');
+                res.redirect('/contest?result=votefail');
             }
         } else {
             res.redirect('/contest?result=votefail');
@@ -107,6 +114,36 @@ router.get('/contest/all/active', (req, res) => {
         dbpool.getConnection( (err, connection) => {
             if (err) throw err;
             connection.query('CALL Get_Active_Contest();', (error, results, fields) => {
+                connection.release();
+                if (error) throw error;
+                res.send(results);
+            });
+        });
+    } else {
+        res.send('Unauthorized Access');
+    }
+});
+//Returns back the users with a Judge role
+router.get('/contest/all/judges', (req, res) => {
+    if(req.isAuthenticated()){
+        dbpool.getConnection( (err, connection) => {
+            if (err) throw err;
+            connection.query('CALL Get_Active_Judges();', (error, results, fields) => {
+                connection.release();
+                if (error) throw error;
+                res.send(results);
+            });
+        });
+    } else {
+        res.send('Unauthorized Access');
+    }
+});
+//Returns back the oldest active contest scoring rubric
+router.get('/contest/all/rubric', (req, res) => {
+    if(req.isAuthenticated()){
+        dbpool.getConnection( (err, connection) => {
+            if (err) throw err;
+            connection.query('CALL Get_Active_Contest_Rubric();', (error, results, fields) => {
                 connection.release();
                 if (error) throw error;
                 res.send(results);

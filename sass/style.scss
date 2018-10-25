@@ -316,6 +316,29 @@
     //
     //General Contest Stuff
     //
+    .contestPageRubric {
+        padding: 5%;
+    }
+    .contestPageRubric h3, .contestPageRubric h1 {
+        color:#7392d6;
+    }
+    #judgeSection {
+        text-align: center;
+        color: oldlace;
+    }
+    #judgeSection h1 {
+        color:#7392d6;
+        font-size: 3rem;
+        margin-bottom: 5rem;
+    }
+    #judgeSection .steaminfo {
+        background-color: #3c3c3c;
+        display: block;
+        margin: 0 auto 4rem 0;
+    }
+    #judgeSection .steaminfo img {
+        margin: -1rem 0.5rem;
+    }
     #activeContest, #submitEntrySection, #howItWorkSection, #showErrorSuccess {
         padding: 5%;
         text-align: center;
@@ -324,11 +347,11 @@
         color: antiquewhite;
         font-weight: bold;
     }
-    #activeContest h1, #activeContest h2 {
-        font-family: 'MedievalSharp', cursive;
-        font-weight: bold;
+    #activeContest .Name h1{
+        color: rgb(250, 250, 250);
     }
     #activeContest h1 {
+        color:#7392d6;
         font-size: 2.5rem;
     }
     #activeContest img {
@@ -390,7 +413,7 @@
         color: darkgoldenrod;
     }
     #howItWorkSection h3 {
-        color: rgb(35, 104, 255);
+        color:#7392d6;
         letter-spacing: 0.1rem;
     }
     //
@@ -492,6 +515,10 @@
     #submissionTable h1 {
         color: whitesmoke;
         padding: 1rem;
+    }
+    #contestRubric {
+        color: oldlace;
+        font-size: 1.2rem;
     }
     #contestRubric h1 {
         text-align: center;
@@ -677,6 +704,9 @@
 @media only screen and (min-width : 2000px) {
     html {
         font-size: 20px;
+    }
+    #contestVotingContainer .votingPick {
+        font-size: 1.1rem;
     }
 }
 
