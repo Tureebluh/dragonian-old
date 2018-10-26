@@ -178,13 +178,14 @@ router.post('/create/contest', (req, res) => {
                     if(!Array.isArray(req.body.contestRules)){
                         tempArray.push(req.body.contestRules);
                     } else {
-                        tempArray.concat(req.body.contestRules);
+                        tempArray = tempArray.concat(req.body.contestRules);
                     }
                     
                     connection.query('CALL Delete_Contest_Rule_Assoc(' + dbpool.escape(req.body.contestID) + ');', (error, results, fields) => {
                         if (error) throw error;
                     });
                     tempArray.forEach(rule => {
+                        console.log(rule);
                         connection.query('CALL Insert_Contest_Rule_Assoc(' + dbpool.escape(req.body.contestID) + ',' + dbpool.escape(rule) + ');', (error, results, fields) => {
                             if (error) throw error;
                         });
@@ -199,7 +200,7 @@ router.post('/create/contest', (req, res) => {
                     if(!Array.isArray(req.body.contestCriteria)){
                         tempArray.push(req.body.contestCriteria);
                     } else {
-                        tempArray.concat(req.body.contestCriteria);
+                        tempArray = tempArray.concat(req.body.contestCriteria);
                     }
                     
                     connection.query('CALL Delete_Contest_Criteria_Assoc(' + dbpool.escape(req.body.contestID) + ');', (error, results, fields) => {
