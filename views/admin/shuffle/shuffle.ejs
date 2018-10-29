@@ -1,0 +1,59 @@
+<%- include('../../app/header') -%>
+<%- include('../../app/navbar') -%>
+<section id="showErrorSuccess"></section>
+<section class="contest-creation">
+    <h1 id="createEditShuffleHeader">Create Shuffle</h1>
+    <form action="/admin/create/shuffle" method="post" class="contest-creation-form">
+
+        <select name="shuffleID" id="shuffleNameDropdown">
+            <option value="0">Create New...</option>
+        </select>
+        <br>
+        <br>
+
+        <label for="shuffleName">Name:<br>(MAX 45 Characters)</label><br>
+        <input type="text" alt="Enter name" id="shuffleName" name="shuffleName" required/><br>
+        <br>
+        <br>
+
+        <label for="shuffleRoundOne">Round 1 Start-Date</label><br>
+        <input type="datetime-local" alt="Enter round one start date" id="shuffleRoundOne" name="shuffleRoundOne" required/><br>
+        <br>
+        <br>
+
+        <label for="shuffleRoundTwo">Round 2 Start-Date</label><br>
+        <input type="datetime-local" alt="Enter round two start date" id="shuffleRoundTwo" name="shuffleRoundTwo" required/><br>
+        <br>
+        <br>
+
+        <label for="shuffleRoundThree">Round 3 Start-Date</label><br>
+        <input type="datetime-local" alt="Enter round three start date" id="shuffleRoundThree" name="shuffleRoundThree" required/><br>
+        <br>
+        <br>
+
+        <label for="shuffleRoundFour">Round 4 Start-Date</label><br>
+        <input type="datetime-local" alt="Enter round four start date" id="shuffleRoundFour" name="shuffleRoundFour" required/><br>
+        <br>
+        <br>
+
+        <label for="shuffleEndDate">Shuffle End-Date</label><br>
+        <input type="datetime-local" alt="Enter end date" id="shuffleEndDate" name="shuffleEndDate" required/><br>
+        <br>
+        <br>
+
+        <label for="shuffleDescription">Description:<br>(MAX 5000 Characters)</label><br>
+        <textarea alt="Enter description" id="shuffleDescription" name="shuffleDescription" required></textarea><br>
+        <br>
+        <br>
+        
+        <input type="checkbox" id="shuffleActive" name="shuffleActive" disabled checked> Active<br>
+        <br>
+        <br>
+
+        <input type="submit" id="submitShuffle" alt="Create Shuffle" value="Create Shuffle" />
+        <br>
+        <br>
+        <input type="reset" alt="Reset Form" value="Reset Form" />
+    </form>
+</section>
+<%- include('../../app/bodyend') -%>

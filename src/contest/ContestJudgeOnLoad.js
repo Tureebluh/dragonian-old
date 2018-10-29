@@ -1,7 +1,7 @@
 import ContestCriteria from './ContestCriteria';
 import JudgeSubmission from './ContestJudgeSubmission';
 
-var onload = () => {
+const onload = () => {
     if(document.querySelector('#judgeTable') !== null){
         fetch('/api/contest/judge/criteria', {credentials: 'include'})
         .then(res => {

@@ -1,6 +1,6 @@
 import ContestResults from './ContestResults';
 //Adding a comment to force a rebuild
-var onload = () => {
+const onload = () => {
     fetch('/api/contest/voters/judged', {credentials: 'include'})
     .then(res => {
         return res.json();

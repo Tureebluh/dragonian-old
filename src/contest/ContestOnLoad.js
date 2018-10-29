@@ -1,6 +1,6 @@
 import Contest from './Contest';
 
-var onload = () => {
+const onload = () => {
     //If user is on contest page, load the oldest active contest and pull all rules associated with that contest.
     //Store all info in an object and call provided function to create HTML visual of data
     //NOTE: Cookies are not sent with fetch() by default, therefore {credentials} are supplied to server to authenticate fetch() request

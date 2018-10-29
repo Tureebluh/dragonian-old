@@ -1,6 +1,6 @@
 import ContestSubmission from './ContestSubmission';
 
-var onload = () => {
+const onload = () => {
     fetch('/api/contest/submissions', {credentials: 'include'})
     .then(res =>{
         return res.json();

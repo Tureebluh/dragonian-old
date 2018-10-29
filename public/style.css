@@ -247,7 +247,7 @@
     margin: 0 auto 4rem 0; }
   #judgeSection .steaminfo img {
     margin: -1rem 0.5rem; }
-  #activeContest, #submitEntrySection, #howItWorkSection, #showErrorSuccess {
+  #activeContest, #submitEntrySection, #howItWorkSection, #showErrorSuccess, #activeShuffle {
     padding: 5%;
     text-align: center;
     font-size: 1rem;
@@ -256,10 +256,10 @@
     font-weight: bold; }
   #activeContest .Name h1 {
     color: #fafafa; }
-  #activeContest h1 {
+  #activeContest h1, #activeShuffle h1 {
     color: #7392d6;
     font-size: 2.5rem; }
-  #activeContest img {
+  #activeContest img, #activeShuffle img {
     width: 100%; }
   #activeContest #twitchImg {
     width: 40%; }

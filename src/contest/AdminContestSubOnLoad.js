@@ -1,6 +1,6 @@
 import ContestOption from './ContestOption';
 
-var onload = () => {
+const onload = () => {
     const submissionDict = {};
     fetch('/admin/contest/submissions/all', {credentials: 'include'
     }).then(res => {

@@ -102,6 +102,14 @@ server.get('/contest', (req, res) => {
         res.redirect('/auth/login');
     }
 });
+//Render shuffle page
+server.get('/shuffle', (req, res) => {
+    if(req.isAuthenticated()){
+        res.render('user/shuffle/shuffle');
+    } else {
+        res.redirect('/auth/login');
+    }
+});
 //Render voting page for active contest
 server.get('/contest/vote/', (req, res) => {
     if(req.isAuthenticated()){

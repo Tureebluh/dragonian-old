@@ -13,6 +13,15 @@ router.get('/contest', (req, res) => {
     }
 });
 
+//Send Administrator to shuffle administration page for CRUD operation on shuffle
+router.get('/shuffle', (req, res) => {
+    if(req.isAuthenticated() && req.user.roles.includes('Administrator')){
+        res.render('admin/shuffle/shuffle');
+    } else {
+        res.redirect('/shuffle');
+    }
+});
+
 //Send Administrator to contest administration page for CRUD operation on contest
 router.get('/contest/submissions', (req, res) => {
     if(req.isAuthenticated() && req.user.roles.includes('Administrator')){
@@ -26,7 +35,7 @@ router.get('/contest/submissions/all', (req, res) => {
     if(req.isAuthenticated() && req.user.roles.includes('Administrator')){
         dbpool.getConnection( (err, connection) => {
             if(err) throw err;
-            connection.query('CALL Get_All_Contest_Submissions();', 
+            connection.query('CALL Get_All_Contest_Submissions();',
             (error, results, fields) => {
                 connection.release();
                 if (error) throw error;
@@ -238,6 +247,63 @@ router.post('/create/contest', (req, res) => {
 
             connection.release();
             res.redirect('/admin/contest' + '?result=success');
+        });
+    } else {
+        res.send('Unauthorized Access');
+    }
+});
+
+//Administrators can POST to this endpoint for contest creation
+router.post('/create/shuffle', (req, res) => {
+    if(req.isAuthenticated() && req.user.roles.includes('Administrator')){
+        dbpool.getConnection( (err, connection) => {
+
+            let roundOne = new Date(req.body.shuffleRoundOne.toString());
+
+            let roundTwo = new Date(req.body.shuffleRoundTwo.toString());
+
+            let roundThree = new Date(req.body.shuffleRoundThree.toString());
+
+            let roundFour = new Date(req.body.shuffleRoundFour.toString());
+
+            let endDate = new Date(req.body.shuffleEndDate.toString());
+
+            if(req.body.shuffleID > 0) {
+                connection.query('CALL Upsert_Shuffle(' + dbpool.escape(req.body.shuffleID) +
+                                                            ',' + dbpool.escape(req.body.shuffleName) +
+                                                            ',' + dbpool.escape(roundOne.toISOString().replace('T', ' ')) +
+                                                            ',' + dbpool.escape(roundTwo.toISOString().replace('T', ' ')) +
+                                                            ',' + dbpool.escape(roundThree.toISOString().replace('T', ' ')) +
+                                                            ',' + dbpool.escape(roundFour.toISOString().replace('T', ' ')) +
+                                                            ',' + dbpool.escape(endDate.toISOString().replace('T', ' ')) +
+                                                            ',' + dbpool.escape(req.body.shuffleDescription) + 
+                                                        ',' + ((typeof req.body.shuffleActive === 'undefined') ? 0 : 1) +
+                                                        ',@insertID);',
+                (error, results, fields) => {
+                    if (error) throw error;
+                });
+                
+            } else {
+                let insertID = 0;
+                connection.query('CALL Upsert_Shuffle(' + null +
+                                                            ',' + dbpool.escape(req.body.shuffleName) +
+                                                            ',' + dbpool.escape(roundOne.toISOString().replace('T', ' ')) +
+                                                            ',' + dbpool.escape(roundTwo.toISOString().replace('T', ' ')) +
+                                                            ',' + dbpool.escape(roundThree.toISOString().replace('T', ' ')) +
+                                                            ',' + dbpool.escape(roundFour.toISOString().replace('T', ' ')) +
+                                                            ',' + dbpool.escape(endDate.toISOString().replace('T', ' ')) +
+                                                            ',' + dbpool.escape(req.body.shuffleDescription) + 
+                                                        ',' + ((typeof req.body.shuffleActive === 'undefined') ? 0 : 1) +
+                                                        ',@insertID);', 
+                (error, results, fields) => {
+                    if (error) throw error;
+                });
+            }
+
+            if(err) throw err;
+
+            connection.release();
+            res.redirect('/admin/shuffle' + '?result=success');
         });
     } else {
         res.send('Unauthorized Access');

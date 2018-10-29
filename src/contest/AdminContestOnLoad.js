@@ -2,7 +2,7 @@ import ContestOption from './ContestOption';
 import ContestRule from './ContestRule';
 import ContestCriteriaOption from './ContestCriteriaOption';
 
-var onload = () => {
+const onload = () => {
     fetch('/api/contest/names/all', {credentials: 'include'})
     .then(res => {
         return res.json();

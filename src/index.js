@@ -1,7 +1,9 @@
-import CollabOnLoad from './collab/CollabOnLoad';
 import AdminContestOnLoad from './contest/AdminContestOnLoad';
 import AdminContestSubOnLoad from './contest/AdminContestSubOnLoad';
+import AdminShuffleOnLoad from './shuffle/AdminShuffleOnLoad';
 import AdminRolesOnLoad from './AdminRolesOnLoad';
+import CollabOnLoad from './collab/CollabOnLoad';
+import ShuffleOnLoad from './shuffle/ShuffleOnLoad'
 import ContestOnLoad from './contest/ContestOnLoad';
 import ContestVoteOnLoad from './contest/ContestVoteOnLoad';
 import ContestJudgeOnLoad from './contest/ContestJudgeOnLoad';
@@ -12,17 +14,17 @@ import ContestResultsOnLoad from './contest/ContestResultsOnLoad';
 //Can only have one window function in bundle.js, so we're checking the pathname to see which page the user is on
 window.onload = function(){
     /******************************************************** 
-                            COLLAB
-    *********************************************************/
-    if(window.location.pathname === "/collabs/" || window.location.pathname === "/collabs"){
-        CollabOnLoad();
-    }
-
-    /******************************************************** 
                         ADMIN-CONTEST
     *********************************************************/
     if(window.location.pathname === '/admin/contest/' || window.location.pathname === '/admin/contest'){
         AdminContestOnLoad();
+    }
+
+    /******************************************************** 
+                        ADMIN-SHUFFLE
+    *********************************************************/
+    if(window.location.pathname === '/admin/shuffle/' || window.location.pathname === '/admin/shuffle'){
+        AdminShuffleOnLoad();
     }
 
     /******************************************************** 
@@ -37,6 +39,20 @@ window.onload = function(){
     *********************************************************/
     if(window.location.pathname === '/admin/contest/submissions' || window.location.pathname === '/admin/contest/submissions/'){
         AdminContestSubOnLoad();
+    }
+
+    /******************************************************** 
+                            COLLAB
+    *********************************************************/
+    if(window.location.pathname === "/collabs/" || window.location.pathname === "/collabs"){
+        CollabOnLoad();
+    }
+
+    /******************************************************** 
+                            SHUFFLE
+    *********************************************************/
+    if(window.location.pathname === "/shuffle/" || window.location.pathname === "/shuffle"){
+        ShuffleOnLoad();
     }
 
     /******************************************************** 

@@ -2,15 +2,12 @@ import express from 'express';
 import dbpool from '../dbpool';
 
 const router = express.Router();
-//
-//          API Endpoints are Structured as /PAGE/DATA_REQUESTED/ALL_OR_SPECIFIED
-//
-/*
+
+/*********************************************************************************************************************************
 *
-*                                       CONTEST
+*                                                           CONTEST
 *
-*/
-                                                //Add restriction for admins and judges submitting
+**********************************************************************************************************************************/
 //Enters the user into the specified contest by ID
 router.post('/contest/submit/', (req, res) => {
     if(req.isAuthenticated() ){
@@ -383,12 +380,62 @@ router.post("/contest/judge/submit", (req, res) => {
         res.send('Unauthorized Access');
     }
 });
+/*********************************************************************************************************************************
+*
+*                                                           SHUFFLES
+*
+**********************************************************************************************************************************/
+//Returns back all the shuffle_ID's and Name's of all the shuffles
+router.get('/shuffle/names/all', (req, res) => {
+    if(req.isAuthenticated()){
+        dbpool.getConnection( (err, connection) => {
+            if (err) throw err;
+            connection.query('CALL Get_All_Shuffle_Names();', (error, results, fields) => {
+                connection.release();
+                if (error) throw error;
+                res.send(results);
+            });
+        });
+    } else {
+        res.send('Unauthorized Access');
+    }
+});
+//Returns back all data associated with the @param shuffleID
+router.get('/shuffle/all/:shuffleID', (req, res) => {
+    if(req.isAuthenticated()){
+        dbpool.getConnection( (err, connection) => {
+            if (err) throw err;
+            connection.query('CALL Get_Shuffle_By_ID(' + dbpool.escape(req.params.shuffleID) + ');', (error, results, fields) => {
+                connection.release();
+                if (error) throw error;
+                res.send(results);
+            });
+        });
+    } else {
+        res.send('Unauthorized Access');
+    }
+});
+//Returns back the oldest active shuffle. Could be easily changed for multiple shuffles
+router.get('/shuffle/active', (req, res) => {
+    if(req.isAuthenticated()){
+        dbpool.getConnection( (err, connection) => {
+            if (err) throw err;
+            connection.query('CALL Get_Active_Shuffle();', (error, results, fields) => {
+                connection.release();
+                if (error) throw error;
+                res.send(results);
+            });
+        });
+    } else {
+        res.send('Unauthorized Access');
+    }
+});
 
-/*
+/*********************************************************************************************************************************
 *
-*                                       COLLABORATION
+*                                                           COLLABORATIONS
 *
-*/
+**********************************************************************************************************************************/
 
 //Get Collaboration Roles that have no currently assigned team member if user is authenticated
 router.get('/collabs/all/unassignedroles', (req, res) => {

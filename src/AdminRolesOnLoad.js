@@ -1,6 +1,6 @@
 import UserOption from './UserOption';
 
-var onload = () => {
+const onload = () => {
 
     getAllJudges();
 
