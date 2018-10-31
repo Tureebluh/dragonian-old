@@ -385,6 +385,48 @@ router.post("/contest/judge/submit", (req, res) => {
 *                                                           SHUFFLES
 *
 **********************************************************************************************************************************/
+
+//Enters the user into the specified shuffle by ID
+router.post('/shuffle/submit/', (req, res) => {
+    if(req.isAuthenticated() ){
+        if(typeof req.body.verifySubmissionCB !== 'undefined'){
+            if(req.body.shuffleID && req.body.roundOne && req.body.roundTwo && req.body.roundThree && req.body.roundFour &&
+                 req.body.submissionURL.indexOf('https://steamcommunity.com/sharedfiles/filedetails/?id=') === 0){
+                let round = 0;
+                if(new Date(req.body.roundTwo) > Date.now()){
+                    round = 1;
+                } else if(new Date(req.body.roundThree) > Date.now()){
+                    round = 2;
+                } else if(new Date(req.body.roundFour) > Date.now()){
+                    round = 3;
+                } else {
+                    round = 4;
+                }
+                dbpool.getConnection( (err, connection) => {
+                    if (err) throw err;
+                    connection.query('CALL Upsert_Shuffle_Submission(' + null + 
+                                                                    ',' + dbpool.escape(req.body.shuffleID) +
+                                                                    ',' + dbpool.escape(req.user.steamid) + 
+                                                                    ',' + dbpool.escape(req.body.submissionURL) + 
+                                                                    ',' + round +
+                                                                    ');',
+                        (error, results, fields) => {
+                            res.redirect('/shuffle?result=subsuccess');
+                            connection.release();
+                            if (error) throw error;
+                    });
+                });
+            } else {
+                res.redirect('/shuffle?result=badurl');
+            }
+        } else {
+            res.redirect('/shuffle?result=noterms');
+        } 
+    } else {
+        res.send('Unauthorized Access');
+    }
+});
+
 //Returns back all the shuffle_ID's and Name's of all the shuffles
 router.get('/shuffle/names/all', (req, res) => {
     if(req.isAuthenticated()){

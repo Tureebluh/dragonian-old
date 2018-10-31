@@ -79,20 +79,48 @@ class Shuffle {
         tempString += "<br>";
         return tempString;
     }
-    entryOrVote(){
-        if(this.VoteStartDate < Date.now()){
-            let tempString = '';
-                tempString += '<form action="/contest/vote/" method="get" class="contestVotingForm">';
-                    tempString += '<input type="hidden" id="contestIDHidden" name="contestID">';
-                    tempString += '<input type="submit" alt="Go To Voting Page" value="Vote On Contest">';
-                tempString += '</form>';
-            return tempString;
+    timerDiv(){
+        let tempString = '';
 
-        } else if(this.submitted !== 1 && this.SubmissionEndDate > Date.now()){
-            let tempString = "";
-            tempString += '<h2 id="submissionHeader">Contest Entry</h2>';
-            tempString += '<form action="/api/contest/submit/" method="post" class="contestSubmissionForm">';
-                tempString += '<input type="hidden" id="contestIDHidden" name="contestID">';
+        if(this.RoundOneStart < Date.now() && this.RoundTwoStart > Date.now()){
+            let hours = ((((this.RoundTwoStart - this.RoundOneStart) / 1000) / 60) / 60);
+            tempString += hours + ' hours left to submit to this round!';
+        } else if(this.RoundTwoStart < Date.now() && this.RoundThreeStart > Date.now()){
+            
+            
+        } else if(this.RoundThreeStart < Date.now() && this.RoundFourStart > Date.now()){
+
+        } else if(this.RoundFourStart < Date.now() && this.RoundThreeStart > Date.now()){
+            
+        }
+
+        return tempString;
+    }
+    workshopDiv(){
+        let tempString = '';
+
+        if(this.RoundOneStart < Date.now() && this.RoundTwoStart > Date.now()){
+
+        } else if(this.RoundTwoStart < Date.now() && this.RoundThreeStart > Date.now()){
+            
+            
+        } else if(this.RoundThreeStart < Date.now() && this.RoundFourStart > Date.now()){
+
+        } else if(this.RoundFourStart < Date.now() && this.RoundThreeStart > Date.now()){
+            
+        }
+
+        return tempString;
+    }
+    submissionDiv(){
+        let tempString = "";
+            tempString += '<h2 id="submissionHeader">Shuffle Entry</h2>';
+            tempString += '<form action="/api/shuffle/submit/" method="post" class="contestSubmissionForm">';
+                tempString += '<input type="hidden" id="shuffleIDHidden" name="shuffleID">';
+                tempString += '<input type="hidden" id="roundOne" name="roundOne">';
+                tempString += '<input type="hidden" id="roundTwo" name="roundTwo">';
+                tempString += '<input type="hidden" id="roundThree" name="roundThree">';
+                tempString += '<input type="hidden" id="roundFour" name="roundFour">';
                 tempString += '<input type="url" id="submissionURL" name="submissionURL" placeholder="https://steamcommunity.com/sharedfiles/filedetails/?id=XXXXXXXXXX" required/>';
                 tempString += '<br>';
                 tempString += '<br>';
@@ -100,30 +128,12 @@ class Shuffle {
                     tempString += '<input type="checkbox" id="verifySubmissionCB" name="verifySubmissionCB" required> By ticking this box and clicking the button("Submit Entry"), I agree and acknowledge that this is my own work';
                     tempString += ' and is associated with this Steam&#174; account. Violating these terms will result in the immediate and irrevocable termination of my privileges on this website.<br>';
                     tempString += '<br>';
-                    tempString += '<input type="submit" id="submitContestUser" alt="Submit To Contest" value="Submit Entry">';
+                    tempString += '<input type="submit" id="submitShuffleUser" alt="Submit To Shuffle" value="Submit Entry">';
                 tempString += '</span>';
             tempString += '</form>';
-            return tempString;
-            
-        } else if(this.submitted === 1 && this.SubmissionEndDate > Date.now()){
-            let tempString = "";
-            tempString += '<h2 id="submissionHeader" class="success-notification">Awesome!<br>We have your submission!</h2>';
-            tempString += '<input type="hidden" id="contestIDHidden" name="contestID">';
-            return tempString;
-        } else if(this.SubmissionEndDate < Date.now() && this.VoteStartDate > Date.now()){
-            let tempString = "";
-            tempString += '<input type="hidden" id="contestIDHidden" name="contestID">';
-            let hoursUntil = Math.round((((this.VoteStartDate.getTime() - Date.now()) / 1000) / 60) / 60);
-            if(hoursUntil > 0){
-                hoursUntil += ' hour(s)';
-            } else {
-                hoursUntil = Math.round(((this.VoteStartDate.getTime() - Date.now()) / 1000) / 60) + ' minute(s)';
-            }
-            tempString += '<h2 id="submissionHeader">Community voting for this contest will begin in ' + hoursUntil + '.<br>Be sure to check out the stream to see all the contest submissions before the voting goes live!</h2>';
-            tempString += '<a href="https://www.twitch.tv/r3ddragons" target="_blank"><img src="img/twitch_purple_combo.svg"></a>';
-            return tempString;
-        }
+        return tempString;
     }
+
 }
 
 export default Shuffle;

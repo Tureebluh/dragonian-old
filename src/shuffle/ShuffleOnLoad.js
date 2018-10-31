@@ -26,8 +26,7 @@ const onload = () => {
                 roundThree,
                 roundFour,
                 endDate,
-                resJson[0][0].Description,
-                null
+                resJson[0][0].Description
             );
             return activeShuffle;
         } else {
@@ -37,30 +36,27 @@ const onload = () => {
     }).then(shuffleObj => {
         if(shuffleObj.hasOwnProperty('_Shuffle_ID')){
             document.querySelector('#activeShuffle').innerHTML = shuffleObj.activeDiv();
-        } else {
-            
+            document.querySelector('#submitEntrySection').innerHTML = shuffleObj.submissionDiv();
+            document.querySelector('#workshopLink').innerHTML = shuffleObj.workshopDiv();
+            document.querySelector('#nextRoundTimer').innerHTML = shuffleObj.timerDiv();
+            document.querySelector('#shuffleIDHidden').value = shuffleObj.Shuffle_ID;
+            document.querySelector('#roundOne').value = shuffleObj.RoundOneStart.toISOString();
+            document.querySelector('#roundTwo').value = shuffleObj.RoundTwoStart.toISOString();
+            document.querySelector('#roundThree').value = shuffleObj.RoundThreeStart.toISOString();
+            document.querySelector('#roundFour').value = shuffleObj.RoundFourStart.toISOString();
         }
     }).catch(error => console.error(error));
 
     if(document.URL.indexOf('result=subsuccess') !== -1){
         document.querySelector('#showErrorSuccess').innerHTML = 
-            '<h1 class="success-notification">Contest entry successfully submitted. Thank you for participating in the contest!</h1>';
+            '<h1 class="success-notification">Shuffle entry successfully submitted. Thank you for participating in the shuffle!</h1>';
     } else if (document.URL.indexOf('result=badurl') !== -1){
         document.querySelector('#showErrorSuccess').innerHTML = 
             '<h1 class="error-notification">The workshop link entered is not a valid workshop link. Please fix any issues with the link and try submitting again.</h1>';
     } else if (document.URL.indexOf('result=noterms') !== -1){
         document.querySelector('#showErrorSuccess').innerHTML = 
-            '<h1 class="error-notification">You must agree to the terms of the contest by ticking the box at the bottom of the page. ' +
+            '<h1 class="error-notification">You must agree to the terms of the shuffle by ticking the box at the bottom of the page. ' +
             'Failure to agree to the terms will result in your submission not being entered.</h1>';
-    } else if (document.URL.indexOf('result=votesuccess') !== -1){
-        document.querySelector('#showErrorSuccess').innerHTML = 
-            '<h1 class="success-notification">Your contest votes have been successfully submitted. Thank you for participating in the voting process!</h1>';
-    } else if (document.URL.indexOf('result=votefail') !== -1){
-        document.querySelector('#showErrorSuccess').innerHTML = 
-            '<h1 class="error-notification">Oops! Something went wrong with your voting selections. Please visit the voting page and try again.</h1>';
-    } else if (document.URL.indexOf('result=voteduplicate') !== -1){
-        document.querySelector('#showErrorSuccess').innerHTML = 
-            '<h1 class="error-notification">You cannot vote for the same submission more than once. Please visit the voting page and try again.</h1>';
     }
 }
 
