@@ -1,6 +1,5 @@
 import express from 'express';
 import dbpool from '../dbpool';
-import { connect } from 'http2';
 
 const router = express.Router();
 

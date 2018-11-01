@@ -80,47 +80,109 @@ class Shuffle {
         return tempString;
     }
     timerDiv(){
-        let tempString = '';
-
+        let tempString = '<h2><strong>';
+        
+        //First Round
         if(this.RoundOneStart < Date.now() && this.RoundTwoStart > Date.now()){
-            let hours = ((((this.RoundTwoStart - this.RoundOneStart) / 1000) / 60) / 60);
-            tempString += hours + ' hours left to submit to this round!';
+            let hoursUntil = Math.round((((this.RoundTwoStart.getTime() - Date.now()) / 1000) / 60) / 60);
+            if(hoursUntil > 0){
+                hoursUntil += ' hour(s) ';
+            } else {
+                hoursUntil = Math.round(((this.RoundTwoStart.getTime() - Date.now()) / 1000) / 60) + ' minute(s) ';
+            }
+            tempString += hoursUntil + 'left in <br>Round 1!</h2></strong>';
+        
+        //Second Round
         } else if(this.RoundTwoStart < Date.now() && this.RoundThreeStart > Date.now()){
-            
-            
+            let hoursUntil = Math.round((((this.RoundThreeStart.getTime() - Date.now()) / 1000) / 60) / 60);
+            if(hoursUntil > 0){
+                hoursUntil += ' hour(s) ';
+            } else {
+                hoursUntil = Math.round(((this.RoundThreeStart.getTime() - Date.now()) / 1000) / 60) + ' minute(s) ';
+            }
+            tempString += hoursUntil + 'left in <br>Round 2!</h2></strong>';
+        
+        //Third Round
         } else if(this.RoundThreeStart < Date.now() && this.RoundFourStart > Date.now()){
-
-        } else if(this.RoundFourStart < Date.now() && this.RoundThreeStart > Date.now()){
-            
+            let hoursUntil = Math.round((((this.RoundFourStart.getTime() - Date.now()) / 1000) / 60) / 60);
+            if(hoursUntil > 0){
+                hoursUntil += ' hour(s) ';
+            } else {
+                hoursUntil = Math.round(((this.RoundFourStart.getTime() - Date.now()) / 1000) / 60) + ' minute(s) ';
+            }
+            tempString += hoursUntil + 'left in <br>Round 3!</h2></strong>';
+        
+        //Final Round
+        } else if(this.RoundFourStart < Date.now() && this.EndDate > Date.now()){
+            let hoursUntil = Math.round((((this.EndDate.getTime() - Date.now()) / 1000) / 60) / 60);
+            if(hoursUntil > 0){
+                hoursUntil += ' hour(s) ';
+            } else {
+                hoursUntil = Math.round(((this.EndDate.getTime() - Date.now()) / 1000) / 60) + ' minute(s) ';
+            }
+            tempString += hoursUntil + 'left in <br>Round 4!</h2></strong>';
+        
         }
 
         return tempString;
     }
     workshopDiv(){
-        let tempString = '';
+        if(this.RoundTwoStart < Date.now()){
+            let tempString = '';
 
-        if(this.RoundOneStart < Date.now() && this.RoundTwoStart > Date.now()){
-
-        } else if(this.RoundTwoStart < Date.now() && this.RoundThreeStart > Date.now()){
-            
-            
-        } else if(this.RoundThreeStart < Date.now() && this.RoundFourStart > Date.now()){
-
-        } else if(this.RoundFourStart < Date.now() && this.RoundThreeStart > Date.now()){
-            
+            let payload = {
+                shuffleID: this._Shuffle_ID
+            };
+            fetch('/api/shuffle/getpick/', {
+                credentials: 'include',
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(payload)
+            }).then(res => {
+                return res.json();
+            }).then(resJson => {
+                if(resJson.results === 'Success'){
+                    payload = {
+                        shuffleID: this._Shuffle_ID
+                    };
+                    fetch('/api/shuffle/workshop/random', {
+                        credentials: 'include',
+                        method: 'POST',
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(payload)
+                    }).then(res => {
+                        return res.json();
+                    }).then(resJson => {
+                        if(typeof resJson[0] !== 'undefined'){
+                            tempString += '<a target="_BLANK" href="';
+                            if(this.RoundOneStart < Date.now() && this.RoundTwoStart > Date.now()){
+                                
+                            } else if(this.RoundTwoStart < Date.now() && this.RoundThreeStart > Date.now()){
+                                tempString += resJson[0][0]['r1_workshop_URL'] + '">Round 2 ';
+                            } else if(this.RoundThreeStart < Date.now() && this.RoundFourStart > Date.now()){
+                                tempString += resJson[0][0]['r2_workshop_URL'] + '">Round 3 ';
+                            } else if(this.RoundFourStart < Date.now() && this.RoundThreeStart > Date.now()){
+                                tempString += resJson[0][0]['r3_workshop_URL'] + '">Round 4 ';
+                            }
+                            tempString += ' - Random Link</a>';
+                            document.querySelector('#workshopLink').innerHTML = tempString;
+                        }
+                    }).catch(error => console.error(error));
+                }
+            }).catch(error => console.error(error));
         }
-
-        return tempString;
     }
     submissionDiv(){
         let tempString = "";
             tempString += '<h2 id="submissionHeader">Shuffle Entry</h2>';
             tempString += '<form action="/api/shuffle/submit/" method="post" class="contestSubmissionForm">';
                 tempString += '<input type="hidden" id="shuffleIDHidden" name="shuffleID">';
-                tempString += '<input type="hidden" id="roundOne" name="roundOne">';
-                tempString += '<input type="hidden" id="roundTwo" name="roundTwo">';
-                tempString += '<input type="hidden" id="roundThree" name="roundThree">';
-                tempString += '<input type="hidden" id="roundFour" name="roundFour">';
                 tempString += '<input type="url" id="submissionURL" name="submissionURL" placeholder="https://steamcommunity.com/sharedfiles/filedetails/?id=XXXXXXXXXX" required/>';
                 tempString += '<br>';
                 tempString += '<br>';

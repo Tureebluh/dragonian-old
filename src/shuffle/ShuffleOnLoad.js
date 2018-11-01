@@ -37,13 +37,14 @@ const onload = () => {
         if(shuffleObj.hasOwnProperty('_Shuffle_ID')){
             document.querySelector('#activeShuffle').innerHTML = shuffleObj.activeDiv();
             document.querySelector('#submitEntrySection').innerHTML = shuffleObj.submissionDiv();
-            document.querySelector('#workshopLink').innerHTML = shuffleObj.workshopDiv();
             document.querySelector('#nextRoundTimer').innerHTML = shuffleObj.timerDiv();
             document.querySelector('#shuffleIDHidden').value = shuffleObj.Shuffle_ID;
-            document.querySelector('#roundOne').value = shuffleObj.RoundOneStart.toISOString();
-            document.querySelector('#roundTwo').value = shuffleObj.RoundTwoStart.toISOString();
-            document.querySelector('#roundThree').value = shuffleObj.RoundThreeStart.toISOString();
-            document.querySelector('#roundFour').value = shuffleObj.RoundFourStart.toISOString();
+            shuffleObj.workshopDiv();
+        }  else {
+            let tempString = '';
+            tempString += 'Looks like the shuffle has ended. Be sure to check out the live stream for future website announcements and more!<br>';
+            tempString += '<a href="https://www.twitch.tv/r3ddragons" target="_blank"><img src="img/twitch_purple_combo.svg"></a>';
+            document.querySelector('#activeShuffle').innerHTML = tempString;
         }
     }).catch(error => console.error(error));
 

@@ -247,13 +247,22 @@
     margin: 0 auto 4rem 0; }
   #judgeSection .steaminfo img {
     margin: -1rem 0.5rem; }
-  #activeContest, #submitEntrySection, #howItWorkSection, #showErrorSuccess, #activeShuffle {
+  #activeContest, #submitEntrySection, #howItWorkSection, #showErrorSuccess, #activeShuffle, #nextRoundTimer, #workshopLink {
     padding: 5%;
     text-align: center;
-    font-size: 1rem;
+    font-size: 1.2rem;
     background-color: #3c3c3c;
     color: antiquewhite;
     font-weight: bold; }
+  #activeShuffle a img {
+    width: 50%; }
+  #workshopLink a {
+    font-size: 1.5rem;
+    color: #7392d6;
+    text-decoration: none;
+    cursor: pointer;
+    border: white 3px dotted;
+    padding: 0.5rem; }
   #activeContest .Name h1 {
     color: #fafafa; }
   #activeContest h1, #activeShuffle h1 {

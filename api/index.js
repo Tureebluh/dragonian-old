@@ -390,25 +390,12 @@ router.post("/contest/judge/submit", (req, res) => {
 router.post('/shuffle/submit/', (req, res) => {
     if(req.isAuthenticated() ){
         if(typeof req.body.verifySubmissionCB !== 'undefined'){
-            if(req.body.shuffleID && req.body.roundOne && req.body.roundTwo && req.body.roundThree && req.body.roundFour &&
-                 req.body.submissionURL.indexOf('https://steamcommunity.com/sharedfiles/filedetails/?id=') === 0){
-                let round = 0;
-                if(new Date(req.body.roundTwo) > Date.now()){
-                    round = 1;
-                } else if(new Date(req.body.roundThree) > Date.now()){
-                    round = 2;
-                } else if(new Date(req.body.roundFour) > Date.now()){
-                    round = 3;
-                } else {
-                    round = 4;
-                }
+            if(req.body.shuffleID && req.body.submissionURL.indexOf('https://steamcommunity.com/sharedfiles/filedetails/?id=') === 0){
                 dbpool.getConnection( (err, connection) => {
                     if (err) throw err;
-                    connection.query('CALL Upsert_Shuffle_Submission(' + null + 
-                                                                    ',' + dbpool.escape(req.body.shuffleID) +
+                    connection.query('CALL Upsert_Shuffle_Submission(' + dbpool.escape(req.body.shuffleID) +
                                                                     ',' + dbpool.escape(req.user.steamid) + 
-                                                                    ',' + dbpool.escape(req.body.submissionURL) + 
-                                                                    ',' + round +
+                                                                    ',' + dbpool.escape(req.body.submissionURL) +
                                                                     ');',
                         (error, results, fields) => {
                             res.redirect('/shuffle?result=subsuccess');
@@ -426,7 +413,66 @@ router.post('/shuffle/submit/', (req, res) => {
         res.send('Unauthorized Access');
     }
 });
-
+//Enters the user into the specified shuffle by ID
+router.post('/shuffle/getpick/', (req, res) => {
+    if(req.isAuthenticated() ){
+            if(req.body.shuffleID){
+                dbpool.getConnection( (err, connection) => {
+                    if (err) throw err;
+                    connection.query('CALL Upsert_Shuffle_Submission(' + dbpool.escape(req.body.shuffleID) +
+                                                                    ',' + dbpool.escape(req.user.steamid) + 
+                                                                    ',' + null +
+                                                                    ');',
+                        (error, results, fields) => {
+                            res.send({results: 'Success'});
+                            connection.release();
+                            if (error) throw error;
+                    });
+                });
+            } else {
+                res.send({results: 'Failed'});
+            }
+    } else {
+        res.send('Unauthorized Access');
+    }
+});
+//Returns back the workshopURL for that round
+router.post('/shuffle/workshop/random', (req, res) => {
+    if(req.isAuthenticated()){
+        if(req.body.shuffleID){
+            dbpool.getConnection( (err, connection) => {
+                if (err) throw err;
+                connection.query('CALL Get_Shuffle_Link('   + dbpool.escape(req.user.steamid) +
+                                                        ',' + dbpool.escape(req.body.shuffleID) +
+                                                        ');',
+                    (error, results, fields) => {
+                        connection.release();
+                        if (error) throw error;
+                        res.send(results);
+                });
+            });
+        } else {
+            res.send({});
+        }
+    } else {
+        res.send('Unauthorized Access');
+    }
+});
+//Returns back all the shuffle_ID's and Name's of all the shuffles
+router.get('/shuffle/names/all', (req, res) => {
+    if(req.isAuthenticated()){
+        dbpool.getConnection( (err, connection) => {
+            if (err) throw err;
+            connection.query('CALL Get_All_Shuffle_Names();', (error, results, fields) => {
+                connection.release();
+                if (error) throw error;
+                res.send(results);
+            });
+        });
+    } else {
+        res.send('Unauthorized Access');
+    }
+});
 //Returns back all the shuffle_ID's and Name's of all the shuffles
 router.get('/shuffle/names/all', (req, res) => {
     if(req.isAuthenticated()){
