@@ -80,7 +80,7 @@ class Shuffle {
         return tempString;
     }
     timerDiv(){
-        let tempString = '<h2><strong>';
+        let tempString = '<h2 id="timeRemaining"><strong>';
         
         //First Round
         if(this.RoundOneStart < Date.now() && this.RoundTwoStart > Date.now()){

@@ -1,9 +1,8 @@
-@import url("https://fonts.googleapis.com/css?family=MedievalSharp");
 /* Extra Small Mobile Devices */
 @media only screen and (min-width: 320px) {
-  /*
+  /*********************************************
 ********************GENERAL*******************
-*/
+*********************************************/
   *, *:before, *:after {
     box-sizing: border-box; }
   html {
@@ -38,8 +37,12 @@
     opacity: 0.4;
     overflow: hidden; }
   .opened {
-    height: 100% !important;
+    height: 80rem !important;
     opacity: 1 !important; }
+  #inDepth {
+    -webkit-transition: height 2s, opacity 1s ease-out;
+    -ms-transition: height 2s, opacity 1s ease-out;
+    transition: height 2s, opacity 1s ease-out; }
   .italic {
     font-style: italic !important; }
   .bold {
@@ -61,9 +64,9 @@
     display: block;
     margin: 0 auto;
     max-width: 100%; }
-  /*
-********************NAVBAR*******************
-*/
+  /*********************************************
+********************NAVBAR********************
+*********************************************/
   .navbar {
     text-align: center;
     background-color: #1f1d1d;
@@ -106,13 +109,13 @@
     background-color: orange; }
   .show {
     display: block; }
-  /*
-*******************USER PANEL*******************
-*/
+  /*********************************************
+********************USER PANEL****************
+*********************************************/
   .welcome, .steaminfo {
     text-align: center;
     font-weight: bold;
-    font-family: 'MedievalSharp', cursive;
+    font-family: Georgia, 'Times New Roman', Times, serif;
     font-size: 1.8rem;
     background-color: darkred;
     color: whitesmoke; }
@@ -181,16 +184,16 @@
     color: black; }
   .patreon img {
     max-height: 10rem; }
-  /*
-**********************COLLAB PAGE*******************
-*/
+  /*********************************************
+*****************COLLAB PAGE******************
+*********************************************/
   #collabsDiv {
     text-align: center;
     background-color: darkred;
     color: white; }
-  /*
-**********************ADMIN CONTEST CREATE/EDIT PAGE*******************
-*/
+  /*********************************************
+*************ADMIN MANAGE CONTEST*************
+*********************************************/
   .contest-creation {
     width: 100%;
     padding: 3rem;
@@ -219,17 +222,24 @@
   .contest-creation-form input[type="reset"] {
     background-color: red;
     color: whitesmoke; }
-  #contestDescription {
+  #contestDescription, #shuffleDescription {
     width: 100%;
     height: 50vh; }
   #contestCriteriaDropdown, #contestRulesDropdown, #addJudgeDropdown, #removeJudgeDropdown {
     height: auto; }
-  /*
-**********************ADMIN MANAGE ROLES PAGE*******************
-*/
-  /*
-**********************ACTIVE CONTEST PAGE*******************
-*/
+  /*********************************************
+******ADMIN MANAGE CONTEST SUBMISSIONS********
+*********************************************/
+  #submissionTable #adminTable td select {
+    width: 10rem; }
+  #submissionTable #adminTable #contestUserPic {
+    width: 3rem; }
+  #submissionTable #adminTable #contestSubmissionURL {
+    color: orangered;
+    text-decoration: none; }
+  /*********************************************
+****************CONTEST PAGE******************
+*********************************************/
   .contestPageRubric {
     padding: 5%; }
   .contestPageRubric h3, .contestPageRubric h1 {
@@ -253,7 +263,7 @@
     font-size: 1.2rem;
     background-color: #3c3c3c;
     color: antiquewhite;
-    font-weight: bold; }
+    font-weight: 400; }
   #activeShuffle a img {
     width: 50%; }
   #workshopLink a {
@@ -264,7 +274,7 @@
     border: white 3px dotted;
     padding: 0.5rem; }
   #activeContest .Name h1 {
-    color: #fafafa; }
+    color: white; }
   #activeContest h1, #activeShuffle h1 {
     color: #7392d6;
     font-size: 2.5rem; }
@@ -302,7 +312,7 @@
     border-top: none;
     border-radius: 0 0 1rem 1rem;
     margin: 0 auto 6rem auto;
-    width: 50%;
+    width: 35%;
     cursor: pointer; }
   #howItWorkSection #contestInDepth {
     transition: opacity 1s ease; }
@@ -312,6 +322,10 @@
   #howItWorkSection h3 {
     color: #7392d6;
     letter-spacing: 0.1rem; }
+  .Description ul {
+    text-align: left;
+    color: #7392d6;
+    margin: 2rem; }
   #submitEntrySection, #howItWorkSection {
     padding: 5%; }
   #submitEntrySection h2 {
@@ -322,9 +336,9 @@
     padding: 0.5rem; }
   #submitEntrySection img {
     width: 50%; }
-  /*
-**********************ACTIVE CONTEST VOTING PAGE*******************
-*/
+  /*********************************************
+************CONTEST VOTING PAGE***************
+*********************************************/
   .contestVotingForm input[type='submit'] {
     font-size: 1.2rem;
     padding: 5%;
@@ -375,9 +389,9 @@
     color: white;
     text-decoration: none;
     font-size: 1.5rem; }
-  /*
-**********************ACTIVE CONTEST JUDGING PAGE*******************
-*/
+  /*********************************************
+************CONTEST JUDGING PAGE**************
+*********************************************/
   #submissionTable {
     font-family: Georgia, 'Times New Roman', Times, serif;
     overflow-x: auto;
@@ -413,19 +427,9 @@
     margin: 1rem 25%;
     width: 50%;
     padding: 1rem; }
-  /*
-**********************ACTIVE CONTEST SUBMISSIONS PAGE*******************
-*/
-  #submissionTable #adminTable td select {
-    width: 10rem; }
-  #submissionTable #adminTable #contestUserPic {
-    width: 3rem; }
-  #submissionTable #adminTable #contestSubmissionURL {
-    color: orangered;
-    text-decoration: none; }
-  /*
-**********************ACTIVE CONTEST RESULTS PAGE*******************
-*/
+  /*********************************************
+***********CONTEST RESULTS PAGE***************
+*********************************************/
   #contestResultsContainer {
     font-family: Georgia, 'Times New Roman', Times, serif;
     overflow-x: auto;
@@ -442,7 +446,7 @@
     margin-top: 2rem;
     width: 100%; }
   #contestResultsTable th {
-    background: skyblue;
+    background: #7392d6;
     word-wrap: normal;
     white-space: normal;
     padding: 0.2rem;
@@ -477,12 +481,18 @@
     background-color: darkgoldenrod; } }
 
 /* Large Mobile Devices */
+@media only screen and (min-width: 375px) {
+  .opened {
+    height: 70rem !important; } }
+
 /* Large Mobile Devices */
 /* Extra-Large Mobile Devices */
 /* Small Devices, Tablets */
 @media only screen and (min-width: 768px) {
   html {
     font-size: 22px; }
+  .opened {
+    height: 65rem !important; }
   .steaminfo {
     height: auto;
     line-height: 3rem; }

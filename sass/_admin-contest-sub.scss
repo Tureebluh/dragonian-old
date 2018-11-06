@@ -1,0 +1,13 @@
+/*********************************************
+******ADMIN MANAGE CONTEST SUBMISSIONS********
+*********************************************/
+#submissionTable #adminTable td select {
+    width: 10rem;
+}
+#submissionTable #adminTable #contestUserPic {
+    width: 3rem;
+}
+#submissionTable #adminTable #contestSubmissionURL {
+    color: orangered;
+    text-decoration: none;
+}

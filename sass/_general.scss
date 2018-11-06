@@ -1,0 +1,87 @@
+/*********************************************
+********************GENERAL*******************
+*********************************************/
+*,*:before,*:after {
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 16px;
+    background-color: $main-bg-color;
+}
+
+body {
+    max-width: 40em;
+    margin: 0 auto;
+    overflow-x: none;
+}
+footer {
+    text-align: center;
+    width: 100%;
+    color: oldlace;
+    padding: 5%;
+}
+footer a {
+    text-decoration: none;
+    color: orangered;
+}
+
+#backToTop {
+    display: none;
+    bottom: 1%;
+    right: 1%;
+    position: fixed;
+    float: right;
+    height: 2rem;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    background-color: $dark-red-orange;
+    color: white;
+}
+
+.closed {
+    height: 4rem;
+    opacity: 0.4;
+    overflow: hidden;
+}
+.opened {
+    height: 80rem!important;
+    opacity: 1!important;
+}
+#inDepth {
+    @include transition(height 2s, opacity 1s ease-out);
+}
+
+.italic {
+    font-style: italic!important;
+}
+.bold {
+    font-weight: bold!important;
+}
+
+.success-notification {
+    background-color: $success-color;
+}
+.error-notification {
+    background-color: $error-color;
+}
+
+.jump-to-icon {
+    background: url('img/forward.png');
+    background-size: 100% 100%;
+    max-width: 50%;
+}
+
+#privacyPolicy, #termsOfUse, #failedLogin {
+    color: whitesmoke;
+    text-align: center;
+    padding: 3%;
+    font-size: 1.3rem;
+}
+
+#failedLogin .steam-privacy {
+    display: block;
+    margin: 0 auto;
+    max-width: 100%;
+}

@@ -1,0 +1,102 @@
+/*********************************************
+********************USER PANEL****************
+*********************************************/
+.welcome, .steaminfo {
+    text-align: center;
+    font-weight: bold;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: 1.8rem;
+    background-color: darkred;
+    color: whitesmoke;
+}
+.steaminfo {
+    width: 100%;
+    display: flex;
+    line-height: 4rem;
+}
+.steaminfo img {
+    width: 4rem;
+    height: 4rem;
+}
+
+.userbanner .controlPanel .steaminfo .logoutBtn {
+    float: right;
+}
+.userbanner {
+    background-color: darkred;
+    width: 100%;
+    padding: 1rem;
+    text-align: center;
+}
+.userbanner > img {
+    width: 50%;
+    margin: 5% 20% 0 20%;
+}
+.userbanner .controlPanel, .userbanner .controlPanel .logoutBtn {
+    width: 100%;
+    padding: 5% 0;
+}
+.userbanner .controlPanel, .userbanner .controlPanel .logoutBtn input{
+    float: right;
+}
+.userSubmitBtn {
+    width: 75%;
+    margin: 0 auto;
+}
+.userSubmitBtn input{
+    width: 100%;
+    font-size: 0.9rem;
+    background-color: darkslategrey;
+    color: white;
+    border-radius: 5px;
+}
+
+.loginbanner {
+    background-color: darkred;
+    width: 100%;
+    padding: 1rem;
+}
+.loginbanner img {
+    max-width: 35%;
+}
+
+.loginBtn input, .logoutBtn input {
+    font-size: 1.2rem;
+    background-color: darkslategrey;
+    color: white;
+}
+
+.infopanel {
+    width: 100%;
+    padding: 1rem 10%;
+    line-height: 2rem;
+    text-align: center;
+    font-weight: bold;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: 1.5rem;
+    color: whitesmoke;
+}
+.discord {
+    background-color: orange;
+}
+.discord img {
+    max-width: 15rem;
+}
+
+.twitch {
+    background-color: darkorange;
+}
+.twitch img{
+    max-width: 10rem;
+    margin-bottom: 1.5rem;
+}
+
+.patreon {
+    background-color: rgb(249, 104, 84);
+}
+.patreon h1 {
+    color: black;
+}
+.patreon img {
+    max-height: 10rem;
+}

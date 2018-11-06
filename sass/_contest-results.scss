@@ -1,0 +1,65 @@
+/*********************************************
+***********CONTEST RESULTS PAGE***************
+*********************************************/
+#contestResultsContainer {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    overflow-x: auto;
+    white-space: nowrap;
+    text-align: center;
+}
+.disclaimer {
+    text-align: center;
+    color: whitesmoke;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: 0.9rem;
+    width: 75%;
+    margin: 0 auto;
+}
+#contestResultsTable {
+    margin-top: 2rem;
+    width: 100%;
+}
+#contestResultsTable th {
+    background: $text-blue-color;
+    word-wrap: normal;
+    white-space: normal;
+    padding: 0.2rem;
+    vertical-align: middle;
+}
+#contestResultsTable td {
+    padding: 0 1rem;
+    border-bottom: 1px black solid;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-weight: bold;
+    text-align: center;
+    font-size: 0.9rem;
+}
+#contestResultsTable td a {
+    text-decoration: none;
+}
+#contestResultsTable td span {
+    height: 100%;
+    line-height: 100%;
+}
+#contestResultsTable td span > img {
+    height: 2rem;
+    vertical-align: middle;
+    margin: 0.2rem;
+}
+#contestResultsTable tr:nth-of-type(1) td {
+    font-size: 1.3rem;
+    background-color: $first-place-color; //First place
+}
+#contestResultsTable tr:nth-of-type(1) td span > img {
+    height: 4rem;
+}
+#contestResultsTable tr:nth-of-type(2) td {
+    font-size: 1.1rem;
+    background-color: lightgrey;        //Second place
+}
+#contestResultsTable tr:nth-of-type(2) td span > img {
+    height: 3rem;
+}
+#contestResultsTable tr:nth-of-type(3) td {
+    background-color: darkgoldenrod;    //Third place
+}

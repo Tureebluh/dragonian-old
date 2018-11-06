@@ -1,0 +1,144 @@
+/*********************************************
+****************CONTEST PAGE******************
+*********************************************/
+    //
+    //General Contest Stuff
+    //
+    .contestPageRubric {
+        padding: 5%;
+    }
+    .contestPageRubric h3, .contestPageRubric h1 {
+        color: $text-blue-color;
+    }
+    #judgeSection {
+        text-align: center;
+        color: oldlace;
+    }
+    #judgeSection h1 {
+        color: $text-blue-color;
+        font-size: 3rem;
+        margin-bottom: 5rem;
+    }
+    #judgeSection .steaminfo {
+        background-color: $main-bg-color;
+        display: block;
+        margin: 0 auto 4rem 0;
+    }
+    #judgeSection .steaminfo img {
+        margin: -1rem 0.5rem;
+    }
+    #activeContest, #submitEntrySection, #howItWorkSection, #showErrorSuccess, #activeShuffle, #nextRoundTimer, #workshopLink {
+        padding: 5%;
+        text-align: center;
+        font-size: 1.2rem;
+        background-color: $main-bg-color;
+        color: antiquewhite;
+        font-weight: 400;
+    }
+    #activeShuffle a img {
+        width: 50%;
+    }
+    #workshopLink a {
+        font-size: 1.5rem;
+        color: $text-blue-color;
+        text-decoration: none;
+        cursor: pointer;
+        border: white 3px dotted;
+        padding: 0.5rem;
+    }
+    #activeContest .Name h1{
+        color: white;
+    }
+    #activeContest h1, #activeShuffle h1{
+        color: $text-blue-color;
+        font-size: 2.5rem;
+    }
+    #activeContest img , #activeShuffle img{
+        width: 100%;
+    }
+    #activeContest #twitchImg {
+        width: 40%;
+    }
+    #activeContest .contest-banner-container {
+        background: url('img/contest_banner.png');
+        background-size: 100% 100%;
+        padding: 2.5%;
+    }
+    #activeContest .sml-container {
+        width: 100%;
+        height: 20vh;
+    }
+    #activeContest .sml-container span {
+        max-width: 47.5%;
+    }
+    #activeContest .sml-container span:nth-of-type(1) {
+        float: left;
+    }
+    #activeContest .sml-container span:nth-of-type(2) {
+        float: right;
+    }
+    #activeContest .sml-container span:nth-of-type(3) {
+        float: left;
+    }
+    #activeContest .sml-container span:nth-of-type(4) {
+        float: right;
+    }
+    #activeContest #rulesDiv {
+        text-align: left;
+        padding: 0 5%;
+    }
+    #activeContest #rulesDiv .rule {
+        font-size: 1.5rem;
+        margin-top: 5%;
+    }
+    //
+    //How It Works Section
+    //
+    #howItWorkSection #learnMore {
+        padding: 1rem;
+        border: 0.2rem solid $near-black;
+        box-shadow: 0 0.6rem 1.5rem 0.1rem $light-gold;
+        border-top: none;
+        border-radius: 0 0 1rem 1rem;
+        margin: 0 auto 6rem auto;
+        width: 35%;
+        cursor: pointer;
+    }
+    #howItWorkSection #contestInDepth {
+        transition: opacity 1s ease;
+    }
+    #howItWorkSection a {
+        text-decoration: none;
+        color: darkgoldenrod;
+    }
+    #howItWorkSection h3 {
+        color: $text-blue-color;
+        letter-spacing: 0.1rem;
+    }
+    //
+    // Description
+    //
+    .Description ul {
+        text-align: left;
+        color: $text-blue-color;
+        margin: 2rem;
+    }
+
+    //
+    //Submit Section
+    //
+    #submitEntrySection, #howItWorkSection {
+        padding: 5%;
+    }
+    #submitEntrySection h2 {
+        font-size: 1.5rem;
+    }
+    #submitEntrySection #submissionURL {
+        width: 100%;
+    }
+    #submitEntrySection #submitContestUser {
+        padding: 0.5rem;
+    }
+    #submitEntrySection img {
+        width: 50%;
+    }

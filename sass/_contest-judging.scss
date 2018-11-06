@@ -1,0 +1,48 @@
+/*********************************************
+************CONTEST JUDGING PAGE**************
+*********************************************/
+#submissionTable {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    overflow-x: auto;
+    white-space: nowrap;
+    text-align: center;
+}
+#submissionTable h1 {
+    color: whitesmoke;
+    padding: 1rem;
+}
+#contestRubric {
+    color: oldlace;
+    font-size: 1.2rem;
+}
+#contestRubric h1 {
+    text-align: center;
+}
+#submissionTable table {
+    width: 100%;
+}
+#submissionTable table th {
+    background: lightgrey;
+    padding: 0 0.5rem;
+    white-space: nowrap;
+}
+#submissionTable table td {
+    padding: 0.5rem 0;
+    border-bottom: 1px black solid;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-weight: bold;
+    text-align: center;
+}
+#submissionTable table td > input {
+    width: 2.5rem;
+}
+#submissionTable table select {
+    width: 3rem;
+    font-weight: bold;
+    font-size: 1rem;
+}
+#submitBtnContainer input[type="submit"] {
+    margin: 1rem 25%;
+    width: 50%;
+    padding: 1rem;
+}
