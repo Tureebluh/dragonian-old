@@ -1,21 +1,41 @@
 <%- include('../app/header') -%>
 <%- include('../app/navbar') -%>
 <section id="showErrorSuccess"></section>
+
 <section id="manageJudgesContainer" class="contest-creation">
     <form action="/admin/add/judges" method="post" class="contest-creation-form" id="addJudgeForm">
         <h1 id="manageJudgesHeader">Add Judge</h1>
-        <input type="text" id="searchUsers" placeholder="Search users..."/>
+        <input type="text" id="searchUsersJudge" placeholder="Search users..."/>
         <select name="users" id="addJudgeDropdown" size="10" required></select>
         <br>
         <br>
         <input type="submit" id="submitJudges" alt="Submit Judges" value="Submit Judges" />
     </form>
     <form action="/admin/remove/judges" method="post" class="contest-creation-form" id="removeJudgeForm">
-        <h1 id="manageJudgesHeader">Remove Judges</h1>
+        <h1 id="manageJudgesHeader">Remove Judge</h1>
         <select name="users" id="removeJudgeDropdown" size="10" multiple required></select>
         <br>
         <br>
         <input style="background-color: red;" type="submit" id="removeJudges" alt="Remove Judges" value="Remove Judges" />
     </form>
 </section>
+
+<section id="manageShuffleBanContainer" class="contest-creation">
+    <form action="/admin/add/shuffleban" method="post" class="contest-creation-form" id="addShuffleBanForm">
+        <h1 id="manageShuffleBanHeader">Apply Shuffle Ban</h1>
+        <input type="text" id="searchUsersShuffle" placeholder="Search users..."/>
+        <select name="users" id="addShuffleBanDropdown" size="10" required></select>
+        <br>
+        <br>
+        <input type="submit" id="submitShuffleBan" alt="Submit Shuffle Ban" value="Submit Shuffle Ban" />
+    </form>
+    <form action="/admin/remove/shuffleban" method="post" class="contest-creation-form" id="removeShuffleBanForm">
+        <h1 id="manageShuffleBanHeader">Remove Shuffle Ban</h1>
+        <select name="users" id="removeShuffleBanDropdown" size="10" multiple required></select>
+        <br>
+        <br>
+        <input style="background-color: red;" type="submit" id="removeShuffleBan" alt="Remove Shuffle Ban" value="Remove Shuffle Ban" />
+    </form>
+</section>
+
 <%- include('../app/bodyend') -%>

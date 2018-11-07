@@ -46,7 +46,11 @@ const onload = () => {
             tempString += '<a href="https://www.twitch.tv/r3ddragons" target="_blank"><img src="img/twitch_purple_combo.svg"></a>';
             document.querySelector('#activeShuffle').innerHTML = tempString;
         }
-    }).catch(error => console.error(error));
+    }).catch(error => {
+        document.querySelector('#showErrorSuccess').innerHTML = 
+            '<h1 class="error-notification">Unauthorized Access. Please contact the administrator.</h1>';
+        console.error(error);
+    });
 
     if(document.URL.indexOf('result=subsuccess') !== -1){
         document.querySelector('#showErrorSuccess').innerHTML = 

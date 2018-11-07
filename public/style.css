@@ -9,10 +9,12 @@
     font-size: 16px;
     background-color: #3c3c3c; }
   body {
-    max-width: 40em;
+    max-width: 50em;
     margin: 0 auto;
     overflow-x: none; }
   footer {
+    font-size: 1.3rem;
+    background-color: #1b1b1b;
     text-align: center;
     width: 100%;
     color: oldlace;
@@ -40,17 +42,17 @@
     height: 80rem !important;
     opacity: 1 !important; }
   #inDepth {
-    -webkit-transition: height 2s, opacity 1s ease-out;
-    -ms-transition: height 2s, opacity 1s ease-out;
-    transition: height 2s, opacity 1s ease-out; }
+    -webkit-transition: height 2s;
+    -ms-transition: height 2s;
+    transition: height 2s; }
   .italic {
     font-style: italic !important; }
   .bold {
     font-weight: bold !important; }
   .success-notification {
-    background-color: rgba(24, 143, 24, 0.5); }
+    background-color: rgba(35, 212, 35, 0.5); }
   .error-notification {
-    background-color: rgba(196, 11, 11, 0.5); }
+    background-color: rgba(245, 18, 18, 0.5); }
   .jump-to-icon {
     background: url("img/forward.png");
     background-size: 100% 100%;
@@ -64,6 +66,14 @@
     display: block;
     margin: 0 auto;
     max-width: 100%; }
+  #reportShuffle {
+    margin-top: 1rem; }
+  .report-user {
+    font-size: 0.7rem;
+    line-height: 1.5rem;
+    padding: 0.5rem; }
+  .report-flag {
+    cursor: pointer; }
   /*********************************************
 ********************NAVBAR********************
 *********************************************/
@@ -116,16 +126,16 @@
     text-align: center;
     font-weight: bold;
     font-family: Georgia, 'Times New Roman', Times, serif;
-    font-size: 1.8rem;
+    font-size: 1.6rem;
     background-color: darkred;
     color: whitesmoke; }
   .steaminfo {
     width: 100%;
     display: flex;
-    line-height: 4rem; }
+    line-height: 3rem; }
   .steaminfo img {
-    width: 4rem;
-    height: 4rem; }
+    width: 3rem;
+    height: 3rem; }
   .userbanner .controlPanel .steaminfo .logoutBtn {
     float: right; }
   .userbanner {
@@ -158,8 +168,10 @@
     max-width: 35%; }
   .loginBtn input, .logoutBtn input {
     font-size: 1.2rem;
-    background-color: darkslategrey;
-    color: white; }
+    background-color: #0f81df;
+    color: white;
+    padding: 0.5rem;
+    border-radius: 1rem; }
   .infopanel {
     width: 100%;
     padding: 1rem 10%;
@@ -199,6 +211,8 @@
     padding: 3rem;
     background-color: #3c3c3c;
     color: antiquewhite; }
+  .contest-creation select > option {
+    max-width: 100%; }
   .contest-creation input[type="datetime-local"], .contest-creation select, .contest-creation input[type="text"],
   .contest-creation input[type="submit"], .contest-creation input[type="reset"], .contest-creation input[type="number"] {
     height: 2rem;
@@ -225,7 +239,7 @@
   #contestDescription, #shuffleDescription {
     width: 100%;
     height: 50vh; }
-  #contestCriteriaDropdown, #contestRulesDropdown, #addJudgeDropdown, #removeJudgeDropdown {
+  #contestCriteriaDropdown, #contestRulesDropdown, #addJudgeDropdown, #removeJudgeDropdown, #addShuffleBanDropdown, #removeShuffleBanDropdown {
     height: auto; }
   /*********************************************
 ******ADMIN MANAGE CONTEST SUBMISSIONS********
@@ -243,12 +257,12 @@
   .contestPageRubric {
     padding: 5%; }
   .contestPageRubric h3, .contestPageRubric h1 {
-    color: #7392d6; }
+    color: #80a5f5; }
   #judgeSection {
     text-align: center;
     color: oldlace; }
   #judgeSection h1 {
-    color: #7392d6;
+    color: #80a5f5;
     font-size: 3rem;
     margin-bottom: 5rem; }
   #judgeSection .steaminfo {
@@ -262,13 +276,13 @@
     text-align: center;
     font-size: 1.2rem;
     background-color: #3c3c3c;
-    color: antiquewhite;
+    color: white;
     font-weight: 400; }
   #activeShuffle a img {
     width: 50%; }
   #workshopLink a {
     font-size: 1.5rem;
-    color: #7392d6;
+    color: #80a5f5;
     text-decoration: none;
     cursor: pointer;
     border: white 3px dotted;
@@ -276,15 +290,17 @@
   #activeContest .Name h1 {
     color: white; }
   #activeContest h1, #activeShuffle h1 {
-    color: #7392d6;
+    color: #80a5f5;
     font-size: 2.5rem; }
   #activeContest img, #activeShuffle img {
     width: 100%; }
   #activeContest #twitchImg {
     width: 40%; }
   #activeContest .contest-banner-container {
-    background: url("img/contest_banner.png");
-    background-size: 100% 100%;
+    background: url("img/cute_dragon.svg");
+    background-position: 50%;
+    background-size: 50% 50%;
+    background-repeat: no-repeat;
     padding: 2.5%; }
   #activeContest .sml-container {
     width: 100%;
@@ -320,22 +336,29 @@
     text-decoration: none;
     color: darkgoldenrod; }
   #howItWorkSection h3 {
-    color: #7392d6;
+    color: #80a5f5;
     letter-spacing: 0.1rem; }
   .Description ul {
     text-align: left;
-    color: #7392d6;
-    margin: 2rem; }
+    color: #80a5f5;
+    margin: 2rem;
+    font-size: 1.4rem; }
   #submitEntrySection, #howItWorkSection {
     padding: 5%; }
   #submitEntrySection h2 {
     font-size: 1.5rem; }
   #submitEntrySection #submissionURL {
     width: 100%; }
-  #submitEntrySection #submitContestUser {
-    padding: 0.5rem; }
+  #submitEntrySection #submitContestUser, #submitEntrySection #submitShuffleUser {
+    padding: 0.5rem;
+    border-radius: 1rem;
+    background-color: rgba(35, 212, 35, 0.5);
+    color: white;
+    font-size: 1.3rem; }
   #submitEntrySection img {
     width: 50%; }
+  #submitEntrySection form #contestVote {
+    padding: 1rem; }
   /*********************************************
 ************CONTEST VOTING PAGE***************
 *********************************************/
@@ -367,7 +390,10 @@
     width: 2rem; }
   #contestVotingContainer form input[type="submit"] {
     margin: 5% 25%;
-    font-size: 1.5rem; }
+    font-size: 1.5rem;
+    border-radius: 1rem;
+    background-color: rgba(35, 212, 35, 0.5);
+    color: white; }
   #contestSubmissionContainer {
     text-align: center;
     padding: 5%; }
@@ -383,6 +409,9 @@
     height: auto;
     padding: 0;
     font-size: 1.5rem; }
+  #contestSubmissionContainer h1 {
+    color: white;
+    font-size: 2rem; }
   #contestSubmissionContainer .contest-submission .steaminfo > img {
     height: 100%; }
   #contestSubmissionContainer .contest-submission a.contest-submission-url:link, #contestSubmissionContainer .contest-submission a.contest-submission-url:visited {
@@ -446,7 +475,7 @@
     margin-top: 2rem;
     width: 100%; }
   #contestResultsTable th {
-    background: #7392d6;
+    background: #80a5f5;
     word-wrap: normal;
     white-space: normal;
     padding: 0.2rem;
@@ -504,8 +533,8 @@
     width: 10rem; }
   .logoutBtn {
     margin-top: 5%; }
-  #contestVotingContainer form input[type="submit"] {
-    margin: 5% 30%; }
+  #contestVotingContainer form select {
+    font-size: 1rem; }
   #contestVotingContainer form {
     width: 65%;
     margin: 0 auto; }
@@ -516,13 +545,16 @@
 /* Medium Devices, Desktops - No minimum height */
 @media only screen and (min-width: 1000px) {
   html {
-    font-size: 22px; } }
+    font-size: 24px; } }
 
 /* Large Devices, Wide Screens */
 /* Extra-Large Devices, Wide Screens */
 @media only screen and (min-width: 1300px) {
   html {
-    font-size: 18px; } }
+    font-size: 18px; }
+  #contestVotingContainer form {
+    width: 50%;
+    margin: 0 auto; } }
 
 /* Extra-Large Devices, Wide Screens */
 @media only screen and (min-width: 2000px) {

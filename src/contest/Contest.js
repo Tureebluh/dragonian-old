@@ -109,7 +109,7 @@ class Contest {
             let tempString = '';
                 tempString += '<form action="/contest/vote/" method="get" class="contestVotingForm">';
                     tempString += '<input type="hidden" id="contestIDHidden" name="contestID">';
-                    tempString += '<input type="submit" alt="Go To Voting Page" value="Vote On Contest">';
+                    tempString += '<input id="contestVote" type="submit" alt="Go To Voting Page" value="Vote On Contest">';
                 tempString += '</form>';
             return tempString;
 

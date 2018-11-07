@@ -11,11 +11,13 @@ html {
 }
 
 body {
-    max-width: 40em;
+    max-width: 50em;
     margin: 0 auto;
     overflow-x: none;
 }
 footer {
+    font-size: 1.3rem;
+    background-color: $near-black;
     text-align: center;
     width: 100%;
     color: oldlace;
@@ -50,7 +52,7 @@ footer a {
     opacity: 1!important;
 }
 #inDepth {
-    @include transition(height 2s, opacity 1s ease-out);
+    @include transition(height 2s);
 }
 
 .italic {
@@ -84,4 +86,15 @@ footer a {
     display: block;
     margin: 0 auto;
     max-width: 100%;
+}
+#reportShuffle {
+    margin-top: 1rem;
+}
+.report-user {
+    font-size: 0.7rem;
+    line-height: 1.5rem;
+    padding: 0.5rem;
+}
+.report-flag {
+    cursor: pointer;
 }

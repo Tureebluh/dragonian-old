@@ -32,7 +32,7 @@
         text-align: center;
         font-size: 1.2rem;
         background-color: $main-bg-color;
-        color: antiquewhite;
+        color: white;
         font-weight: 400;
     }
     #activeShuffle a img {
@@ -60,8 +60,10 @@
         width: 40%;
     }
     #activeContest .contest-banner-container {
-        background: url('img/contest_banner.png');
-        background-size: 100% 100%;
+        background: url('img/cute_dragon.svg');
+        background-position: 50%;
+        background-size: 50% 50%;
+        background-repeat: no-repeat;
         padding: 2.5%;
     }
     #activeContest .sml-container {
@@ -122,6 +124,7 @@
         text-align: left;
         color: $text-blue-color;
         margin: 2rem;
+        font-size: 1.4rem;
     }
 
     //
@@ -136,9 +139,16 @@
     #submitEntrySection #submissionURL {
         width: 100%;
     }
-    #submitEntrySection #submitContestUser {
+    #submitEntrySection #submitContestUser, #submitEntrySection #submitShuffleUser {
         padding: 0.5rem;
+        border-radius: 1rem;
+        background-color: $success-color;
+        color: white;
+        font-size: 1.3rem;
     }
     #submitEntrySection img {
         width: 50%;
+    }
+    #submitEntrySection form #contestVote {
+        padding: 1rem;
     }

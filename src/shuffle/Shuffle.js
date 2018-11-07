@@ -71,7 +71,7 @@ class Shuffle {
         let tempString = "";
         tempString += "<div class=\"shuffle-banner-container\">";
             tempString += "<div class=\"Name\"><h1>" + this._Name + "</h1></div>";
-            tempString += "<img src='img/contest_banner.png'/>";
+            tempString += "<img style=\"max-width: 50%\" src='img/cute_dragon.svg'/>";
             tempString += "<br>";
         tempString += "</div>";
         tempString += "<br>";
@@ -170,8 +170,16 @@ class Shuffle {
                             } else if(this.RoundFourStart < Date.now() && this.RoundThreeStart > Date.now()){
                                 tempString += resJson[0][0]['r3_workshop_URL'] + '">Round 4 ';
                             }
+
                             tempString += ' - Random Link</a>';
+                            tempString += '<br><br>';
+                            tempString += '<span class="report-user"><img id="reportShuffle" class="report-flag" style="height: 2rem;" src="img/flag.svg" /> Report User</span>';
                             document.querySelector('#workshopLink').innerHTML = tempString;
+
+                            document.querySelector('#reportShuffle').addEventListener('click', (event) => {
+                                let res = confirm('Are you sure you want to report this blueprint?');
+                                console.log(res);
+                            });
                         }
                     }).catch(error => console.error(error));
                 }
@@ -180,7 +188,7 @@ class Shuffle {
     }
     submissionDiv(){
         let tempString = "";
-            tempString += '<h2 id="submissionHeader">Shuffle Entry</h2>';
+            tempString += '<h1 id="submissionHeader">Shuffle Entry</h1>';
             tempString += '<form action="/api/shuffle/submit/" method="post" class="contestSubmissionForm">';
                 tempString += '<input type="hidden" id="shuffleIDHidden" name="shuffleID">';
                 tempString += '<input type="url" id="submissionURL" name="submissionURL" placeholder="https://steamcommunity.com/sharedfiles/filedetails/?id=XXXXXXXXXX" required/>';

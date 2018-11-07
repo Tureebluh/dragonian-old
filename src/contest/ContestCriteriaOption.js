@@ -21,7 +21,7 @@ class ContestCriteriaOption {
     getCriteriaOption(){
         let node = document.createElement("OPTION");
         node.value = this._contest_criteria_ID;
-        let textnode = document.createTextNode(this._contest_criteria);
+        let textnode = document.createTextNode(this._contest_criteria.substring(0, 10));
         node.appendChild(textnode);
         return node;
     }

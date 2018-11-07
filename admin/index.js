@@ -21,7 +21,7 @@ router.get('/shuffle', (req, res) => {
     }
 });
 
-//Send Administrator to contest administration page for CRUD operation on contest
+//Send Administrator to contest submissions administration page for CRUD operation on contest submissions
 router.get('/contest/submissions', (req, res) => {
     if(req.isAuthenticated() && req.user.roles.includes('Administrator')){
         res.render('admin/contest/contestSubmissions');
@@ -62,7 +62,6 @@ router.post('/contest/submissions/update', (req, res) => {
     }
 });
 
-//Send Administrator to contest administration page for CRUD operation on contest
 router.get('/roles', (req, res) => {
     if(req.isAuthenticated() && req.user.roles.includes('Administrator')){
         res.render('admin/manageroles');
@@ -71,29 +70,6 @@ router.get('/roles', (req, res) => {
     }
 });
 
-//Send Administrator to contest administration page for CRUD operation on contest
-router.post('/roles/judges', (req, res) => {
-    if(req.isAuthenticated() && req.user.roles.includes('Administrator')){
-        dbpool.getConnection( (err, connection) => {
-            if(err) throw err;
-
-            if(req.body.search !== '') {
-                connection.query('CALL Search_Users(' + dbpool.escape(req.body.search) + ');', 
-                (error, results, fields) => {
-                    connection.release();
-                    if (error) throw error;
-                    res.send(results);
-                });
-            } else {
-                res.send({});
-            }
-        });
-    } else {
-        res.redirect('/');
-    }
-});
-
-//Send Administrator to contest administration page for CRUD operation on contest
 router.get('/roles/judges/all', (req, res) => {
     if(req.isAuthenticated() && req.user.roles.includes('Administrator')){
         dbpool.getConnection( (err, connection) => {
@@ -111,7 +87,6 @@ router.get('/roles/judges/all', (req, res) => {
     }
 });
 
-//Send Administrator to contest administration page for CRUD operation on contest
 router.post('/roles/add/judge', (req, res) => {
     if(req.isAuthenticated() && req.user.roles.includes('Administrator')){
         dbpool.getConnection( (err, connection) => {
@@ -133,7 +108,6 @@ router.post('/roles/add/judge', (req, res) => {
     }
 });
 
-//Send Administrator to contest administration page for CRUD operation on contest
 router.post('/roles/remove/judges', (req, res) => {
     if(req.isAuthenticated() && req.user.roles.includes('Administrator')){
             dbpool.getConnection( (err, connection) => {
@@ -141,6 +115,64 @@ router.post('/roles/remove/judges', (req, res) => {
                 req.body.steamid.forEach(element => {
                     console.log(element);
                     connection.query('CALL Delete_User_Role_Assoc(' + dbpool.escape(element) + ',' + '"Judge"' + ');', 
+                    (error, results, fields) => {
+                        if (error) throw error;
+                    });
+                });
+            connection.release();
+            res.send({result: 'Success'});
+            });
+    } else {
+        res.redirect('/');
+    }
+});
+
+
+router.get('/roles/shuffleban/all', (req, res) => {
+    if(req.isAuthenticated() && req.user.roles.includes('Administrator')){
+        dbpool.getConnection( (err, connection) => {
+            if(err) throw err;
+
+            connection.query('CALL Get_Users_By_Role(' + '"Shuffle Banned"' + ');', 
+            (error, results, fields) => {
+                connection.release();
+                if (error) throw error;
+                res.send(results);
+            });
+        });
+    } else {
+        res.redirect('/');
+    }
+});
+
+router.post('/roles/add/shuffleban', (req, res) => {
+    if(req.isAuthenticated() && req.user.roles.includes('Administrator')){
+        dbpool.getConnection( (err, connection) => {
+            if(err) throw err;
+
+            if(req.body.steamid !== '') {
+                connection.query('CALL Insert_User_Role_Assoc(' + dbpool.escape(req.body.steamid) + ',' + '"Shuffle Banned"' + ');', 
+                (error, results, fields) => {
+                    connection.release();
+                    if (error) throw error;
+                    res.send({result: 'Success'});
+                });
+            } else {
+                res.send({});
+            }
+        });
+    } else {
+        res.redirect('/');
+    }
+});
+
+router.post('/roles/remove/shuffleban', (req, res) => {
+    if(req.isAuthenticated() && req.user.roles.includes('Administrator')){
+            dbpool.getConnection( (err, connection) => {
+                if(err) throw err;
+                req.body.steamid.forEach(element => {
+                    console.log(element);
+                    connection.query('CALL Delete_User_Role_Assoc(' + dbpool.escape(element) + ',' + '"Shuffle Banned"' + ');', 
                     (error, results, fields) => {
                         if (error) throw error;
                     });
@@ -376,6 +408,28 @@ router.post('/create/criteria', (req, res) => {
 router.post('/update/contest/submission', (req, res) => {
     if(req.isAuthenticated() && req.user.roles.includes('Administrator')){
         res.send({result: 'success'});
+    }
+});
+
+//Search database for user matching search query
+router.post('/search/users', (req, res) => {
+    if(req.isAuthenticated() && req.user.roles.includes('Administrator')){
+        dbpool.getConnection( (err, connection) => {
+            if(err) throw err;
+
+            if(req.body.search !== '') {
+                connection.query('CALL Search_Users(' + dbpool.escape(req.body.search) + ');', 
+                (error, results, fields) => {
+                    connection.release();
+                    if (error) throw error;
+                    res.send(results);
+                });
+            } else {
+                res.send({});
+            }
+        });
+    } else {
+        res.redirect('/');
     }
 });
 

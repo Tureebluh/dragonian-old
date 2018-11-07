@@ -1,24 +1,19 @@
 //SASS VARIABLES
 $main-bg-color: #3c3c3c;
-$text-blue-color: #7392d6;
+$text-blue-color: #80a5f5;
 $light-gold: rgb(196, 177, 128);
 $near-black: rgb(27, 27, 27);
 $first-place-color: rgb(240, 222, 64);
 $toy-blue-color: rgb(15, 129, 223);
 $almost-white: rgb(248, 242, 242);
 $dark-red-orange: rgb(200, 50, 50);
-$success-color: rgba(24, 143, 24, 0.5);
-$error-color: rgba(196, 11, 11, 0.5);
+$success-color: rgba(35, 212, 35, 0.5);
+$error-color: rgba(245, 18, 18, 0.5);
 
 @mixin transition($property) {
     -webkit-transition: $property;
     -ms-transition: $property;
     transition: $property;
-}
-@mixin transition($property1, $property2) {
-    -webkit-transition: $property1, $property2;
-    -ms-transition: $property1, $property2;
-    transition: $property1, $property2;
 }
 
 //*****  Older-Browser Support & Styling
@@ -71,14 +66,14 @@ $error-color: rgba(196, 11, 11, 0.5);
     #howItWorkSection {
         font-size: 1.3rem;
     }
-    .loginbanner img{
+    .loginbanner img {
         width: 10rem;
     }
     .logoutBtn {
         margin-top: 5%;
     }
-    #contestVotingContainer form input[type="submit"] {
-        margin: 5% 30%;
+    #contestVotingContainer form select {
+        font-size: 1rem;
     }
     #contestVotingContainer form {
         width: 65%;
@@ -93,7 +88,7 @@ $error-color: rgba(196, 11, 11, 0.5);
 /* Medium Devices, Desktops - No minimum height */
 @media only screen and (min-width : 1000px){
     html {
-        font-size: 22px;
+        font-size: 24px;
     }
 }
 
@@ -106,6 +101,10 @@ $error-color: rgba(196, 11, 11, 0.5);
 @media only screen and (min-width : 1300px) {
     html {
         font-size: 18px;
+    }
+    #contestVotingContainer form {
+        width: 50%;
+        margin: 0 auto;
     }
 }
 

@@ -388,7 +388,7 @@ router.post("/contest/judge/submit", (req, res) => {
 
 //Enters the user into the specified shuffle by ID
 router.post('/shuffle/submit/', (req, res) => {
-    if(req.isAuthenticated() ){
+    if(req.isAuthenticated() && !req.user.roles.includes('Shuffle Banned')){
         if(typeof req.body.verifySubmissionCB !== 'undefined'){
             if(req.body.shuffleID && req.body.submissionURL.indexOf('https://steamcommunity.com/sharedfiles/filedetails/?id=') === 0){
                 dbpool.getConnection( (err, connection) => {
@@ -415,7 +415,7 @@ router.post('/shuffle/submit/', (req, res) => {
 });
 //Enters the user into the specified shuffle by ID
 router.post('/shuffle/getpick/', (req, res) => {
-    if(req.isAuthenticated() ){
+    if(req.isAuthenticated() && !req.user.roles.includes('Shuffle Banned')){
             if(req.body.shuffleID){
                 dbpool.getConnection( (err, connection) => {
                     if (err) throw err;
@@ -438,7 +438,7 @@ router.post('/shuffle/getpick/', (req, res) => {
 });
 //Returns back the workshopURL for that round
 router.post('/shuffle/workshop/random', (req, res) => {
-    if(req.isAuthenticated()){
+    if(req.isAuthenticated() && !req.user.roles.includes('Shuffle Banned')){
         if(req.body.shuffleID){
             dbpool.getConnection( (err, connection) => {
                 if (err) throw err;
@@ -460,7 +460,7 @@ router.post('/shuffle/workshop/random', (req, res) => {
 });
 //Returns back all the shuffle_ID's and Name's of all the shuffles
 router.get('/shuffle/names/all', (req, res) => {
-    if(req.isAuthenticated()){
+    if(req.isAuthenticated() && !req.user.roles.includes('Shuffle Banned')){
         dbpool.getConnection( (err, connection) => {
             if (err) throw err;
             connection.query('CALL Get_All_Shuffle_Names();', (error, results, fields) => {
@@ -473,24 +473,10 @@ router.get('/shuffle/names/all', (req, res) => {
         res.send('Unauthorized Access');
     }
 });
-//Returns back all the shuffle_ID's and Name's of all the shuffles
-router.get('/shuffle/names/all', (req, res) => {
-    if(req.isAuthenticated()){
-        dbpool.getConnection( (err, connection) => {
-            if (err) throw err;
-            connection.query('CALL Get_All_Shuffle_Names();', (error, results, fields) => {
-                connection.release();
-                if (error) throw error;
-                res.send(results);
-            });
-        });
-    } else {
-        res.send('Unauthorized Access');
-    }
-});
+
 //Returns back all data associated with the @param shuffleID
 router.get('/shuffle/all/:shuffleID', (req, res) => {
-    if(req.isAuthenticated()){
+    if(req.isAuthenticated() && !req.user.roles.includes('Shuffle Banned')){
         dbpool.getConnection( (err, connection) => {
             if (err) throw err;
             connection.query('CALL Get_Shuffle_By_ID(' + dbpool.escape(req.params.shuffleID) + ');', (error, results, fields) => {
@@ -505,7 +491,7 @@ router.get('/shuffle/all/:shuffleID', (req, res) => {
 });
 //Returns back the oldest active shuffle. Could be easily changed for multiple shuffles
 router.get('/shuffle/active', (req, res) => {
-    if(req.isAuthenticated()){
+    if(req.isAuthenticated() && !req.user.roles.includes('Shuffle Banned')){
         dbpool.getConnection( (err, connection) => {
             if (err) throw err;
             connection.query('CALL Get_Active_Shuffle();', (error, results, fields) => {
