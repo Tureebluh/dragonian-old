@@ -52,7 +52,7 @@
   .success-notification {
     background-color: rgba(35, 212, 35, 0.5); }
   .error-notification {
-    background-color: rgba(245, 18, 18, 0.5); }
+    background-color: rgba(255, 67, 67, 0.5); }
   .jump-to-icon {
     background: url("img/forward.png");
     background-size: 100% 100%;
@@ -64,15 +64,23 @@
     font-size: 1.3rem; }
   #failedLogin .steam-privacy {
     display: block;
-    margin: 0 auto;
-    max-width: 100%; }
-  #reportShuffle {
-    margin-top: 1rem; }
+    margin: 3rem auto;
+    max-width: 65%;
+    border: 0.3rem white solid;
+    margin-bottom: 3rem; }
   .report-user {
+    color: #1b1b1b;
+    font-family: Georgia, 'Times New Roman', Times, serif;
     font-size: 0.7rem;
     line-height: 1.5rem;
-    padding: 0.5rem; }
-  .report-flag {
+    background: #80a5f5;
+    border: 0.1rem dotted white;
+    border-radius: 1rem;
+    width: 6rem;
+    margin: 0 auto;
+    text-transform: uppercase;
+    font-weight: bold;
+    padding-top: 1rem;
     cursor: pointer; }
   /*********************************************
 ********************NAVBAR********************
@@ -110,7 +118,11 @@
     display: none;
     position: absolute;
     background-color: #1f1d1d;
-    z-index: 1; }
+    z-index: 1;
+    padding: 1rem; }
+  .dropdown-content hr {
+    width: 100%;
+    margin: 1rem 0; }
   .dropdown-content a {
     color: white;
     text-decoration: none;
@@ -421,12 +433,12 @@
   /*********************************************
 ************CONTEST JUDGING PAGE**************
 *********************************************/
-  #submissionTable {
+  .table-style {
     font-family: Georgia, 'Times New Roman', Times, serif;
     overflow-x: auto;
     white-space: nowrap;
     text-align: center; }
-  #submissionTable h1 {
+  .table-style h1 {
     color: whitesmoke;
     padding: 1rem; }
   #contestRubric {
@@ -434,28 +446,35 @@
     font-size: 1.2rem; }
   #contestRubric h1 {
     text-align: center; }
-  #submissionTable table {
+  .table-style table {
     width: 100%; }
-  #submissionTable table th {
+  .table-style table th {
     background: lightgrey;
     padding: 0 0.5rem;
-    white-space: nowrap; }
-  #submissionTable table td {
+    white-space: nowrap;
+    color: #1b1b1b; }
+  .table-style table td {
     padding: 0.5rem 0;
     border-bottom: 1px black solid;
     font-family: Georgia, 'Times New Roman', Times, serif;
     font-weight: bold;
     text-align: center; }
-  #submissionTable table td > input {
+  .table-style table td > input {
     width: 2.5rem; }
-  #submissionTable table select {
+  .table-style table select {
     width: 3rem;
     font-weight: bold;
     font-size: 1rem; }
-  #submitBtnContainer input[type="submit"] {
-    margin: 1rem 25%;
-    width: 50%;
-    padding: 1rem; }
+  .table-style a {
+    color: #80a5f5; }
+  .submit-container {
+    text-align: center;
+    width: 100%; }
+  .submit-container input[type="submit"] {
+    padding: 1rem;
+    background-color: #0f81df;
+    border-radius: 1rem;
+    color: white; }
   /*********************************************
 ***********CONTEST RESULTS PAGE***************
 *********************************************/

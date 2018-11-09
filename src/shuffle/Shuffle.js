@@ -79,6 +79,7 @@ class Shuffle {
         tempString += "<br>";
         return tempString;
     }
+
     timerDiv(){
         let tempString = '<h2 id="timeRemaining"><strong>';
         
@@ -126,6 +127,7 @@ class Shuffle {
 
         return tempString;
     }
+
     workshopDiv(){
         if(this.RoundTwoStart < Date.now()){
             let tempString = '';
@@ -160,7 +162,7 @@ class Shuffle {
                         return res.json();
                     }).then(resJson => {
                         if(typeof resJson[0] !== 'undefined'){
-                            tempString += '<a target="_BLANK" href="';
+                            tempString += '<a id="randomShuffleURL" target="_BLANK" href="';
                             if(this.RoundOneStart < Date.now() && this.RoundTwoStart > Date.now()){
                                 
                             } else if(this.RoundTwoStart < Date.now() && this.RoundThreeStart > Date.now()){
@@ -173,12 +175,39 @@ class Shuffle {
 
                             tempString += ' - Random Link</a>';
                             tempString += '<br><br>';
-                            tempString += '<span class="report-user"><img id="reportShuffle" class="report-flag" style="height: 2rem;" src="img/flag.svg" /> Report User</span>';
+                            tempString += '<div class="report-user"><img id="reportShuffle" class="report-flag" style="height: 2rem;" src="img/flag.svg" /><br>Report User</div>';
+
                             document.querySelector('#workshopLink').innerHTML = tempString;
 
-                            document.querySelector('#reportShuffle').addEventListener('click', (event) => {
-                                let res = confirm('Are you sure you want to report this blueprint?');
-                                console.log(res);
+                            document.querySelector('.report-user').addEventListener('click', (event) => {
+                                let res = confirm('Does the blueprint violate one of the posted RULES?');
+                                if(res){
+                                    payload = {
+                                        submissionURL: document.querySelector('#randomShuffleURL').href
+                                    };
+                                    fetch('/api/shuffle/report', {
+                                        credentials: 'include',
+                                        method: 'POST',
+                                        headers: {
+                                            'Accept': 'application/json',
+                                            'Content-Type': 'application/json'
+                                        },
+                                        body: JSON.stringify(payload)
+                                    }).then(res => {
+                                        return res.json();
+                                    }).then(resJson => {
+                                            console.log(resJson.result);
+                                            if(resJson.result === 'Success'){
+                                                document.querySelector('#showErrorSuccess').innerHTML = 
+                                                        '<h1 class="success-notification">Report submitted successfully. Thank you for helping keep the community amazing!</h1>';
+                                                        window.location.hash = '#showErrorSuccess';
+                                            } else {
+                                                document.querySelector('#showErrorSuccess').innerHTML = 
+                                                        '<h1 class="success-notification">Report failed to submit. Please contact an administrator if the problem persist.</h1>';
+                                                        window.location.hash = '#showErrorSuccess';
+                                            }
+                                    }).catch(error => console.error(error));
+                                }
                             });
                         }
                     }).catch(error => console.error(error));
@@ -186,6 +215,7 @@ class Shuffle {
             }).catch(error => console.error(error));
         }
     }
+
     submissionDiv(){
         let tempString = "";
             tempString += '<h1 id="submissionHeader">Shuffle Entry</h1>';

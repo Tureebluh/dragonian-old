@@ -21,6 +21,41 @@ router.get('/shuffle', (req, res) => {
     }
 });
 
+//Send Administrator to roles administration page for CRUD operation on roles
+router.get('/roles', (req, res) => {
+    if(req.isAuthenticated() && req.user.roles.includes('Administrator')){
+        res.render('admin/manageroles');
+    } else {
+        res.redirect('/');
+    }
+});
+
+//Send Administrator to roles administration page for CRUD operation on roles
+router.get('/reports', (req, res) => {
+    if(req.isAuthenticated() && req.user.roles.includes('Administrator')){
+        res.render('admin/managereports');
+    } else {
+        res.redirect('/');
+    }
+});
+
+//Send Administrator to roles administration page for CRUD operation on roles
+router.get('/reports/shuffle/unread', (req, res) => {
+    if(req.isAuthenticated() && req.user.roles.includes('Administrator')){
+        dbpool.getConnection( (err, connection) => {
+            if(err) throw err;
+            connection.query('CALL Get_Unread_Shuffle_Reports();',
+            (error, results, fields) => {
+                connection.release();
+                if (error) throw error;
+                res.send(results);
+            });
+        });
+    } else {
+        res.redirect('/shuffle');
+    }
+});
+
 //Send Administrator to contest submissions administration page for CRUD operation on contest submissions
 router.get('/contest/submissions', (req, res) => {
     if(req.isAuthenticated() && req.user.roles.includes('Administrator')){
@@ -62,13 +97,7 @@ router.post('/contest/submissions/update', (req, res) => {
     }
 });
 
-router.get('/roles', (req, res) => {
-    if(req.isAuthenticated() && req.user.roles.includes('Administrator')){
-        res.render('admin/manageroles');
-    } else {
-        res.redirect('/');
-    }
-});
+
 
 router.get('/roles/judges/all', (req, res) => {
     if(req.isAuthenticated() && req.user.roles.includes('Administrator')){
@@ -402,12 +431,6 @@ router.post('/create/criteria', (req, res) => {
         });
     } else {
         res.send('Unauthorized Access');
-    }
-});
-
-router.post('/update/contest/submission', (req, res) => {
-    if(req.isAuthenticated() && req.user.roles.includes('Administrator')){
-        res.send({result: 'success'});
     }
 });
 

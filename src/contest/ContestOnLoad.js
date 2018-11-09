@@ -114,25 +114,43 @@ const onload = () => {
     }).catch(error => console.error(error));
 
     if(document.URL.indexOf('result=subsuccess') !== -1){
+
         document.querySelector('#showErrorSuccess').innerHTML = 
             '<h1 class="success-notification">Contest entry successfully submitted. Thank you for participating in the contest!</h1>';
+        window.location.hash = '#showErrorSuccess';
+
     } else if (document.URL.indexOf('result=badurl') !== -1){
+
         document.querySelector('#showErrorSuccess').innerHTML = 
             '<h1 class="error-notification">The workshop link entered is not a valid workshop link. Please fix any issues with the link and try submitting again.</h1>';
+        window.location.hash = '#showErrorSuccess';
+
     } else if (document.URL.indexOf('result=noterms') !== -1){
+
         document.querySelector('#showErrorSuccess').innerHTML = 
             '<h1 class="error-notification">You must agree to the terms of the contest by ticking the box at the bottom of the page. ' +
             'Failure to agree to the terms will result in your submission not being entered.</h1>';
+        window.location.hash = '#showErrorSuccess';
+
     } else if (document.URL.indexOf('result=votesuccess') !== -1){
+
         document.querySelector('#showErrorSuccess').innerHTML = 
             '<h1 class="success-notification">Your contest votes have been successfully submitted. Thank you for participating in the voting process!</h1>';
+        window.location.hash = '#showErrorSuccess';
+
     } else if (document.URL.indexOf('result=votefail') !== -1){
+
         document.querySelector('#showErrorSuccess').innerHTML = 
             '<h1 class="error-notification">Oops! Something went wrong with your voting selections. Please visit the voting page and try again.</h1>';
+        window.location.hash = '#showErrorSuccess';
+
     } else if (document.URL.indexOf('result=voteduplicate') !== -1){
+
         document.querySelector('#showErrorSuccess').innerHTML = 
             '<h1 class="error-notification">You cannot vote for the same submission more than once. Please visit the voting page and try again.</h1>';
+        window.location.hash = '#showErrorSuccess';
     }
+    
     document.querySelector('#learnMore').addEventListener('click', (event) =>{
         if(document.querySelector('#inDepth').classList.contains('closed')){
             document.querySelector('#inDepth').classList.toggle('opened');

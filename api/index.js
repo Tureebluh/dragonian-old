@@ -385,7 +385,28 @@ router.post("/contest/judge/submit", (req, res) => {
 *                                                           SHUFFLES
 *
 **********************************************************************************************************************************/
-
+//Report the specified workshop_URL for Admin review
+router.post('/shuffle/report', (req, res) => {
+    if(req.isAuthenticated() && !req.user.roles.includes('Shuffle Banned')){
+        if(typeof req.body.submissionURL !== 'undefined'){
+                dbpool.getConnection( (err, connection) => {
+                    if (err) throw err;
+                    connection.query('CALL Insert_Shuffle_Report(' + dbpool.escape(req.user.steamid) + 
+                                                                ',' + dbpool.escape(req.body.submissionURL) +
+                                                                ');',
+                        (error, results, fields) => {
+                            res.send({result: 'Success'});
+                            connection.release();
+                            if (error) throw error;
+                    });
+                });
+        } else {
+            res.send({result: 'Failed'});
+        } 
+    } else {
+        res.send('Unauthorized Access');
+    }
+});
 //Enters the user into the specified shuffle by ID
 router.post('/shuffle/submit/', (req, res) => {
     if(req.isAuthenticated() && !req.user.roles.includes('Shuffle Banned')){

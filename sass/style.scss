@@ -8,7 +8,7 @@ $toy-blue-color: rgb(15, 129, 223);
 $almost-white: rgb(248, 242, 242);
 $dark-red-orange: rgb(200, 50, 50);
 $success-color: rgba(35, 212, 35, 0.5);
-$error-color: rgba(245, 18, 18, 0.5);
+$error-color: rgba(255, 67, 67, 0.5);
 
 @mixin transition($property) {
     -webkit-transition: $property;

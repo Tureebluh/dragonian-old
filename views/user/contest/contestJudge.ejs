@@ -7,11 +7,11 @@
     <ul id="judgingRubric"></ul>
 </section>
 <form action="/api/contest/judge/submit" method="POST" id="judgeSubmitForm">
-    <section id="submissionTable">
+    <section id="submissionTable" class="table-style">
         <input type="hidden" id="contestIDHidden" name="contestID">
         <table id="judgeTable"></table>
     </section>
-    <span id="submitBtnContainer"></span>
+    <div id="submitBtnContainer" class="submit-container"></div>
 </form>
 <%- include('../../app/backToTop') -%>
 <%- include('../../app/bodyend') -%>

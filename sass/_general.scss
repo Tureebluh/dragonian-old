@@ -84,17 +84,24 @@ footer a {
 
 #failedLogin .steam-privacy {
     display: block;
-    margin: 0 auto;
-    max-width: 100%;
+    margin: 3rem auto;
+    max-width: 65%;
+    border: 0.3rem white solid;
+    margin-bottom: 3rem;
 }
-#reportShuffle {
-    margin-top: 1rem;
-}
+
 .report-user {
+    color: $near-black;
+    font-family: Georgia, 'Times New Roman', Times, serif;
     font-size: 0.7rem;
     line-height: 1.5rem;
-    padding: 0.5rem;
-}
-.report-flag {
+    background: $text-blue-color;
+    border: 0.1rem dotted white;
+    border-radius: 1rem;
+    width: 6rem;
+    margin: 0 auto;
+    text-transform: uppercase;
+    font-weight: bold;
+    padding-top: 1rem;
     cursor: pointer;
 }

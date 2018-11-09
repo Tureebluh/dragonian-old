@@ -1,13 +1,13 @@
 /*********************************************
 ************CONTEST JUDGING PAGE**************
 *********************************************/
-#submissionTable {
+.table-style {
     font-family: Georgia, 'Times New Roman', Times, serif;
     overflow-x: auto;
     white-space: nowrap;
     text-align: center;
 }
-#submissionTable h1 {
+.table-style h1 {
     color: whitesmoke;
     padding: 1rem;
 }
@@ -18,31 +18,40 @@
 #contestRubric h1 {
     text-align: center;
 }
-#submissionTable table {
+.table-style table {
     width: 100%;
 }
-#submissionTable table th {
+.table-style table th {
     background: lightgrey;
     padding: 0 0.5rem;
     white-space: nowrap;
+    color: $near-black;
 }
-#submissionTable table td {
+.table-style table td {
     padding: 0.5rem 0;
     border-bottom: 1px black solid;
     font-family: Georgia, 'Times New Roman', Times, serif;
     font-weight: bold;
     text-align: center;
 }
-#submissionTable table td > input {
+.table-style table td > input {
     width: 2.5rem;
 }
-#submissionTable table select {
+.table-style table select {
     width: 3rem;
     font-weight: bold;
     font-size: 1rem;
 }
-#submitBtnContainer input[type="submit"] {
-    margin: 1rem 25%;
-    width: 50%;
+.table-style a {
+    color: $text-blue-color;
+}
+.submit-container {
+    text-align: center;
+    width: 100%;
+}
+.submit-container input[type="submit"] {
     padding: 1rem;
+    background-color: $toy-blue-color;
+    border-radius: 1rem;
+    color: white;
 }

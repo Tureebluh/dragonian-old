@@ -42,6 +42,11 @@
     position: absolute;
     background-color: rgb(31, 29, 29);
     z-index: 1;
+    padding: 1rem;
+}
+.dropdown-content hr {
+    width: 100%;
+    margin: 1rem 0;
 }
 .dropdown-content a {
     color: white;

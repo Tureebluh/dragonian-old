@@ -2,8 +2,9 @@ import AdminContestOnLoad from './contest/AdminContestOnLoad';
 import AdminContestSubOnLoad from './contest/AdminContestSubOnLoad';
 import AdminShuffleOnLoad from './shuffle/AdminShuffleOnLoad';
 import AdminRolesOnLoad from './AdminRolesOnLoad';
+import AdminReportsOnLoad from './shuffle/AdminReportsOnLoad';
 import CollabOnLoad from './collab/CollabOnLoad';
-import ShuffleOnLoad from './shuffle/ShuffleOnLoad'
+import ShuffleOnLoad from './shuffle/ShuffleOnLoad';
 import ContestOnLoad from './contest/ContestOnLoad';
 import ContestVoteOnLoad from './contest/ContestVoteOnLoad';
 import ContestJudgeOnLoad from './contest/ContestJudgeOnLoad';
@@ -32,6 +33,13 @@ window.onload = function(){
     *********************************************************/
     if(window.location.pathname === '/admin/roles/' || window.location.pathname === '/admin/roles'){
         AdminRolesOnLoad();
+    }
+
+    /******************************************************** 
+                    ADMIN-ROLE MANAGEMENT
+    *********************************************************/
+    if(window.location.pathname === '/admin/reports/' || window.location.pathname === '/admin/reports'){
+        AdminReportsOnLoad();
     }
 
     /******************************************************** 
