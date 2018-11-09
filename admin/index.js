@@ -56,6 +56,23 @@ router.get('/reports/shuffle/unread', (req, res) => {
     }
 });
 
+//Send Administrator to roles administration page for CRUD operation on roles
+router.post('/reports/shuffle/validate', (req, res) => {
+    if(req.isAuthenticated() && req.user.roles.includes('Administrator')){
+        dbpool.getConnection( (err, connection) => {
+            if(err) throw err;
+            connection.query('CALL Update_Shuffle_Report(' + dbpool.escape(req.body.shuffleReportID) + ',' + dbpool.escape(req.body.isValid) + ');',
+            (error, results, fields) => {
+                connection.release();
+                if (error) throw error;
+                res.send({result: 'Success'});
+            });
+        });
+    } else {
+        res.redirect('/shuffle');
+    }
+});
+
 //Send Administrator to contest submissions administration page for CRUD operation on contest submissions
 router.get('/contest/submissions', (req, res) => {
     if(req.isAuthenticated() && req.user.roles.includes('Administrator')){
