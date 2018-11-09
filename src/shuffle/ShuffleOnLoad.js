@@ -42,8 +42,8 @@ const onload = () => {
             shuffleObj.workshopDiv();
         }  else {
             let tempString = '';
-            tempString += 'Looks like the shuffle has ended. Be sure to check out the live stream for future website announcements and more!<br>';
-            tempString += '<a href="https://www.twitch.tv/r3ddragons" target="_blank"><img src="img/twitch_purple_combo.svg"></a>';
+            tempString += 'The shuffle has ended.<br>Be sure to check out the live stream for future website announcements and more!<br>';
+            tempString += '<a href="https://www.twitch.tv/r3ddragons" target="_blank"><img style="width: 35%; margin-top: 3rem;" src="img/twitch_purple_combo.svg"></a>';
             document.querySelector('#activeShuffle').innerHTML = tempString;
         }
     }).catch(error => {

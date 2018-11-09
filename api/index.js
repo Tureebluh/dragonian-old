@@ -407,6 +407,7 @@ router.post('/shuffle/report', (req, res) => {
         res.send('Unauthorized Access');
     }
 });
+
 //Enters the user into the specified shuffle by ID
 router.post('/shuffle/submit/', (req, res) => {
     if(req.isAuthenticated() && !req.user.roles.includes('Shuffle Banned')){
@@ -434,6 +435,7 @@ router.post('/shuffle/submit/', (req, res) => {
         res.send('Unauthorized Access');
     }
 });
+
 //Enters the user into the specified shuffle by ID
 router.post('/shuffle/getpick/', (req, res) => {
     if(req.isAuthenticated() && !req.user.roles.includes('Shuffle Banned')){
@@ -457,6 +459,7 @@ router.post('/shuffle/getpick/', (req, res) => {
         res.send('Unauthorized Access');
     }
 });
+
 //Returns back the workshopURL for that round
 router.post('/shuffle/workshop/random', (req, res) => {
     if(req.isAuthenticated() && !req.user.roles.includes('Shuffle Banned')){
@@ -479,6 +482,7 @@ router.post('/shuffle/workshop/random', (req, res) => {
         res.send('Unauthorized Access');
     }
 });
+
 //Returns back all the shuffle_ID's and Name's of all the shuffles
 router.get('/shuffle/names/all', (req, res) => {
     if(req.isAuthenticated() && !req.user.roles.includes('Shuffle Banned')){
@@ -510,6 +514,7 @@ router.get('/shuffle/all/:shuffleID', (req, res) => {
         res.send('Unauthorized Access');
     }
 });
+
 //Returns back the oldest active shuffle. Could be easily changed for multiple shuffles
 router.get('/shuffle/active', (req, res) => {
     if(req.isAuthenticated() && !req.user.roles.includes('Shuffle Banned')){
@@ -528,10 +533,9 @@ router.get('/shuffle/active', (req, res) => {
 
 /*********************************************************************************************************************************
 *
-*                                                           COLLABORATIONS
+*                                                          COLLABORATIONS
 *
 **********************************************************************************************************************************/
-
 //Get Collaboration Roles that have no currently assigned team member if user is authenticated
 router.get('/collabs/all/unassignedroles', (req, res) => {
     if(req.isAuthenticated()){

@@ -129,7 +129,7 @@ class Shuffle {
     }
 
     workshopDiv(){
-        if(this.RoundTwoStart < Date.now()){
+        if(this.RoundTwoStart < Date.now() && this.EndDate > Date.now()){
             let tempString = '';
 
             let payload = {
@@ -161,15 +161,17 @@ class Shuffle {
                     }).then(res => {
                         return res.json();
                     }).then(resJson => {
-                        if(typeof resJson[0] !== 'undefined'){
+                        if(typeof resJson[0][0] !== 'undefined'){
+
                             tempString += '<a id="randomShuffleURL" target="_BLANK" href="';
+
                             if(this.RoundOneStart < Date.now() && this.RoundTwoStart > Date.now()){
                                 
                             } else if(this.RoundTwoStart < Date.now() && this.RoundThreeStart > Date.now()){
                                 tempString += resJson[0][0]['r1_workshop_URL'] + '">Round 2 ';
                             } else if(this.RoundThreeStart < Date.now() && this.RoundFourStart > Date.now()){
                                 tempString += resJson[0][0]['r2_workshop_URL'] + '">Round 3 ';
-                            } else if(this.RoundFourStart < Date.now() && this.RoundThreeStart > Date.now()){
+                            } else if(this.RoundFourStart < Date.now() && this.EndDate > Date.now()){
                                 tempString += resJson[0][0]['r3_workshop_URL'] + '">Round 4 ';
                             }
 
