@@ -6,7 +6,7 @@
     font-weight: bold;
     font-family: Georgia, 'Times New Roman', Times, serif;
     font-size: 1.6rem;
-    background-color: darkred;
+    background-color: $red-bg-color;
     color: whitesmoke;
 }
 .steaminfo {
@@ -23,7 +23,7 @@
     float: right;
 }
 .userbanner {
-    background-color: darkred;
+    background-color: $red-bg-color;
     width: 100%;
     padding: 1rem;
     text-align: center;
@@ -52,7 +52,7 @@
 }
 
 .loginbanner {
-    background-color: darkred;
+    background-color: $red-bg-color;
     width: 100%;
     padding: 1rem;
 }
@@ -63,30 +63,30 @@
 .loginBtn input, .logoutBtn input {
     font-size: 1.2rem;
     background-color: $toy-blue-color;
-    color: white;
+    color: $almost-white;
     padding: 0.5rem;
     border-radius: 1rem;
 }
 
 .infopanel {
     width: 100%;
-    padding: 1rem 10%;
+    padding: 3rem 10%;
     line-height: 2rem;
     text-align: center;
     font-weight: bold;
     font-family: Georgia, 'Times New Roman', Times, serif;
     font-size: 1.5rem;
-    color: whitesmoke;
+    color: $almost-white;
 }
 .discord {
-    background-color: orange;
+    background-color: $main-bg-color;
 }
 .discord img {
     max-width: 15rem;
 }
 
 .twitch {
-    background-color: darkorange;
+    background-color: $main-bg-color;
 }
 .twitch img {
     max-width: 10rem;
@@ -94,10 +94,7 @@
 }
 
 .patreon {
-    background-color: rgb(249, 104, 84);
-}
-.patreon h1 {
-    color: black;
+    background-color: $main-bg-color;
 }
 .patreon img {
     max-height: 10rem;

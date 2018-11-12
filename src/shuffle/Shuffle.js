@@ -122,7 +122,7 @@ class Shuffle {
                 hoursUntil = Math.round(((this.EndDate.getTime() - Date.now()) / 1000) / 60) + ' minute(s) ';
             }
             tempString += hoursUntil + 'left in <br>Round 4!</h2></strong>';
-        
+
         }
 
         return tempString;
@@ -198,7 +198,6 @@ class Shuffle {
                                     }).then(res => {
                                         return res.json();
                                     }).then(resJson => {
-                                            console.log(resJson.result);
                                             if(resJson.result === 'Success'){
                                                 document.querySelector('#showErrorSuccess').innerHTML = 
                                                         '<h1 class="success-notification">Report submitted successfully. Thank you for helping keep the community amazing!</h1>';
@@ -228,14 +227,13 @@ class Shuffle {
                 tempString += '<br>';
                 tempString += '<span>';
                     tempString += '<input type="checkbox" id="verifySubmissionCB" name="verifySubmissionCB" required> By ticking this box and clicking the button("Submit Entry"), I agree and acknowledge that this is my own work';
-                    tempString += ' and is associated with this Steam&#174; account. Violating these terms will result in the immediate and irrevocable termination of my privileges on this website.<br>';
+                    tempString += ' and is associated with this Steam&#174; account.<br>Violating these terms will result in the immediate and irrevocable termination of my privileges on this website.<br>';
                     tempString += '<br>';
                     tempString += '<input type="submit" id="submitShuffleUser" alt="Submit To Shuffle" value="Submit Entry">';
                 tempString += '</span>';
             tempString += '</form>';
         return tempString;
     }
-
 }
 
 export default Shuffle;

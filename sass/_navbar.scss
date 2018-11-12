@@ -3,7 +3,7 @@
 *********************************************/
 .navbar {
     text-align: center;
-    background-color: rgb(31, 29, 29);
+    background-color: $near-black;
     padding: 2%;
 }
 .navbar a{
@@ -40,7 +40,7 @@
     text-align: justify;
     display: none;
     position: absolute;
-    background-color: rgb(31, 29, 29);
+    background-color: $near-black;
     z-index: 1;
     padding: 1rem;
 }

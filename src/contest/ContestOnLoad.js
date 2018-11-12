@@ -57,6 +57,16 @@ const onload = () => {
                     document.querySelector('#activeContest').innerHTML = contestObj.activeContestDiv();
                     document.querySelector('#submitEntrySection').innerHTML = contestObj.entryOrVote();
                     document.querySelector('#contestIDHidden').value = contestObj.contest_ID;
+                    
+                    if(document.querySelector('#submissionURL')){
+                        //Events to toggle placeholder on submission field for better UX
+                        document.querySelector('#submissionURL').addEventListener('focusin', (event) => {
+                            event.target.setAttribute('placeholder', '');
+                        });
+                        document.querySelector('#submissionURL').addEventListener('focusout', (event) => {
+                            event.target.setAttribute('placeholder', 'https://steamcommunity.com/sharedfiles/filedetails/?id=XXXXXXXXXX');
+                        });
+                    }
                 }).catch(error => console.error(error));
             }).catch(error => console.error(error));
 

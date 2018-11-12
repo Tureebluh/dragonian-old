@@ -40,6 +40,14 @@ const onload = () => {
             document.querySelector('#nextRoundTimer').innerHTML = shuffleObj.timerDiv();
             document.querySelector('#shuffleIDHidden').value = shuffleObj.Shuffle_ID;
             shuffleObj.workshopDiv();
+
+            //Events to toggle placeholder on submission field for better UX
+            document.querySelector('#submissionURL').addEventListener('focusin', (event) => {
+                event.target.setAttribute('placeholder', '');
+            });
+            document.querySelector('#submissionURL').addEventListener('focusout', (event) => {
+                event.target.setAttribute('placeholder', 'https://steamcommunity.com/sharedfiles/filedetails/?id=XXXXXXXXXX');
+            });
         }  else {
             let tempString = '';
             tempString += 'The shuffle has ended.<br>Be sure to check out the live stream for future website announcements and more!<br>';

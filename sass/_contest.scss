@@ -105,6 +105,9 @@
         margin: 0 auto 6rem auto;
         width: 35%;
         cursor: pointer;
+        background-color: $text-blue-color;
+        color: $near-black;
+        font-weight: bold;
     }
     #howItWorkSection #contestInDepth {
         transition: opacity 1s ease;
@@ -138,6 +141,11 @@
     }
     #submitEntrySection #submissionURL {
         width: 100%;
+        height: 2rem;
+    }
+    #submitEntrySection input[type="checkbox"] {
+        width: 1rem;
+        height: 1rem;
     }
     #submitEntrySection #submitContestUser, #submitEntrySection #submitShuffleUser {
         padding: 0.5rem;
