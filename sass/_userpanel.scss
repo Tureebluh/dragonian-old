@@ -67,35 +67,3 @@
     padding: 0.5rem;
     border-radius: 1rem;
 }
-
-.infopanel {
-    width: 100%;
-    padding: 3rem 10%;
-    line-height: 2rem;
-    text-align: center;
-    font-weight: bold;
-    font-family: Georgia, 'Times New Roman', Times, serif;
-    font-size: 1.5rem;
-    color: $almost-white;
-}
-.discord {
-    background-color: $main-bg-color;
-}
-.discord img {
-    max-width: 15rem;
-}
-
-.twitch {
-    background-color: $main-bg-color;
-}
-.twitch img {
-    max-width: 10rem;
-    margin-bottom: 1.5rem;
-}
-
-.patreon {
-    background-color: $main-bg-color;
-}
-.patreon img {
-    max-height: 10rem;
-}

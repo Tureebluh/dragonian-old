@@ -460,6 +460,30 @@ router.post('/shuffle/getpick/', (req, res) => {
     }
 });
 
+//Enters the user into the specified shuffle by ID
+router.post('/shuffle/previous/', (req, res) => {
+    if(req.isAuthenticated() && !req.user.roles.includes('Shuffle Banned')){
+            if(req.body.shuffleID){
+                dbpool.getConnection( (err, connection) => {
+                    if (err) throw err;
+                    connection.query('CALL Upsert_Shuffle_Submission(' + dbpool.escape(req.body.shuffleID) +
+                                                                    ',' + dbpool.escape(req.user.steamid) + 
+                                                                    ',' + null +
+                                                                    ');',
+                        (error, results, fields) => {
+                            res.send({results: 'Success'});
+                            connection.release();
+                            if (error) throw error;
+                    });
+                });
+            } else {
+                res.send({results: 'Failed'});
+            }
+    } else {
+        res.send('Unauthorized Access');
+    }
+});
+
 //Returns back the workshopURL for that round
 router.post('/shuffle/workshop/random', (req, res) => {
     if(req.isAuthenticated() && !req.user.roles.includes('Shuffle Banned')){

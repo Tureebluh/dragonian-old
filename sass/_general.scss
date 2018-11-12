@@ -51,6 +51,11 @@ footer a {
     height: 80rem!important;
     opacity: 1!important;
 }
+
+.hidden {
+    display: none;
+}
+
 #inDepth {
     @include transition(height 2s);
 }
@@ -90,18 +95,37 @@ footer a {
     margin-bottom: 3rem;
 }
 
-.report-user {
-    color: $near-black;
-    font-family: Georgia, 'Times New Roman', Times, serif;
-    font-size: 0.7rem;
-    line-height: 1.5rem;
-    background: $text-blue-color;
-    border: 0.1rem dotted white;
-    border-radius: 1rem;
-    width: 6rem;
-    margin: 0 auto;
-    text-transform: uppercase;
+.infopanel {
+    width: 100%;
+    padding: 3rem 10%;
+    line-height: 2rem;
+    text-align: center;
     font-weight: bold;
-    padding-top: 1rem;
-    cursor: pointer;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: 1.5rem;
+    color: $almost-white;
+}
+.discord {
+    background-color: $main-bg-color;
+}
+.discord img {
+    max-width: 15rem;
+}
+
+.twitch {
+    background-color: $main-bg-color;
+}
+.twitch img {
+    max-width: 10rem;
+    margin-bottom: 1.5rem;
+}
+
+.patreon {
+    background-color: $main-bg-color;
+}
+.patreon h1, .patreon span {
+    color: $toy-blue-color;
+}
+.patreon img {
+    max-height: 10rem;
 }

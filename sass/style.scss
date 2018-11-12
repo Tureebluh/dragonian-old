@@ -1,15 +1,15 @@
 //SASS VARIABLES
 $main-bg-color: #303030;
-$text-blue-color: #80a5f5;
+$text-blue-color: #3b79ff;
 $light-gold: rgb(196, 177, 128);
 $near-black: #272822;
 $first-place-color: rgb(240, 222, 64);
 $toy-blue-color: rgb(15, 129, 223);
-$almost-white: #d9d1cf;
+$almost-white: rgb(220, 220, 220);
 $dark-red-orange: rgb(200, 50, 50);
-$success-color: rgba(35, 212, 35, 0.5);
+$success-color: rgb(0, 121, 0);
 $error-color: rgba(255, 67, 67, 0.5);
-$red-bg-color: rgb(155, 15, 15);
+$red-bg-color: rgb(140, 15, 15);
 
 @mixin transition($property) {
     -webkit-transition: $property;
@@ -31,6 +31,7 @@ $red-bg-color: rgb(155, 15, 15);
     @import 'contest-voting';
     @import 'contest-judging';
     @import 'contest-results';
+    @import 'shuffle';
 
 }
 /* Large Mobile Devices */

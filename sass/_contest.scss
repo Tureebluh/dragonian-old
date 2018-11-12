@@ -35,17 +35,7 @@
         color: white;
         font-weight: 400;
     }
-    #activeShuffle a img {
-        width: 50%;
-    }
-    #workshopLink a {
-        font-size: 1.5rem;
-        color: $text-blue-color;
-        text-decoration: none;
-        cursor: pointer;
-        border: white 3px dotted;
-        padding: 0.5rem;
-    }
+    
     #activeContest .Name h1{
         color: white;
     }
@@ -106,7 +96,7 @@
         width: 35%;
         cursor: pointer;
         background-color: $text-blue-color;
-        color: $near-black;
+        color: $almost-white;
         font-weight: bold;
     }
     #howItWorkSection #contestInDepth {
@@ -125,7 +115,7 @@
     //
     .Description ul {
         text-align: left;
-        color: $text-blue-color;
+        color: $almost-white;
         margin: 2rem;
         font-size: 1.4rem;
     }
@@ -133,6 +123,11 @@
     //
     //Submit Section
     //
+    #submitEntrySection {
+        background: $almost-white;
+        margin: 5% auto 0 auto;
+        color: $near-black;
+    }
     #submitEntrySection, #howItWorkSection {
         padding: 5%;
     }
@@ -143,9 +138,13 @@
         width: 100%;
         height: 2rem;
     }
-    #submitEntrySection input[type="checkbox"] {
+    #submitEntrySection .reg-checkbox {
         width: 1rem;
         height: 1rem;
+    }
+    #submitEntrySection input[type=url] {
+        border: 0.1rem black solid;
+        padding: 0.3rem;
     }
     #submitEntrySection #submitContestUser, #submitEntrySection #submitShuffleUser {
         padding: 0.5rem;

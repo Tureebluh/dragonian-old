@@ -122,12 +122,46 @@ class Shuffle {
                 hoursUntil = Math.round(((this.EndDate.getTime() - Date.now()) / 1000) / 60) + ' minute(s) ';
             }
             tempString += hoursUntil + 'left in <br>Round 4!</h2></strong>';
-
         }
 
         return tempString;
     }
+    previousDiv(){
+        if(this.RoundThreeStart < Date.now() && this.EndDate > Date.now()){
 
+            let tempString = '';
+
+            let payload = {
+                shuffleID: this._Shuffle_ID
+            };
+            fetch('/api/shuffle/previous/', {
+                credentials: 'include',
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(payload)
+            }).then(res => {
+                return res.json();
+            }).then(resJson => {
+                if(typeof resJson[0][0] !== 'undefined'){
+                    resJson[0].forEach(element => {
+                        tempString += '<a target="_BLANK" href="';
+
+                        if(this.RoundThreeStart < Date.now() && this.RoundFourStart > Date.now()){
+                            tempString += resJson[0][0]['r2_workshop_URL'] + '">Round 3';
+                        } else if(this.RoundFourStart < Date.now() && this.EndDate > Date.now()){
+                            tempString += resJson[0][0]['r3_workshop_URL'] + '">Round 4';
+                        }
+                        tempString += '</a>';
+                        tempString += '<br><br>';
+                    });
+                    document.querySelector('#previousLinks').innerHTML = tempString;
+                }
+            }).catch(error => console.error(error));
+        }
+    }
     workshopDiv(){
         if(this.RoundTwoStart < Date.now() && this.EndDate > Date.now()){
             let tempString = '';
@@ -180,6 +214,7 @@ class Shuffle {
                             tempString += '<div class="report-user"><img id="reportShuffle" class="report-flag" style="height: 2rem;" src="img/flag.svg" /><br>Report User</div>';
 
                             document.querySelector('#workshopLink').innerHTML = tempString;
+                            document.querySelector('#workshopLink').classList.toggle('hidden');
 
                             document.querySelector('.report-user').addEventListener('click', (event) => {
                                 let res = confirm('Does the blueprint violate one of the posted RULES?');
@@ -226,7 +261,7 @@ class Shuffle {
                 tempString += '<br>';
                 tempString += '<br>';
                 tempString += '<span>';
-                    tempString += '<input type="checkbox" id="verifySubmissionCB" name="verifySubmissionCB" required> By ticking this box and clicking the button("Submit Entry"), I agree and acknowledge that this is my own work';
+                    tempString += '<input type="checkbox" id="verifySubmissionCB" name="verifySubmissionCB" class="reg-checkbox" required> By ticking this box and clicking the button("Submit Entry"), I agree and acknowledge that this is my own work';
                     tempString += ' and is associated with this Steam&#174; account.<br>Violating these terms will result in the immediate and irrevocable termination of my privileges on this website.<br>';
                     tempString += '<br>';
                     tempString += '<input type="submit" id="submitShuffleUser" alt="Submit To Shuffle" value="Submit Entry">';
