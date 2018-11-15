@@ -27,7 +27,7 @@
     #judgeSection .steaminfo img {
         margin: -1rem 0.5rem;
     }
-    #activeContest, #submitEntrySection, #howItWorkSection, #showErrorSuccess, #activeShuffle, #nextRoundTimer, #workshopLink {
+    #activeContest, #submitEntrySection, #howItWorkSection, #showErrorSuccess, #activeShuffle, #nextRoundTimer {
         padding: 5%;
         text-align: center;
         font-size: 1.2rem;
@@ -104,7 +104,7 @@
     }
     #howItWorkSection a {
         text-decoration: none;
-        color: darkgoldenrod;
+        color: $first-place-color;
     }
     #howItWorkSection h3 {
         color: $text-blue-color;
@@ -127,9 +127,13 @@
         background: $almost-white;
         margin: 5% auto 0 auto;
         color: $near-black;
+        font-size: 1.5rem;
     }
     #submitEntrySection, #howItWorkSection {
         padding: 5%;
+    }
+    #submitEntrySection h1 {
+        color: $text-blue-color;
     }
     #submitEntrySection h2 {
         font-size: 1.5rem;
@@ -137,14 +141,16 @@
     #submitEntrySection #submissionURL {
         width: 100%;
         height: 2rem;
+        border: 0.1rem $near-black solid;
+        padding: 0.3rem;
+        border-radius: 0.5rem;
+    }
+    #submitEntrySection #submissionURL:focus {
+        border: 0.1rem $text-blue-color solid;
     }
     #submitEntrySection .reg-checkbox {
         width: 1rem;
         height: 1rem;
-    }
-    #submitEntrySection input[type=url] {
-        border: 0.1rem black solid;
-        padding: 0.3rem;
     }
     #submitEntrySection #submitContestUser, #submitEntrySection #submitShuffleUser {
         padding: 0.5rem;

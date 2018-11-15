@@ -466,12 +466,11 @@ router.post('/shuffle/previous/', (req, res) => {
             if(req.body.shuffleID){
                 dbpool.getConnection( (err, connection) => {
                     if (err) throw err;
-                    connection.query('CALL Upsert_Shuffle_Submission(' + dbpool.escape(req.body.shuffleID) +
-                                                                    ',' + dbpool.escape(req.user.steamid) + 
-                                                                    ',' + null +
-                                                                    ');',
+                    connection.query('CALL Get_Shuffle_Round_Contributors(' + dbpool.escape(req.body.shuffleID) +
+                                                                        ',' + dbpool.escape(req.user.steamid) +
+                                                                        ');',
                         (error, results, fields) => {
-                            res.send({results: 'Success'});
+                            res.send(results);
                             connection.release();
                             if (error) throw error;
                     });

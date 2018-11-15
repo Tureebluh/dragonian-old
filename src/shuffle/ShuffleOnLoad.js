@@ -40,13 +40,14 @@ const onload = () => {
             document.querySelector('#nextRoundTimer').innerHTML = shuffleObj.timerDiv();
             document.querySelector('#shuffleIDHidden').value = shuffleObj.Shuffle_ID;
             shuffleObj.workshopDiv();
+            shuffleObj.previousDiv();
 
             //Events to toggle placeholder on submission field for better UX
             document.querySelector('#submissionURL').addEventListener('focusin', (event) => {
                 event.target.setAttribute('placeholder', '');
             });
             document.querySelector('#submissionURL').addEventListener('focusout', (event) => {
-                event.target.setAttribute('placeholder', 'https://steamcommunity.com/sharedfiles/filedetails/?id=XXXXXXXXXX');
+                event.target.setAttribute('placeholder', 'Type/paste your workshop link here');
             });
         }  else {
             let tempString = '';
@@ -75,6 +76,11 @@ const onload = () => {
     document.querySelector('#learnMore').addEventListener('click', (event) => {
         if(document.querySelector('#inDepth').classList.contains('closed')){
             document.querySelector('#inDepth').classList.toggle('opened');
+            if(document.querySelector('#inDepth').classList.contains('opened')){
+                event.target.innerHTML = 'Learn More<br>▲';
+            } else {
+                event.target.innerHTML = 'Learn More<br>▼';
+            }
         }
     });
 }

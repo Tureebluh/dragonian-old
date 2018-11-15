@@ -16,12 +16,19 @@
     padding: 0.5rem;
     width: 75%;
     margin: 5% auto 0 auto;
+    text-align: center;
 }
 #workshopLink a, #previousLinks a {
     cursor: pointer;
     text-decoration: none;
     color: $near-black;
     font-weight: bold;
+}
+#workshopLink h1, #previousLinks h1 {
+    color: $text-blue-color;
+}
+#workshopLink a:hover, #previousLinks a:hover {
+    color: $success-color;
 }
 
 #activeShuffle a img {
@@ -40,6 +47,10 @@
     margin: 0 auto;
     text-transform: uppercase;
     font-weight: bold;
-    padding-top: 1rem;
+    padding: 0.5rem;
     cursor: pointer;
+}
+.report-user:hover {
+    color: $almost-white;
+    background-color: $red-bg-color;
 }

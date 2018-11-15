@@ -129,7 +129,7 @@ class Shuffle {
     previousDiv(){
         if(this.RoundThreeStart < Date.now() && this.EndDate > Date.now()){
 
-            let tempString = '';
+            let tempString = '<h1>Previous Rounds</h1>';
 
             let payload = {
                 shuffleID: this._Shuffle_ID
@@ -147,24 +147,33 @@ class Shuffle {
             }).then(resJson => {
                 if(typeof resJson[0][0] !== 'undefined'){
                     resJson[0].forEach(element => {
-                        tempString += '<a target="_BLANK" href="';
-
                         if(this.RoundThreeStart < Date.now() && this.RoundFourStart > Date.now()){
-                            tempString += resJson[0][0]['r2_workshop_URL'] + '">Round 3';
+                            tempString += '<a target="_BLANK" href="';
+                            tempString += resJson[0][0]['r1_workshop_URL'] + '">Round 1';
+                            tempString += ' - Click Here</a>';
+                            tempString += '<br><br>';
+
                         } else if(this.RoundFourStart < Date.now() && this.EndDate > Date.now()){
-                            tempString += resJson[0][0]['r3_workshop_URL'] + '">Round 4';
+                            tempString += '<a target="_BLANK" href="';
+                            tempString += resJson[0][0]['r1_workshop_URL'] + '">Round 1';
+                            tempString += ' - Click Here</a>';
+                            tempString += '<br><br>';
+
+                            tempString += '<a target="_BLANK" href="';
+                            tempString += resJson[0][0]['r2_workshop_URL'] + '">Round 2';
+                            tempString += ' - Click Here</a>';
+                            tempString += '<br><br>';
                         }
-                        tempString += '</a>';
-                        tempString += '<br><br>';
                     });
                     document.querySelector('#previousLinks').innerHTML = tempString;
+                    document.querySelector('#previousLinks').classList.toggle('hidden');
                 }
             }).catch(error => console.error(error));
         }
     }
     workshopDiv(){
         if(this.RoundTwoStart < Date.now() && this.EndDate > Date.now()){
-            let tempString = '';
+            let tempString = '<h1>Current Round</h1>';
 
             let payload = {
                 shuffleID: this._Shuffle_ID
@@ -202,14 +211,14 @@ class Shuffle {
                             if(this.RoundOneStart < Date.now() && this.RoundTwoStart > Date.now()){
                                 
                             } else if(this.RoundTwoStart < Date.now() && this.RoundThreeStart > Date.now()){
-                                tempString += resJson[0][0]['r1_workshop_URL'] + '">Round 2 ';
+                                tempString += resJson[0][0]['r1_workshop_URL'] + '">';
                             } else if(this.RoundThreeStart < Date.now() && this.RoundFourStart > Date.now()){
-                                tempString += resJson[0][0]['r2_workshop_URL'] + '">Round 3 ';
+                                tempString += resJson[0][0]['r2_workshop_URL'] + '">';
                             } else if(this.RoundFourStart < Date.now() && this.EndDate > Date.now()){
-                                tempString += resJson[0][0]['r3_workshop_URL'] + '">Round 4 ';
+                                tempString += resJson[0][0]['r3_workshop_URL'] + '">';
                             }
 
-                            tempString += ' - Random Link</a>';
+                            tempString += 'Random Link - Click Here</a>';
                             tempString += '<br><br>';
                             tempString += '<div class="report-user"><img id="reportShuffle" class="report-flag" style="height: 2rem;" src="img/flag.svg" /><br>Report User</div>';
 
@@ -257,7 +266,7 @@ class Shuffle {
             tempString += '<h1 id="submissionHeader">Shuffle Entry</h1>';
             tempString += '<form action="/api/shuffle/submit/" method="post" class="contestSubmissionForm">';
                 tempString += '<input type="hidden" id="shuffleIDHidden" name="shuffleID">';
-                tempString += '<input type="url" id="submissionURL" name="submissionURL" placeholder="https://steamcommunity.com/sharedfiles/filedetails/?id=XXXXXXXXXX" required/>';
+                tempString += '<input type="url" id="submissionURL" name="submissionURL" placeholder="Type/paste your workshop link here" required/>';
                 tempString += '<br>';
                 tempString += '<br>';
                 tempString += '<span>';

@@ -164,6 +164,11 @@ const onload = () => {
     document.querySelector('#learnMore').addEventListener('click', (event) =>{
         if(document.querySelector('#inDepth').classList.contains('closed')){
             document.querySelector('#inDepth').classList.toggle('opened');
+            if(document.querySelector('#inDepth').classList.contains('opened')){
+                event.target.innerHTML = 'Learn More<br>▲';
+            } else {
+                event.target.innerHTML = 'Learn More<br>▼';
+            }
         }
     });
 }
