@@ -110,6 +110,16 @@ server.get('/shuffle', (req, res) => {
         res.redirect('/auth/login');
     }
 });
+//Render profile page for this user
+server.get('/profile/me', (req, res) => {
+    if(req.isAuthenticated()){
+        res.render('user/profile/profile');
+    } else {
+        res.redirect('/auth/login');
+    }
+});
+
+
 //Render voting page for active contest
 server.get('/contest/vote/', (req, res) => {
     if(req.isAuthenticated()){

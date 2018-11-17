@@ -5,6 +5,63 @@ const router = express.Router();
 
 /*********************************************************************************************************************************
 *
+*                                                           USER-PROFILE
+*
+**********************************************************************************************************************************/
+//Gets users details like created date and last login etc.
+router.get('/profile/user/details', (req, res) => {
+    if(req.isAuthenticated() ){
+        dbpool.getConnection( (err, connection) => {
+            if (err) throw err;
+            connection.query('CALL Get_User_Profile_Details(' + dbpool.escape(req.user.steamid) +
+                                                            ');',
+                (error, results, fields) => {
+                    res.send(results);
+                    connection.release();
+                    if (error) throw error;
+            });
+        });
+    } else {
+        res.send('Unauthorized Access');
+    }
+});
+//Gets users shuffles that they've completed
+router.get('/profile/user/shuffles', (req, res) => {
+    if(req.isAuthenticated() ){
+        dbpool.getConnection( (err, connection) => {
+            if (err) throw err;
+            connection.query('CALL Get_User_Profile_Shuffles(' + dbpool.escape(req.user.steamid) +
+                                                            ');',
+                (error, results, fields) => {
+                    res.send(results);
+                    connection.release();
+                    if (error) throw error;
+            });
+        });
+    } else {
+        res.send('Unauthorized Access');
+    }
+});
+//Get users contests they've completed
+router.get('/profile/user/contests', (req, res) => {
+    if(req.isAuthenticated() ){
+        dbpool.getConnection( (err, connection) => {
+            if (err) throw err;
+            connection.query('CALL Get_User_Profile_Contests(' + dbpool.escape(req.user.steamid) +
+                                                            ');',
+                (error, results, fields) => {
+                    res.send(results);
+                    connection.release();
+                    if (error) throw error;
+            });
+        });
+    } else {
+        res.send('Unauthorized Access');
+    }
+});
+
+/*********************************************************************************************************************************
+*
 *                                                           CONTEST
 *
 **********************************************************************************************************************************/

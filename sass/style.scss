@@ -32,6 +32,7 @@ $red-bg-color: rgb(140, 15, 15);
     @import 'contest-judging';
     @import 'contest-results';
     @import 'shuffle';
+    @import 'user-profile';
 
 }
 /* Large Mobile Devices */
@@ -68,6 +69,9 @@ $red-bg-color: rgb(140, 15, 15);
     #howItWorkSection {
         font-size: 1.3rem;
     }
+    #howItWorkSection #learnMore {
+        width: 30%;
+    }
     .loginbanner img {
         width: 10rem;
     }
@@ -92,6 +96,9 @@ $red-bg-color: rgb(140, 15, 15);
     html {
         font-size: 24px;
     }
+    .userProfileSection span:nth-child(2){
+        float: right;
+    }
 }
 
 /* Large Devices, Wide Screens */
@@ -107,6 +114,9 @@ $red-bg-color: rgb(140, 15, 15);
     #contestVotingContainer form {
         width: 50%;
         margin: 0 auto;
+    }
+    #howItWorkSection #learnMore {
+        width: 25%;
     }
 }
 

@@ -43,7 +43,7 @@ class JudgeSubmission {
             numberInput.setAttribute("step", '1');
             numberInput.setAttribute("min", '1');
             numberInput.setAttribute("max", '10');
-            numberInput.setAttribute("value", '5');
+            numberInput.setAttribute("value", '10');
             numberInput.required = true;
             tempTD.appendChild(numberInput);
             node.appendChild(tempTD);

@@ -1,4 +1,4 @@
-import ContestOption from './ContestOption';
+import ContestOption from '../contest/ContestOption';
 
 const onload = () => {
     const submissionDict = {};
@@ -6,17 +6,19 @@ const onload = () => {
     }).then(res => {
         return res.json();
     }).then(resJson => {
-        let tempSubs = resJson[0];
-        tempSubs.forEach(element => {
-            submissionDict[''+ element.contest_submission_ID] = element
-            let option = new ContestOption(element.contest_submission_ID, element.personaname);
-            let node = option.getContestOption();
-            document.querySelector('#contestUserName').appendChild(node);
-        });
-        let currentValue = document.querySelector('#contestUserName').value;
-        document.querySelector('#contestUserPic').setAttribute('src', submissionDict[currentValue].avatarfull);
-        document.querySelector('#contestSubmissionURL').href = submissionDict[currentValue]['workshop_URL'];
-        document.querySelector('#contestSubmissionValid').checked = submissionDict[currentValue].valid.data[0] ? true : false;
+        if(typeof resJson[0][0] !== 'undefined'){
+            let tempSubs = resJson[0];
+            tempSubs.forEach(element => {
+                submissionDict[''+ element.contest_submission_ID] = element
+                let option = new ContestOption(element.contest_submission_ID, element.personaname);
+                let node = option.getContestOption();
+                document.querySelector('#contestUserName').appendChild(node);
+            });
+            let currentValue = document.querySelector('#contestUserName').value;
+            document.querySelector('#contestUserPic').setAttribute('src', submissionDict[currentValue].avatarfull);
+            document.querySelector('#contestSubmissionURL').href = submissionDict[currentValue]['workshop_URL'];
+            document.querySelector('#contestSubmissionValid').checked = submissionDict[currentValue].valid.data[0] ? true : false;
+        }
     }).catch(error => console.error(error));
 
     document.querySelector('#contestUserName').addEventListener('change', (event) => {

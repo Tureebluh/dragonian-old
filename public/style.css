@@ -155,21 +155,28 @@
     color: whitesmoke; }
   .steaminfo {
     width: 100%;
-    display: flex;
-    line-height: 3rem; }
+    display: inline-block;
+    line-height: 3rem;
+    text-align: left; }
+  .steaminfo a {
+    width: 100%;
+    color: gainsboro;
+    text-decoration: none; }
   .steaminfo img {
     width: 3rem;
-    height: 3rem; }
+    height: 3rem;
+    vertical-align: middle;
+    float: left; }
   .userbanner .controlPanel .steaminfo .logoutBtn {
-    float: right; }
+    margin-top: -25%; }
   .userbanner {
     background-color: #8c0f0f;
     width: 100%;
     padding: 1rem;
-    text-align: center; }
+    text-align: center;
+    min-height: 7rem; }
   .userbanner > img {
-    width: 50%;
-    margin: 5% 20% 0 20%; }
+    max-width: 35%; }
   .userbanner .controlPanel, .userbanner .controlPanel .logoutBtn {
     width: 100%;
     padding: 5% 0; }
@@ -195,7 +202,8 @@
     background-color: #0f81df;
     color: gainsboro;
     padding: 0.5rem;
-    border-radius: 1rem; }
+    border-radius: 1rem;
+    cursor: pointer; }
   /*********************************************
 *****************COLLAB PAGE******************
 *********************************************/
@@ -288,9 +296,9 @@
   #activeContest #twitchImg {
     width: 40%; }
   #activeContest .contest-banner-container {
-    background: url("img/cute_dragon.svg");
+    background: url("img/chill_dragon.svg");
     background-position: 50%;
-    background-size: 50% 50%;
+    background-size: 35% 35%;
     background-repeat: no-repeat;
     padding: 2.5%; }
   #activeContest .sml-container {
@@ -310,7 +318,6 @@
     text-align: left;
     padding: 0 5%; }
   #activeContest #rulesDiv .rule {
-    font-size: 1.5rem;
     margin-top: 5%; }
   #howItWorkSection #learnMore {
     padding: 1rem;
@@ -319,7 +326,7 @@
     border-top: none;
     border-radius: 0 0 1rem 1rem;
     margin: 0 auto 6rem auto;
-    width: 35%;
+    width: 50%;
     cursor: pointer;
     background-color: #3b79ff;
     color: gainsboro;
@@ -569,7 +576,37 @@
     cursor: pointer; }
   .report-user:hover {
     color: gainsboro;
-    background-color: #8c0f0f; } }
+    background-color: #8c0f0f; }
+  /*********************************************
+****************USER PROFILE PAGE*************
+*********************************************/
+  .userProfileSection {
+    color: #272822;
+    background-color: gainsboro;
+    border: 1rem darkgrey solid;
+    font-size: 1.1rem;
+    text-align: justify;
+    padding: 2rem 1rem;
+    font-family: Georgia, 'Times New Roman', Times, serif; }
+  .userProfileSection a {
+    font-family: inherit;
+    color: #272822;
+    font-weight: bold;
+    text-decoration: none;
+    cursor: pointer; }
+  .userProfileSection h1, .userProfileSection h3 {
+    color: #3b79ff; }
+  .userProfileSection h1, .userProfileSection h2, .userProfileSection h3 {
+    text-align: center; }
+  .userProfileSection h2 > img {
+    width: 3rem;
+    height: 3rem;
+    vertical-align: middle; }
+  .userProfileSection span {
+    display: inline-block;
+    margin: 1rem 0;
+    color: #3b79ff;
+    font-weight: bold; } }
 
 /* Large Mobile Devices */
 @media only screen and (min-width: 375px) {
@@ -591,6 +628,8 @@
     height: 3rem; }
   #howItWorkSection {
     font-size: 1.3rem; }
+  #howItWorkSection #learnMore {
+    width: 30%; }
   .loginbanner img {
     width: 10rem; }
   .logoutBtn {
@@ -607,7 +646,9 @@
 /* Medium Devices, Desktops - No minimum height */
 @media only screen and (min-width: 1000px) {
   html {
-    font-size: 24px; } }
+    font-size: 24px; }
+  .userProfileSection span:nth-child(2) {
+    float: right; } }
 
 /* Large Devices, Wide Screens */
 /* Extra-Large Devices, Wide Screens */
@@ -616,7 +657,9 @@
     font-size: 18px; }
   #contestVotingContainer form {
     width: 50%;
-    margin: 0 auto; } }
+    margin: 0 auto; }
+  #howItWorkSection #learnMore {
+    width: 25%; } }
 
 /* Extra-Large Devices, Wide Screens */
 @media only screen and (min-width: 2000px) {

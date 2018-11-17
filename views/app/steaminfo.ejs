@@ -1,4 +1,4 @@
 <span class="steaminfo">
-    <img src="<%- user.avatarfull %>"/> &nbsp;<%- user.personaname %>
+    <a href="/profile/me"><img src="<%- user.avatarfull %>"/> &nbsp;<%- user.personaname %></a>
     <%- (user) ? include('logoutbtn') : include('loginbtn') %>
 </span>

@@ -11,26 +11,34 @@
 }
 .steaminfo {
     width: 100%;
-    display: flex;
+    display: inline-block;
     line-height: 3rem;
+    text-align: left
+}
+.steaminfo a {
+    width: 100%;
+    color: $almost-white;
+    text-decoration: none;
 }
 .steaminfo img {
     width: 3rem;
     height: 3rem;
+    vertical-align: middle;
+    float: left;
 }
 
 .userbanner .controlPanel .steaminfo .logoutBtn {
-    float: right;
+    margin-top: -25%;
 }
 .userbanner {
     background-color: $red-bg-color;
     width: 100%;
     padding: 1rem;
     text-align: center;
+    min-height: 7rem;
 }
 .userbanner > img {
-    width: 50%;
-    margin: 5% 20% 0 20%;
+    max-width: 35%;
 }
 .userbanner .controlPanel, .userbanner .controlPanel .logoutBtn {
     width: 100%;
@@ -66,4 +74,5 @@
     color: $almost-white;
     padding: 0.5rem;
     border-radius: 1rem;
+    cursor: pointer;
 }

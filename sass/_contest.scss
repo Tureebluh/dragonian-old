@@ -50,9 +50,9 @@
         width: 40%;
     }
     #activeContest .contest-banner-container {
-        background: url('img/cute_dragon.svg');
+        background: url('img/chill_dragon.svg');
         background-position: 50%;
-        background-size: 50% 50%;
+        background-size: 35% 35%;
         background-repeat: no-repeat;
         padding: 2.5%;
     }
@@ -80,7 +80,6 @@
         padding: 0 5%;
     }
     #activeContest #rulesDiv .rule {
-        font-size: 1.5rem;
         margin-top: 5%;
     }
     //
@@ -93,7 +92,7 @@
         border-top: none;
         border-radius: 0 0 1rem 1rem;
         margin: 0 auto 6rem auto;
-        width: 35%;
+        width: 50%;
         cursor: pointer;
         background-color: $text-blue-color;
         color: $almost-white;

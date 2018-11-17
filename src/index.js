@@ -1,10 +1,15 @@
-import AdminContestOnLoad from './contest/AdminContestOnLoad';
-import AdminContestSubOnLoad from './contest/AdminContestSubOnLoad';
-import AdminShuffleOnLoad from './shuffle/AdminShuffleOnLoad';
-import AdminRolesOnLoad from './AdminRolesOnLoad';
-import AdminReportsOnLoad from './shuffle/AdminReportsOnLoad';
+import AdminContestOnLoad from './admin/AdminContestOnLoad';
+import AdminContestSubOnLoad from './admin/AdminContestSubOnLoad';
+import AdminShuffleOnLoad from './admin/AdminShuffleOnLoad';
+import AdminRolesOnLoad from './admin/AdminRolesOnLoad';
+import AdminReportsOnLoad from './admin/AdminReportsOnLoad';
+
+import ProfileMeOnLoad from './user/ProfileMeOnLoad';
+
 import CollabOnLoad from './collab/CollabOnLoad';
+
 import ShuffleOnLoad from './shuffle/ShuffleOnLoad';
+
 import ContestOnLoad from './contest/ContestOnLoad';
 import ContestVoteOnLoad from './contest/ContestVoteOnLoad';
 import ContestJudgeOnLoad from './contest/ContestJudgeOnLoad';
@@ -47,6 +52,13 @@ window.onload = function(){
     *********************************************************/
     if(window.location.pathname === '/admin/contest/submissions' || window.location.pathname === '/admin/contest/submissions/'){
         AdminContestSubOnLoad();
+    }
+
+    /******************************************************** 
+                    ADMIN-CONTEST-SUBMISSIONS MANAGEMENT
+    *********************************************************/
+    if(window.location.pathname === '/profile/me/' || window.location.pathname === '/profile/me'){
+        ProfileMeOnLoad();
     }
 
     /******************************************************** 

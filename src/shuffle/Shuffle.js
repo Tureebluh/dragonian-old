@@ -71,7 +71,7 @@ class Shuffle {
         let tempString = "";
         tempString += "<div class=\"shuffle-banner-container\">";
             tempString += "<div class=\"Name\"><h1>" + this._Name + "</h1></div>";
-            tempString += "<img style=\"max-width: 50%\" src='img/cute_dragon.svg'/>";
+            tempString += "<img style=\"max-width: 35%\" src='img/cute_dragon_blue.svg'/>";
             tempString += "<br>";
         tempString += "</div>";
         tempString += "<br>";
@@ -153,6 +153,11 @@ class Shuffle {
                             tempString += ' - Click Here</a>';
                             tempString += '<br><br>';
 
+                            tempString += '<a target="_BLANK" href="';
+                            tempString += resJson[0][0]['r2_workshop_URL'] + '">Round 2';
+                            tempString += ' - Click Here</a>';
+                            tempString += '<br><br>';
+
                         } else if(this.RoundFourStart < Date.now() && this.EndDate > Date.now()){
                             tempString += '<a target="_BLANK" href="';
                             tempString += resJson[0][0]['r1_workshop_URL'] + '">Round 1';
@@ -161,6 +166,11 @@ class Shuffle {
 
                             tempString += '<a target="_BLANK" href="';
                             tempString += resJson[0][0]['r2_workshop_URL'] + '">Round 2';
+                            tempString += ' - Click Here</a>';
+                            tempString += '<br><br>';
+
+                            tempString += '<a target="_BLANK" href="';
+                            tempString += resJson[0][0]['r3_workshop_URL'] + '">Round 3';
                             tempString += ' - Click Here</a>';
                             tempString += '<br><br>';
                         }

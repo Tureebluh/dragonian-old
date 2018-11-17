@@ -1,6 +1,6 @@
-import ContestOption from './ContestOption';
-import ContestRule from './ContestRule';
-import ContestCriteriaOption from './ContestCriteriaOption';
+import ContestOption from '../contest/ContestOption';
+import ContestRule from '../contest/ContestRule';
+import ContestCriteriaOption from '../contest/ContestCriteriaOption';
 
 const onload = () => {
     fetch('/api/contest/names/all', {credentials: 'include'})

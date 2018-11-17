@@ -1,0 +1,43 @@
+import UserProfile from './UserProfile';
+
+const onload = () => {
+    let userProfile = {};
+    //Get basic user profile details (lastLogIn, CreatedDate, Avatarfull and personaname)
+    fetch('/api/profile/user/details', {credentials: 'include'})
+    .then(res =>{
+        return res.json();
+        //Return res in JSON form to next then()
+    }).then(resJson =>{
+        if(typeof resJson[0][0] !== 'undefined'){
+            userProfile = new UserProfile(new Date(resJson[0][0].CreatedDate), new Date(resJson[0][0].LastLogIn),
+                                                        resJson[0][0].avatarfull, resJson[0][0].personaname);
+            document.querySelector('#userProfile').innerHTML = userProfile.userProfileDiv();
+
+            //Get shuffles user has participated in that are completed
+            fetch('/api/profile/user/shuffles', {credentials: 'include'})
+            .then(res =>{
+                return res.json();
+                //Return res in JSON form to next then()
+            }).then(resJson =>{
+                if(typeof resJson[0][0] !== 'undefined'){
+                    userProfile.shuffles = resJson[0];
+                    document.querySelector('#userShuffles').innerHTML = userProfile.userShuffleDiv();
+                }
+            }).catch(error => console.error(error));
+
+            //Get shuffles user has participated in that are completed
+            fetch('/api/profile/user/contests', {credentials: 'include'})
+            .then(res =>{
+                return res.json();
+                //Return res in JSON form to next then()
+            }).then(resJson =>{
+                if(typeof resJson[0][0] !== 'undefined'){
+                    userProfile.contests = resJson[0];
+                    document.querySelector('#userContests').innerHTML = userProfile.userContestDiv();
+                }
+            }).catch(error => console.error(error));
+        }
+    }).catch(error => console.error(error));    
+}
+
+export default onload;
