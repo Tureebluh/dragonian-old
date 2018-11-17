@@ -55,6 +55,7 @@ class UserProfile {
         
         this.shuffles.forEach(element => {
             tempString += '<a target="_BLANK" href="' + element['r4_workshop_URL'] + '">' + element.Name + ' - Click Here</a>';
+            tempString += '<br><br>';
         });
         
         return tempString;
@@ -68,6 +69,7 @@ class UserProfile {
         
         this.contests.forEach(element => {
             tempString += '<a target="_BLANK" href="' + element['workshop_URL'] + '">' + element.Name + ' - Click Here</a>';
+            tempString += '<br><br>';
         });
         
         return tempString;

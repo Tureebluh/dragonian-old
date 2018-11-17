@@ -365,13 +365,15 @@
     border: 0.1rem #3b79ff solid; }
   #submitEntrySection .reg-checkbox {
     width: 1rem;
-    height: 1rem; }
+    height: 1rem;
+    cursor: pointer; }
   #submitEntrySection #submitContestUser, #submitEntrySection #submitShuffleUser {
     padding: 0.5rem;
     border-radius: 1rem;
     background-color: #007900;
     color: white;
-    font-size: 1.3rem; }
+    font-size: 1.3rem;
+    cursor: pointer; }
   #submitEntrySection img {
     width: 50%; }
   #submitEntrySection form #contestVote {

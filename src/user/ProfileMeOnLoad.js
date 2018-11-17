@@ -12,6 +12,7 @@ const onload = () => {
             userProfile = new UserProfile(new Date(resJson[0][0].CreatedDate), new Date(resJson[0][0].LastLogIn),
                                                         resJson[0][0].avatarfull, resJson[0][0].personaname);
             document.querySelector('#userProfile').innerHTML = userProfile.userProfileDiv();
+            document.querySelector('#userProfile').classList.toggle('hidden');
 
             //Get shuffles user has participated in that are completed
             fetch('/api/profile/user/shuffles', {credentials: 'include'})
@@ -22,6 +23,7 @@ const onload = () => {
                 if(typeof resJson[0][0] !== 'undefined'){
                     userProfile.shuffles = resJson[0];
                     document.querySelector('#userShuffles').innerHTML = userProfile.userShuffleDiv();
+                    document.querySelector('#userShuffles').classList.toggle('hidden');
                 }
             }).catch(error => console.error(error));
 
@@ -34,6 +36,7 @@ const onload = () => {
                 if(typeof resJson[0][0] !== 'undefined'){
                     userProfile.contests = resJson[0];
                     document.querySelector('#userContests').innerHTML = userProfile.userContestDiv();
+                    document.querySelector('#userContests').classList.toggle('hidden');
                 }
             }).catch(error => console.error(error));
         }
