@@ -1,5 +1,6 @@
 import express from 'express';
 import dbpool from '../dbpool';
+import fetch from 'node-fetch';
 
 const router = express.Router();
 
@@ -27,7 +28,7 @@ router.get('/profile/user/details', (req, res) => {
 });
 //Gets users shuffles that they've completed
 router.get('/profile/user/shuffles', (req, res) => {
-    if(req.isAuthenticated() ){
+    if(req.isAuthenticated() && req.user.verified){
         dbpool.getConnection( (err, connection) => {
             if (err) throw err;
             connection.query('CALL Get_User_Profile_Shuffles(' + dbpool.escape(req.user.steamid) +
@@ -44,7 +45,7 @@ router.get('/profile/user/shuffles', (req, res) => {
 });
 //Get users contests they've completed
 router.get('/profile/user/contests', (req, res) => {
-    if(req.isAuthenticated() ){
+    if(req.isAuthenticated() && req.user.verified){
         dbpool.getConnection( (err, connection) => {
             if (err) throw err;
             connection.query('CALL Get_User_Profile_Contests(' + dbpool.escape(req.user.steamid) +
@@ -60,6 +61,44 @@ router.get('/profile/user/contests', (req, res) => {
     }
 });
 
+//Get users contests they've completed
+router.get('/profile/user/verify', (req, res) => {
+    if(req.isAuthenticated()){
+        if(req.user.verified === false) {
+            //Check to see if user owns - Planet Coaster (493340)
+            fetch('http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key='
+            + process.env.STEAM_API_KEY + '&format=json&input_json={"steamid":' + req.user.steamid + ', "appids_filter":' + '[493340]}')
+            .then(res => {
+                //Return response to next call as JSON
+                return res.json();
+            })
+            .then(resJson => {
+                //If the game count is equal to 1 it was found, other wise done will be called with false and fail validation
+                if(resJson.response['game_count'] === 1){
+                    dbpool.getConnection( (err, connection) => {
+                        if (err) throw err;
+                        connection.query('CALL Update_User_Verified(1,' + dbpool.escape(req.user.steamid) +
+                                                                        ');',
+                            (error, results, fields) => {
+                                req.user.verified = true;
+                                res.send({result: 1});
+                                connection.release();
+                                if (error) throw error;
+                        });
+                    });
+                } else {
+                    res.send({result: 0});
+                }
+            })
+            .catch(err => console.error(err));
+        } else {
+            res.send({result: 1});
+        }
+    } else {
+        res.send('Unauthorized Access');
+    }
+});
+
 /*********************************************************************************************************************************
 *
 *                                                           CONTEST
@@ -67,7 +106,7 @@ router.get('/profile/user/contests', (req, res) => {
 **********************************************************************************************************************************/
 //Enters the user into the specified contest by ID
 router.post('/contest/submit/', (req, res) => {
-    if(req.isAuthenticated() ){
+    if(req.isAuthenticated() && req.user.verified){
         if(!req.user.roles.includes('Judge') && !req.user.roles.includes('Administrator')) {
             if(typeof req.body.verifySubmissionCB !== 'undefined'){
                 if(req.body.contestID && req.body.submissionURL.indexOf('https://steamcommunity.com/sharedfiles/filedetails/?id=') === 0){
@@ -101,7 +140,7 @@ router.post('/contest/submit/', (req, res) => {
 
 //Submits the users vote to the active contest
 router.post('/contest/vote/submit', (req, res) => {
-    if(req.isAuthenticated()){
+    if(req.isAuthenticated() && req.user.verified){
         if(!req.user.roles.includes('Judge') && !req.user.roles.includes('Administrator')) {
             if(typeof req.body.firstPick !== 'undefined' && typeof req.body.secondPick !== 'undefined' && typeof req.body.thirdPick !== 'undefined' &&
             typeof req.body.fourthPick !== 'undefined' && typeof req.body.fifthPick !== 'undefined' && typeof req.body.contestID !== 'undefined'){
@@ -444,7 +483,7 @@ router.post("/contest/judge/submit", (req, res) => {
 **********************************************************************************************************************************/
 //Report the specified workshop_URL for Admin review
 router.post('/shuffle/report', (req, res) => {
-    if(req.isAuthenticated() && !req.user.roles.includes('Shuffle Banned')){
+    if(req.isAuthenticated() && !req.user.roles.includes('Shuffle Banned') && req.user.verified){
         if(typeof req.body.submissionURL !== 'undefined'){
                 dbpool.getConnection( (err, connection) => {
                     if (err) throw err;
@@ -467,7 +506,7 @@ router.post('/shuffle/report', (req, res) => {
 
 //Enters the user into the specified shuffle by ID
 router.post('/shuffle/submit/', (req, res) => {
-    if(req.isAuthenticated() && !req.user.roles.includes('Shuffle Banned')){
+    if(req.isAuthenticated() && !req.user.roles.includes('Shuffle Banned') && req.user.verified){
         if(typeof req.body.verifySubmissionCB !== 'undefined'){
             if(req.body.shuffleID && req.body.submissionURL.indexOf('https://steamcommunity.com/sharedfiles/filedetails/?id=') === 0){
                 dbpool.getConnection( (err, connection) => {
@@ -495,7 +534,7 @@ router.post('/shuffle/submit/', (req, res) => {
 
 //Enters the user into the specified shuffle by ID
 router.post('/shuffle/getpick/', (req, res) => {
-    if(req.isAuthenticated() && !req.user.roles.includes('Shuffle Banned')){
+    if(req.isAuthenticated() && !req.user.roles.includes('Shuffle Banned') && req.user.verified){
             if(req.body.shuffleID){
                 dbpool.getConnection( (err, connection) => {
                     if (err) throw err;
@@ -517,9 +556,9 @@ router.post('/shuffle/getpick/', (req, res) => {
     }
 });
 
-//Enters the user into the specified shuffle by ID
+//Gives the user information on all previous submissions
 router.post('/shuffle/previous/', (req, res) => {
-    if(req.isAuthenticated() && !req.user.roles.includes('Shuffle Banned')){
+    if(req.isAuthenticated() && !req.user.roles.includes('Shuffle Banned') && req.user.verified){
             if(req.body.shuffleID){
                 dbpool.getConnection( (err, connection) => {
                     if (err) throw err;
@@ -542,7 +581,7 @@ router.post('/shuffle/previous/', (req, res) => {
 
 //Returns back the workshopURL for that round
 router.post('/shuffle/workshop/random', (req, res) => {
-    if(req.isAuthenticated() && !req.user.roles.includes('Shuffle Banned')){
+    if(req.isAuthenticated() && !req.user.roles.includes('Shuffle Banned') && req.user.verified){
         if(req.body.shuffleID){
             dbpool.getConnection( (err, connection) => {
                 if (err) throw err;
@@ -618,7 +657,7 @@ router.get('/shuffle/active', (req, res) => {
 **********************************************************************************************************************************/
 //Get Collaboration Roles that have no currently assigned team member if user is authenticated
 router.get('/collabs/all/unassignedroles', (req, res) => {
-    if(req.isAuthenticated()){
+    if(req.isAuthenticated() && req.user.verified){
         dbpool.getConnection( (err, connection) => {
             if (err) throw err;
             connection.query('CALL Get_UnassignedCollabRoles(0, 20);', (error, results, fields) => {

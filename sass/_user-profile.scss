@@ -17,9 +17,17 @@
     font-weight: bold;
     text-decoration: none;
     cursor: pointer;
+    
+}
+.userProfileSection h3 {
+    font-size: 1.6rem;
+    margin: 0 auto;
 }
 .userProfileSection h1, .userProfileSection h3 {
     color: $text-blue-color;
+}
+.userProfileSection h3 a {
+    font-size: 1rem;
 }
 .userProfileSection h1, .userProfileSection h2, .userProfileSection h3 {
     text-align: center;

@@ -1,9 +1,10 @@
 class UserProfile {
-    constructor(CreatedDate, LastLogIn, avatarfull, personaname){
+    constructor(CreatedDate, LastLogIn, avatarfull, personaname, verified){
         this._CreatedDate = CreatedDate;
         this._LastLogIn = LastLogIn;
         this._avatarfull = avatarfull;
         this._personaname = personaname;
+        this._verified = verified;
     }
 
     set CreatedDate(CreatedDate){
@@ -34,6 +35,13 @@ class UserProfile {
         return this._personaname;
     }
 
+    set verified(verified){
+        this._verified = verified;
+    }
+    get verified(){
+        return this._verified;
+    }
+
     userProfileDiv(){
         let tempString = '';
 
@@ -44,6 +52,7 @@ class UserProfile {
             tempString += '<span>Last login: ' + this._LastLogIn.toDateString() + '</span>';
             tempString += '<span>Member since: ' + this._CreatedDate.toDateString() + '</span>';
         tempString += '</div>';
+        tempString += '<h3 id="userVerified" style="text-align: center; color: white; margin-top: 1rem;" class="error-notification">Not Verified<br><a href="#">Why am I seeing this?</a></h3>';
         return tempString;
     }
 
