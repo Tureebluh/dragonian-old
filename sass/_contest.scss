@@ -13,6 +13,7 @@
     #judgeSection {
         text-align: center;
         color: oldlace;
+        width: 100%;
     }
     #judgeSection h1 {
         color: $text-blue-color;
@@ -21,11 +22,12 @@
     }
     #judgeSection .steaminfo {
         background-color: $main-bg-color;
-        display: block;
-        margin: 0 auto 4rem 0;
+        margin: 1rem auto;
+        text-align: center;
     }
     #judgeSection .steaminfo img {
-        margin: -1rem 0.5rem;
+        float: none;
+        margin: 0 1rem;
     }
     #activeContest, #submitEntrySection, #howItWorkSection, #showErrorSuccess, #activeShuffle, #nextRoundTimer {
         padding: 5%;

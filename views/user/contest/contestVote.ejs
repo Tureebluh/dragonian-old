@@ -6,7 +6,7 @@
 <div class="disclaimer">Disclaimer:<br>Initial values are randomized for psychological fairness.<br>Duplicate picks will not be accepted by the system.</div>
 
 <section id="contestVotingContainer">
-    <h1>Choose Your Top 5</h1>
+    <h1>Choose Your Top 3</h1>
     <form method="post" action="/api/contest/vote/submit" id="contestVoteForm">
         <table>
             <tr>
@@ -27,17 +27,6 @@
                 <td><input type="button" id="thirdPickBtn" class="jump-to-icon" /></td>
             </tr>
 
-            <tr>
-                <td><label for="fourthPick">Fourth pick:</label></td>
-                <td><select name="fourthPick" id="fourthPick" class="votingPick"></select></td>
-                <td><input type="button" id="fourthPickBtn" class="jump-to-icon" /></td>
-            </tr>
-
-            <tr>
-                <td><label for="fifthPick">Fifth pick:</label></td>
-                <td><select name="fifthPick" id="fifthPick" class="votingPick"></select></td>
-                <td><input type="button" id="fifthPickBtn" class="jump-to-icon" /></td>
-            </tr>
         </table>
         <input type="hidden" id="contestIDHidden" name="contestID">
         <br>

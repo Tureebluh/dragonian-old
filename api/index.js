@@ -141,11 +141,10 @@ router.post('/contest/submit/', (req, res) => {
 //Submits the users vote to the active contest
 router.post('/contest/vote/submit', (req, res) => {
     if(req.isAuthenticated() && req.user.verified){
-        if(!req.user.roles.includes('Judge') && !req.user.roles.includes('Administrator')) {
-            if(typeof req.body.firstPick !== 'undefined' && typeof req.body.secondPick !== 'undefined' && typeof req.body.thirdPick !== 'undefined' &&
-            typeof req.body.fourthPick !== 'undefined' && typeof req.body.fifthPick !== 'undefined' && typeof req.body.contestID !== 'undefined'){
-
-                let tempPicks = [req.body.firstPick, req.body.secondPick, req.body.thirdPick, req.body.fourthPick, req.body.fifthPick];
+        if(req.user.roles.includes('Judge') && req.user.roles.includes('Administrator')) {
+            if(typeof req.body.firstPick !== 'undefined' && typeof req.body.secondPick !== 'undefined' 
+            && typeof req.body.thirdPick !== 'undefined' && typeof req.body.contestID !== 'undefined'){
+                let tempPicks = [req.body.firstPick, req.body.secondPick, req.body.thirdPick];
                 let result = tempPicks.some((pick)=>{
                     return ((tempPicks.includes(tempPicks.shift())) ? true : false);
                 });
@@ -158,8 +157,6 @@ router.post('/contest/vote/submit', (req, res) => {
                                                                         ',' + dbpool.escape(req.body.firstPick) +
                                                                         ',' + dbpool.escape(req.body.secondPick) +
                                                                         ',' + dbpool.escape(req.body.thirdPick) +
-                                                                        ',' + dbpool.escape(req.body.fourthPick) +
-                                                                        ',' + dbpool.escape(req.body.fifthPick) +
                                                                         ');',
                             (error, results, fields) => {
                                 res.redirect('/contest?result=votesuccess');

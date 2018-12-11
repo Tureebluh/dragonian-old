@@ -37,7 +37,9 @@ const onload = () => {
         if(shuffleObj.hasOwnProperty('_Shuffle_ID')){
             document.querySelector('#activeShuffle').innerHTML = shuffleObj.activeDiv();
             document.querySelector('#submitEntrySection').innerHTML = shuffleObj.submissionDiv();
+            document.querySelector('#submitEntrySection').classList.toggle('hidden');
             document.querySelector('#nextRoundTimer').innerHTML = shuffleObj.timerDiv();
+            document.querySelector('#nextRoundTimer').classList.toggle('hidden');
             document.querySelector('#shuffleIDHidden').value = shuffleObj.Shuffle_ID;
             shuffleObj.workshopDiv();
             shuffleObj.previousDiv();

@@ -268,17 +268,19 @@
     color: #3b79ff; }
   #judgeSection {
     text-align: center;
-    color: oldlace; }
+    color: oldlace;
+    width: 100%; }
   #judgeSection h1 {
     color: #3b79ff;
     font-size: 3rem;
     margin-bottom: 5rem; }
   #judgeSection .steaminfo {
     background-color: #303030;
-    display: block;
-    margin: 0 auto 4rem 0; }
+    margin: 1rem auto;
+    text-align: center; }
   #judgeSection .steaminfo img {
-    margin: -1rem 0.5rem; }
+    float: none;
+    margin: 0 1rem; }
   #activeContest, #submitEntrySection, #howItWorkSection, #showErrorSuccess, #activeShuffle, #nextRoundTimer {
     padding: 5%;
     text-align: center;

@@ -20,15 +20,11 @@ const onload = () => {
                 let node = tempSub.getSubmissionOption();
                 document.querySelector('#firstPick').appendChild(node);
                 document.querySelector('#secondPick').appendChild(node.cloneNode(true));
-                document.querySelector('#thirdPick').appendChild(node.cloneNode(true));
-                document.querySelector('#fourthPick').appendChild(node.cloneNode(true));
-                document.querySelector('#fifthPick').appendChild(node.cloneNode(true));    
+                document.querySelector('#thirdPick').appendChild(node.cloneNode(true));   
             });
             let options = firstPick.length;
             document.querySelector('#secondPick').selectedIndex = Math.floor(Math.random() * Math.floor(options));
             document.querySelector('#thirdPick').selectedIndex = Math.floor(Math.random() * Math.floor(options));
-            document.querySelector('#fourthPick').selectedIndex = Math.floor(Math.random() * Math.floor(options));
-            document.querySelector('#fifthPick').selectedIndex = Math.floor(Math.random() * Math.floor(options));
             document.querySelector('#contestIDHidden').value = resJson[0][0].contest_ID;
             document.querySelector('#contestSubmissionContainer').innerHTML = allSubHtml;
         }
