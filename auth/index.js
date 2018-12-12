@@ -17,6 +17,10 @@ router.get('/failed', (req, res) => {
   res.render('app/failedlogin');
 });
 
+router.get('/verification/failed', (req, res) => {
+  res.render('app/failedverification');
+});
+
 //Destroy the session and redirect to homepage
 router.get('/logout', (req, res) => {
   if(req.isAuthenticated()){
