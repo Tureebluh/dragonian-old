@@ -14,7 +14,8 @@ const onload = () => {
                     submission.contest_submission_ID,
                     submission.workshop_URL,
                     submission.personaname,
-                    submission.avatarfull
+                    submission.avatarfull,
+                    submission.twitch
                 );
                 allSubHtml += tempSub.getSubmissionDiv();
                 let node = tempSub.getSubmissionOption();

@@ -98,11 +98,28 @@ router.get('/contest/submissions/all', (req, res) => {
     }
 });
 //Retrieve all invalid submissions from database
-router.post('/contest/submissions/update', (req, res) => {
+router.post('/contest/submissions/validate', (req, res) => {
     if(req.isAuthenticated() && req.user.roles.includes('Administrator')){
         dbpool.getConnection( (err, connection) => {
             if(err) throw err;
             connection.query('CALL Update_Contest_Validity(' + dbpool.escape(req.body.contestSubmissionID) + ',' + dbpool.escape(req.body.isValid) + ');', 
+            (error, results, fields) => {
+                connection.release();
+                if (error) throw error;
+                res.send({result: 'Success'});
+            });
+        });
+    } else {
+        res.redirect('/contest');
+    }
+});
+
+//Retrieve all invalid submissions from database
+router.post('/contest/submissions/twitch', (req, res) => {
+    if(req.isAuthenticated() && req.user.roles.includes('Administrator')){
+        dbpool.getConnection( (err, connection) => {
+            if(err) throw err;
+            connection.query('CALL Update_Contest_Twitch(' + dbpool.escape(req.body.contestSubmissionID) + ',' + dbpool.escape(req.body.twitchURL) + ');', 
             (error, results, fields) => {
                 connection.release();
                 if (error) throw error;
@@ -271,7 +288,6 @@ router.post('/create/contest', (req, res) => {
                         if (error) throw error;
                     });
                     tempArray.forEach(rule => {
-                        console.log(rule);
                         connection.query('CALL Insert_Contest_Rule_Assoc(' + dbpool.escape(req.body.contestID) + ',' + dbpool.escape(rule) + ');', (error, results, fields) => {
                             if (error) throw error;
                         });

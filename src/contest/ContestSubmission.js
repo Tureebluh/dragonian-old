@@ -1,9 +1,10 @@
 class ContestSubmission {
-    constructor(contest_submission_ID, workshop_URL, personaname, avatarfull) {
+    constructor(contest_submission_ID, workshop_URL, personaname, avatarfull, twitchURL) {
         this._contest_submission_ID = contest_submission_ID;
         this._workshop_URL = workshop_URL;
         this._personaname = personaname;
         this._avatarfull = avatarfull;
+        this._twitchURL = twitchURL;
     }
 
     set contest_submission_ID(contest_submission_ID){
@@ -33,14 +34,25 @@ class ContestSubmission {
     get avatarfull(){
         return this._avatarfull;
     }
+
+    set twitchURL(twitchURL){
+        this._twitchURL = twitchURL;
+    }
+    get twitchURL(){
+        return this._twitchURL;
+    }
+
     getSubmissionDiv(){
         let tempString = "";
-        tempString += '<div class="contest-submission" id="contestSubmission' + this._contest_submission_ID + '">';
-        tempString += '<span class="steaminfo"><img src="' + this._avatarfull + '" class="submission-avatar" />&nbsp;' + this._personaname + '</span>';
-        tempString += '<br>';
-        tempString += '<a href="' + this._workshop_URL + '" target="_blank" class="contest-submission-url">Submission Link</a>';
-        tempString += '</div>';
         
+        tempString += '<table class="contest-submission" id="contestSubmission' + this._contest_submission_ID + '">';
+            tempString += '<tr>';
+                tempString += '<td><span class="steaminfo"><img src="' + this._avatarfull + '" class="submission-avatar" />&nbsp;' + this._personaname + '</span></td>';
+                tempString += '<td><a href="' + this._workshop_URL + '" target="_blank" class="contest-submission-url">View on workshop</td>';
+            tempString += '</tr>';
+        tempString += '</table>';
+        tempString += '<div class="twitch-timestamp"><a href="' + this._twitchURL + '" target="_BLANK"><img alt="Twitch Logo" src="/img/twitch_purple_combo.svg"></a>';
+        tempString += '<p>Click the Twitch Logo to watch the live review of this submission.</p></div>'
         return tempString;
     }
 

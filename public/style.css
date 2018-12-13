@@ -419,17 +419,26 @@
     text-align: center;
     padding: 5%; }
   #contestSubmissionContainer .contest-submission {
-    background-color: darkslategray;
-    margin: 0 0 5% 0;
+    background-color: gray;
+    box-shadow: 0 0.5rem 0.1rem gainsboro;
+    margin: 0 auto;
     width: 100%;
     align-content: center;
     padding: 3%; }
   #contestSubmissionContainer .contest-submission .steaminfo {
-    margin: 0 auto;
-    background-color: inherit;
-    height: auto;
+    background-color: transparent;
+    height: 3rem;
     padding: 0;
     font-size: 1.5rem; }
+  #contestSubmissionContainer .twitch-timestamp {
+    color: gainsboro;
+    font-size: 1.2rem;
+    margin: 0.5rem auto 2rem auto;
+    background-color: gray;
+    box-shadow: 0 0.5rem 0.1rem gainsboro;
+    padding: 2rem; }
+  #contestSubmissionContainer .twitch-timestamp img {
+    width: 30%; }
   #contestSubmissionContainer h1 {
     color: white;
     font-size: 2rem; }
@@ -438,7 +447,10 @@
   #contestSubmissionContainer .contest-submission a.contest-submission-url:link, #contestSubmissionContainer .contest-submission a.contest-submission-url:visited {
     color: white;
     text-decoration: none;
-    font-size: 1.5rem; }
+    font-size: 1.5rem;
+    background: #0f81df;
+    border-radius: 0.2rem;
+    padding: 0.5rem; }
   /*********************************************
 ************CONTEST JUDGING PAGE**************
 *********************************************/

@@ -15,8 +15,19 @@
             <td><select id="contestUserName" required></select></td>
             <td><img src="#" id="contestUserPic"></td>
             <td><a href="#" id="contestSubmissionURL" target="_BLANK">Workshop Link</a></td>
-            <td><input id="contestSubmissionValid" type="checkbox" required></td>
+            <td><input id="contestSubmissionValid" type="checkbox"></td>
         </tr>
     </table>
+    <table style="margin-top: 2%;">
+        <tr>
+            <th>Twitch Timestamp</th>
+            <th></th> 
+        </tr>
+        <tr>
+            <td><input placeholder="Paste link here" id="contestSubTwitchURL" type="URL" style="width: 90%;"></td>
+            <td><input id="submitTwitchURL" type="button" value="Submit Timestamp" style="width: 50%; background: green; color: white; border-radius: 1rem; font-size: 1.3rem;"></td>
+        </tr>
+    </table>
+    
 </section>
 <%- include('../../app/bodyend') -%>
