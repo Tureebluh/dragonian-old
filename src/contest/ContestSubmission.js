@@ -52,7 +52,7 @@ class ContestSubmission {
             tempString += '</tr>';
         tempString += '</table>';
         tempString += '<div class="twitch-timestamp"><a href="' + this._twitchURL + '" target="_BLANK"><img alt="Twitch Logo" src="/img/twitch_purple_combo.svg"></a>';
-        tempString += '<p>Click the Twitch Logo to watch the live review of this submission.</p></div>'
+        tempString += '<p>Click the Twitch Logo to watch the live review of this submission.</p></div>';
         return tempString;
     }
 

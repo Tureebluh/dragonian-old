@@ -385,7 +385,7 @@ router.get("/contest/voters/judged", (req, res) => {
     }
 });
 
-//Returns back number of voters in active contest
+//Returns back scores of judges for Active contest
 router.get("/contest/judged/scores", (req, res) => {
     if(req.isAuthenticated()){
         dbpool.getConnection( (err, connection) => {

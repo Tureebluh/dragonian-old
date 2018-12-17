@@ -74,17 +74,6 @@ const onload = () => {
             '<h1 class="error-notification">You must agree to the terms of the shuffle by ticking the box at the bottom of the page. ' +
             'Failure to agree to the terms will result in your submission not being entered.</h1>';
     }
-
-    document.querySelector('#learnMore').addEventListener('click', (event) => {
-        if(document.querySelector('#inDepth').classList.contains('closed')){
-            document.querySelector('#inDepth').classList.toggle('opened');
-            if(document.querySelector('#inDepth').classList.contains('opened')){
-                event.target.innerHTML = 'Learn More<br>▲';
-            } else {
-                event.target.innerHTML = 'Learn More<br>▼';
-            }
-        }
-    });
 }
 
 export default onload;

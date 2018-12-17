@@ -87,22 +87,6 @@
     //
     //How It Works Section
     //
-    #howItWorkSection #learnMore {
-        padding: 1rem;
-        border: 0.2rem solid $near-black;
-        box-shadow: 0 0.6rem 1.5rem 0.1rem $light-gold;
-        border-top: none;
-        border-radius: 0 0 1rem 1rem;
-        margin: 0 auto 6rem auto;
-        width: 50%;
-        cursor: pointer;
-        background-color: $text-blue-color;
-        color: $almost-white;
-        font-weight: bold;
-    }
-    #howItWorkSection #contestInDepth {
-        transition: opacity 1s ease;
-    }
     #howItWorkSection a {
         text-decoration: none;
         color: $first-place-color;

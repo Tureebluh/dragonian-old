@@ -160,17 +160,6 @@ const onload = () => {
             '<h1 class="error-notification">You cannot vote for the same submission more than once. Please visit the voting page and try again.</h1>';
         window.location.hash = '#showErrorSuccess';
     }
-    
-    document.querySelector('#learnMore').addEventListener('click', (event) =>{
-        if(document.querySelector('#inDepth').classList.contains('closed')){
-            document.querySelector('#inDepth').classList.toggle('opened');
-            if(document.querySelector('#inDepth').classList.contains('opened')){
-                event.target.innerHTML = 'Learn More<br>▲';
-            } else {
-                event.target.innerHTML = 'Learn More<br>▼';
-            }
-        }
-    });
 }
 
 export default onload;

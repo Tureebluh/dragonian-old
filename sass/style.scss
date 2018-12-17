@@ -106,7 +106,9 @@ $red-bg-color: rgb(140, 15, 15);
 
 /* Large Devices, Wide Screens */
 @media only screen and (min-width : 1200px) {
-    
+    .dropdown-content {
+        right: 15%;
+    }
 }
 
 /* Extra-Large Devices, Wide Screens */
@@ -130,6 +132,9 @@ $red-bg-color: rgb(140, 15, 15);
     }
     #contestVotingContainer .votingPick {
         font-size: 1.1rem;
+    }
+    .dropdown-content {
+        right: 30%;
     }
 }
 

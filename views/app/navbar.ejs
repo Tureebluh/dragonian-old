@@ -1,7 +1,15 @@
-<nav id="navbar" class="navbar">
-    <a href="/">Home
-    </a><a href="/collabs">Collabs
-    </a><a href="/contest">Contest
-    </a><a href="/shuffle">Shuffle</a>
-    <%- (user) ? ((user.roles.includes('Administrator')) ? include('../admin/adminPanel') : null) : null %>
-</nav>
+<div class="dropdown navbar">
+    <div class="dropbtn"><hr class="dropbtnhr"><hr class="dropbtnhr"><hr class="dropbtnhr"></div>
+    <div class="dropdown-content" id="dropdownContent">
+        <a href="/">Home</a>
+        <a href="/shuffle">Shuffle</a>
+        <a href="/contest">Contest</a>
+        <ul>
+            <li><a href="/contest/vote">Contest Vote</a></li>
+            <li><a href="/contest/results">Contest Results</a></li>
+            <%- (user) ? ((user.roles.includes('Judge')) ? include('../app/judgePanel') : null) : null %>
+        </ul>
+        <a href="/collabs">Collabs</a>
+        <%- (user) ? ((user.roles.includes('Administrator')) ? include('../admin/adminPanel') : null) : null %>
+    </div>
+</div>

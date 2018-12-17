@@ -107,13 +107,8 @@ window.onload = function(){
 
 // Close the dropdown if the user clicks outside of it
 window.onclick = function(e) {
-    if(document.querySelector('#adminDropdown') !== null){
-        if (!e.target.matches('.dropbtn')) {
-            var myDropdown = document.getElementById("adminDropdown");
-            if (myDropdown.classList.contains('show')) {
-                myDropdown.classList.remove('show');
-            }
-        }
+    if (!e.target.matches('.dropbtn') && !e.target.matches('.dropbtnhr')) {
+        document.querySelector("#dropdownContent").classList.remove('show');
     }
 }
 
@@ -128,9 +123,11 @@ window.onscroll = function() {
     }
 }
 
-//If user is an admin
-if(document.querySelector('#adminPanel') !== null){
-    document.querySelector('#adminPanel').addEventListener('click', (event)=>{
-        document.getElementById("adminDropdown").classList.toggle("show");
-    });
-}
+//Open navbar if user clicks dropbtn
+document.querySelector('.dropbtn').addEventListener('click', (event)=>{
+    document.getElementById("dropdownContent").classList.toggle("show");
+});
+//Open navbar if user clicks dropbtn
+document.querySelector('.dropbtnhr').addEventListener('click', (event)=>{
+    document.getElementById("dropdownContent").classList.toggle("show");
+});

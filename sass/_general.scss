@@ -56,10 +56,6 @@ footer a {
     display: none;
 }
 
-#inDepth {
-    @include transition(height 2s);
-}
-
 .italic {
     font-style: italic!important;
 }
