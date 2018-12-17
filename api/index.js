@@ -141,7 +141,7 @@ router.post('/contest/submit/', (req, res) => {
 //Submits the users vote to the active contest
 router.post('/contest/vote/submit', (req, res) => {
     if(req.isAuthenticated() && req.user.verified){
-        if(req.user.roles.includes('Judge') && req.user.roles.includes('Administrator')) {
+        if(!req.user.roles.includes('Judge') && !req.user.roles.includes('Administrator')) {
             if(typeof req.body.firstPick !== 'undefined' && typeof req.body.secondPick !== 'undefined' 
             && typeof req.body.thirdPick !== 'undefined' && typeof req.body.contestID !== 'undefined'){
                 let tempPicks = [req.body.firstPick, req.body.secondPick, req.body.thirdPick];
