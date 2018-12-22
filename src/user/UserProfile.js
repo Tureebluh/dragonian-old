@@ -51,7 +51,7 @@ class UserProfile {
             tempString += '<span>Last login: ' + this._LastLogIn.toDateString() + '</span>';
             tempString += '<span>Member since: ' + this._CreatedDate.toDateString() + '</span>';
         tempString += '</div>';
-        if(this._verified.lastIndexOf(1) !== -1){
+        if(this._verified.includes('1') !== -1){
             tempString += '<h3 id="userVerified" style="text-align: center; color: white; margin-top: 1rem;" class="error-notification">Not Verified<br><a href="/auth/verification/failed">Why am I seeing this?</a></h3>';
         } else {
             tempString += '<h3 id="userVerified" style="text-align: center; color: white; margin-top: 1rem;" class="success-notification">Verified</h3>';

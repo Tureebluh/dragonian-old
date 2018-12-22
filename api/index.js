@@ -61,7 +61,7 @@ router.get('/profile/user/contests', (req, res) => {
     }
 });
 
-//Get users contests they've completed
+//Get users verified status for planet coaster
 router.get('/profile/user/verify', (req, res) => {
     if(req.isAuthenticated()){
         if(req.user.verified === false) {

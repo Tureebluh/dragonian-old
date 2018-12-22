@@ -40,7 +40,7 @@ const onload = () => {
                 }
             }).catch(error => console.error(error));
 
-            if(userProfile.verified.lastIndexOf(1) !== -1){
+            if(userProfile.verified.includes('1') !== -1){
                 //Check if user is verified
                 fetch('/api/profile/user/verify', {credentials: 'include'})
                 .then(res =>{
