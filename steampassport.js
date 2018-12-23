@@ -24,7 +24,7 @@ const SteamStrategy = new OpenIDStrategy(
                     });
 
                     connection.query('CALL Get_User_Verified(\'' + resJson.response.players[0].steamid + '\');', (error, results, fields) => {
-                        verified = (results[0][0].verified.lastIndexOf(1) !== -1) ? true : false;
+                        verified = (results[0][0].verified === 1) ? true : false;
                         if (error) throw error;
                     });
 

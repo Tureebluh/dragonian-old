@@ -8,9 +8,9 @@ const onload = () => {
         return res.json();
         //Return res in JSON form to next then()
     }).then(resJson =>{
-        if(typeof resJson[0][0] !== 'undefined'){
+        if(typeof resJson[0][0] !== 'undefined'){ 
             userProfile = new UserProfile(new Date(resJson[0][0].CreatedDate), new Date(resJson[0][0].LastLogIn),
-                                                        resJson[0][0].avatarfull, resJson[0][0].personaname, resJson[0][0].verified + "");
+                                                        resJson[0][0].avatarfull, resJson[0][0].personaname, resJson[0][0].verified);
             document.querySelector('#userProfile').innerHTML = userProfile.userProfileDiv();
             document.querySelector('#userProfile').classList.toggle('hidden');
 
@@ -39,8 +39,8 @@ const onload = () => {
                     document.querySelector('#userContests').classList.toggle('hidden');
                 }
             }).catch(error => console.error(error));
-
-            if(userProfile.verified.includes('1') !== -1){
+            
+            if(userProfile.verified !== 1){
                 //Check if user is verified
                 fetch('/api/profile/user/verify', {credentials: 'include'})
                 .then(res =>{
@@ -55,7 +55,6 @@ const onload = () => {
                     }
                 }).catch(error => console.error(error));
             }
-            
         }
     }).catch(error => console.error(error));    
 }
