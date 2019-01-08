@@ -68,7 +68,8 @@ const onload = () => {
         if(document.querySelector('#contestSubTwitchURL').value){
             let contestSubmissionID = document.querySelector('#contestUserName').value;
             let contestTwitchURL = document.querySelector('#contestSubTwitchURL').value;
-
+            submissionDict[contestSubmissionID].twitch = contestTwitchURL;
+            
             let payload = {
                 contestSubmissionID: contestSubmissionID,
                 twitchURL: contestTwitchURL

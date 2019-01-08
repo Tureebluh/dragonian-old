@@ -89,9 +89,7 @@ const onload = () => {
                             }, 10000);
                         }).catch(error => console.error(error));
                     }
-                    
                 });
-
             }).catch(error => console.error(error));
         }).catch(error => console.error(error));
     }

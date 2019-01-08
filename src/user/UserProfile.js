@@ -68,8 +68,10 @@ class UserProfile {
         tempString += '<br>';
         
         this.shuffles.forEach(element => {
-            tempString += '<a target="_BLANK" href="' + element['r4_workshop_URL'] + '">' + element.Name + ' - Click Here</a>';
-            tempString += '<br><br>';
+            if(element['r4_workshop_URL']){
+                tempString += '<a target="_BLANK" href="' + element['r4_workshop_URL'] + '">' + element.Name + ' - Click Here</a>';
+                tempString += '<br><br>';
+            }
         });
         
         return tempString;

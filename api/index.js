@@ -337,7 +337,7 @@ router.post("/contest/criteria/id", (req, res) => {
     }
 });
 
-//Returns back all criteria properties for criteria_ID
+//Returns back all criteria for contest_ID
 router.post("/contest/criteria/contestid", (req, res) => {
     if(req.isAuthenticated()){
         dbpool.getConnection( (err, connection) => {
