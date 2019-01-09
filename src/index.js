@@ -1,10 +1,12 @@
 import AdminContestOnLoad from './admin/AdminContestOnLoad';
+import AdminContestWinOnLoad from './admin/AdminContestWinOnLoad';
 import AdminContestSubOnLoad from './admin/AdminContestSubOnLoad';
 import AdminShuffleOnLoad from './admin/AdminShuffleOnLoad';
 import AdminRolesOnLoad from './admin/AdminRolesOnLoad';
 import AdminReportsOnLoad from './admin/AdminReportsOnLoad';
 
 import ProfileMeOnLoad from './user/ProfileMeOnLoad';
+import HomePageOnLoad from './user/HomePageOnLoad';
 
 import CollabOnLoad from './collab/CollabOnLoad';
 
@@ -20,42 +22,49 @@ import ContestResultsOnLoad from './contest/ContestResultsOnLoad';
 //Can only have one window function in bundle.js, so we're checking the pathname to see which page the user is on
 window.onload = function(){
     /******************************************************** 
-                        ADMIN-CONTEST
+                            ADMIN-CONTEST
     *********************************************************/
     if(window.location.pathname === '/admin/contest/' || window.location.pathname === '/admin/contest'){
         AdminContestOnLoad();
     }
 
     /******************************************************** 
-                        ADMIN-SHUFFLE
+                            ADMIN-SHUFFLE
     *********************************************************/
     if(window.location.pathname === '/admin/shuffle/' || window.location.pathname === '/admin/shuffle'){
         AdminShuffleOnLoad();
     }
 
     /******************************************************** 
-                    ADMIN-ROLE MANAGEMENT
+                        ADMIN-ROLE MANAGEMENT
     *********************************************************/
     if(window.location.pathname === '/admin/roles/' || window.location.pathname === '/admin/roles'){
         AdminRolesOnLoad();
     }
 
     /******************************************************** 
-                    ADMIN-ROLE MANAGEMENT
+                        ADMIN-ROLE MANAGEMENT
     *********************************************************/
     if(window.location.pathname === '/admin/reports/' || window.location.pathname === '/admin/reports'){
         AdminReportsOnLoad();
     }
 
     /******************************************************** 
-                    ADMIN-CONTEST-SUBMISSIONS MANAGEMENT
+                ADMIN-CONTEST-SUBMISSIONS MANAGEMENT
     *********************************************************/
     if(window.location.pathname === '/admin/contest/submissions' || window.location.pathname === '/admin/contest/submissions/'){
         AdminContestSubOnLoad();
     }
 
     /******************************************************** 
-                    ADMIN-CONTEST-SUBMISSIONS MANAGEMENT
+                ADMIN-CONTEST-WINNERS MANAGEMENT
+    *********************************************************/
+    if(window.location.pathname === '/admin/contest/winners' || window.location.pathname === '/admin/contest/winners/'){
+        AdminContestWinOnLoad();
+    }
+
+    /******************************************************** 
+                    PROFILE FOR LOGGED IN USER
     *********************************************************/
     if(window.location.pathname === '/profile/me/' || window.location.pathname === '/profile/me'){
         ProfileMeOnLoad();
@@ -101,6 +110,13 @@ window.onload = function(){
     *********************************************************/
     if(window.location.pathname === '/contest/results/' || window.location.pathname === '/contest/results'){
         ContestResultsOnLoad();
+    }
+
+    /******************************************************** 
+                            HOME PAGE
+    *********************************************************/
+    if(window.location.pathname === '/' || window.location.pathname === ''){
+        HomePageOnLoad();
     }
 
 }

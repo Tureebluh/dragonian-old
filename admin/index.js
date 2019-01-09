@@ -74,6 +74,15 @@ router.post('/reports/shuffle/validate', (req, res) => {
 });
 
 //Send Administrator to contest submissions administration page for CRUD operation on contest submissions
+router.get('/contest/winners', (req, res) => {
+    if(req.isAuthenticated() && req.user.roles.includes('Administrator')){
+        res.render('admin/contest/contestWinners');
+    } else {
+        res.redirect('/contest');
+    }
+});
+
+//Send Administrator to contest submissions administration page for CRUD operation on contest submissions
 router.get('/contest/submissions', (req, res) => {
     if(req.isAuthenticated() && req.user.roles.includes('Administrator')){
         res.render('admin/contest/contestSubmissions');
@@ -81,6 +90,24 @@ router.get('/contest/submissions', (req, res) => {
         res.redirect('/contest');
     }
 });
+
+//Retrieve all valid submissions
+router.post('/contest/submissions/contestid', (req, res) => {
+    if(req.isAuthenticated() && req.user.roles.includes('Administrator')){
+        dbpool.getConnection( (err, connection) => {
+            if(err) throw err;
+            connection.query('CALL Get_Valid_Contest_Sub_Names(' + dbpool.escape(req.body.contestID) + ');',
+            (error, results, fields) => {
+                connection.release();
+                if (error) throw error;
+                res.send(results);
+            });
+        });
+    } else {
+        res.redirect('/contest');
+    }
+});
+
 //Retrieve all invalid submissions from database
 router.get('/contest/submissions/all', (req, res) => {
     if(req.isAuthenticated() && req.user.roles.includes('Administrator')){
@@ -97,7 +124,8 @@ router.get('/contest/submissions/all', (req, res) => {
         res.redirect('/contest');
     }
 });
-//Retrieve all invalid submissions from database
+
+//Update contest submission validity
 router.post('/contest/submissions/validate', (req, res) => {
     if(req.isAuthenticated() && req.user.roles.includes('Administrator')){
         dbpool.getConnection( (err, connection) => {
@@ -114,7 +142,24 @@ router.post('/contest/submissions/validate', (req, res) => {
     }
 });
 
-//Retrieve all invalid submissions from database
+//Update contest winner
+router.post('/contest/submit/winner', (req, res) => {
+    if(req.isAuthenticated() && req.user.roles.includes('Administrator')){
+        dbpool.getConnection( (err, connection) => {
+            if(err) throw err;
+            connection.query('CALL Update_Contest_Winner(' + dbpool.escape(req.body.contestID) + ',' + dbpool.escape(req.body.winnerID) + ');',
+            (error, results, fields) => {
+                connection.release();
+                if (error) throw error;
+                res.send({result: 'Success'});
+            });
+        });
+    } else {
+        res.redirect('/contest');
+    }
+});
+
+//Update contest submission twitch URL for voting page
 router.post('/contest/submissions/twitch', (req, res) => {
     if(req.isAuthenticated() && req.user.roles.includes('Administrator')){
         dbpool.getConnection( (err, connection) => {

@@ -104,6 +104,18 @@ router.get('/profile/user/verify', (req, res) => {
 *                                                           CONTEST
 *
 **********************************************************************************************************************************/
+router.get('/contest/recentwinner', (req, res) => {
+    dbpool.getConnection( (err, connection) => {
+        if (err) throw err;
+        connection.query('CALL Get_Recent_Contest_Winner();',
+            (error, results, fields) => {
+                if (error) throw error;
+                connection.release();
+                res.send(results);
+        });
+    });
+});
+
 //Enters the user into the specified contest by ID
 router.post('/contest/submit/', (req, res) => {
     if(req.isAuthenticated() && req.user.verified){

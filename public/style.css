@@ -75,6 +75,13 @@
     font-family: Georgia, 'Times New Roman', Times, serif;
     font-size: 1.5rem;
     color: gainsboro; }
+  #contestWinnerSection {
+    color: #f0de40; }
+  .contest-winner {
+    align-content: center; }
+  .contest-winner img {
+    vertical-align: middle;
+    max-width: 4rem; }
   .discord {
     background-color: #303030; }
   .discord img {

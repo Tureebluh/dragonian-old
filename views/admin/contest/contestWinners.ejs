@@ -1,0 +1,20 @@
+<%- include('../../app/header') -%>
+<%- include('../../app/navbar') -%>
+<section id="showErrorSuccess"></section>
+<section id="submissionTable" class="table-style" style="margin-bottom: 5%;">
+    <h1>Update Contest Winners</h1>
+    <table style="margin-top: 2%;">
+        <tr>
+            <th>Select Contest</th>
+            <th>Select Winner</th>
+            <th></th>
+        </tr>
+        <tr>
+            <td><select name="contestID" style="width: 50%;" id="contestNameDropdown"></select></td>
+            <td><select name="winnerID" style="width: 50%;" id="winnerNameDropdown"></select></td>
+            <td><input id="submitContestWinner" type="button" value="Submit" style="width: 50%; background: green; color: white; border-radius: 1rem; font-size: 1.3rem;"></td>
+        </tr>
+    </table>
+    
+</section>
+<%- include('../../app/bodyend') -%>

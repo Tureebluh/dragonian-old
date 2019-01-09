@@ -101,6 +101,17 @@ footer a {
     font-size: 1.5rem;
     color: $almost-white;
 }
+#contestWinnerSection {
+    color: $first-place-color;
+}
+.contest-winner {
+    align-content: center;
+}
+.contest-winner img {
+    vertical-align: middle;
+    max-width: 4rem;
+}
+
 .discord {
     background-color: $main-bg-color;
 }
