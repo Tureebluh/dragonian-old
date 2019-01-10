@@ -381,6 +381,22 @@ router.get("/contest/submissions", (req, res) => {
     }
 });
 
+//Returns back the top community voted submissions for the active contest
+router.get("/contest/topsubs", (req, res) => {
+    if(req.isAuthenticated()){
+        dbpool.getConnection( (err, connection) => {
+            if (err) throw err;
+            connection.query('CALL Get_Top_Contest_Submissions_Judged(null);', (error, results, fields) => {
+                connection.release();
+                if (error) throw error;
+                res.send(results);
+            });
+        });
+    } else {
+        res.send('Unauthorized Access');
+    }
+});
+
 //Returns back number of voters in Judged contest
 router.get("/contest/voters/judged", (req, res) => {
     if(req.isAuthenticated()){
@@ -418,7 +434,7 @@ router.get("/contest/judge/topsubs", (req, res) => {
     if(req.isAuthenticated()){
         dbpool.getConnection( (err, connection) => {
             if (err) throw err;
-            connection.query('CALL Get_Top_Contest_Submissions(null);', (error, results, fields) => {
+            connection.query('CALL Get_Top_Contest_Submissions_Unjudged(null);', (error, results, fields) => {
                 connection.release();
                 if (error) throw error;
                 res.send(results);
@@ -485,6 +501,7 @@ router.post("/contest/judge/submit", (req, res) => {
         res.send('Unauthorized Access');
     }
 });
+
 /*********************************************************************************************************************************
 *
 *                                                           SHUFFLES

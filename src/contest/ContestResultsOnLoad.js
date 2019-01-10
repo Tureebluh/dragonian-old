@@ -31,7 +31,7 @@ const onload = () => {
                 });
 
                 //Get all top contest submissions by community vote total
-                fetch('/api/contest/judge/topsubs', {credentials: 'include'})
+                fetch('/api/contest/topsubs', {credentials: 'include'})
                 .then(res => {
                     return res.json();
                 }).then(votesJson => {

@@ -28,6 +28,8 @@ const onload = () => {
             document.querySelector('#thirdPick').selectedIndex = Math.floor(Math.random() * Math.floor(options));
             document.querySelector('#contestIDHidden').value = resJson[0][0].contest_ID;
             document.querySelector('#contestSubmissionContainer').innerHTML = allSubHtml;
+        } else {
+            window.location.replace('/contest/results');
         }
     }).catch(error => console.error(error));
     
