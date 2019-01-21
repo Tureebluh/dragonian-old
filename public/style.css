@@ -268,7 +268,7 @@
   #contestDescription, #shuffleDescription {
     width: 100%;
     height: 50vh; }
-  #contestCriteriaDropdown, #contestRulesDropdown, #addJudgeDropdown, #removeJudgeDropdown, #addShuffleBanDropdown, #removeShuffleBanDropdown {
+  #contestCriteriaDropdown, #contestRulesDropdown, #addJudgeDropdown, #removeJudgeDropdown, #addShuffleBanDropdown, #removeShuffleBanDropdown, #addSiteBanDropdown, #removeSiteBanDropdown {
     height: auto; }
   /*********************************************
 ******ADMIN MANAGE CONTEST SUBMISSIONS********

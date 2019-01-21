@@ -293,6 +293,63 @@ router.post('/roles/remove/shuffleban', (req, res) => {
     }
 });
 
+router.get('/roles/siteban/all', (req, res) => {
+    if(req.isAuthenticated() && req.user.roles.includes('Administrator')){
+        dbpool.getConnection( (err, connection) => {
+            if(err) throw err;
+
+            connection.query('CALL Get_Users_By_Role(' + '"Banned"' + ');', 
+            (error, results, fields) => {
+                connection.release();
+                if (error) throw error;
+                res.send(results);
+            });
+        });
+    } else {
+        res.redirect('/');
+    }
+});
+
+router.post('/roles/add/siteban', (req, res) => {
+    if(req.isAuthenticated() && req.user.roles.includes('Administrator')){
+        dbpool.getConnection( (err, connection) => {
+            if(err) throw err;
+
+            if(req.body.steamid !== '') {
+                connection.query('CALL Insert_User_Role_Assoc(' + dbpool.escape(req.body.steamid) + ',' + '"Banned"' + ');', 
+                (error, results, fields) => {
+                    connection.release();
+                    if (error) throw error;
+                    res.send({result: 'Success'});
+                });
+            } else {
+                res.send({});
+            }
+        });
+    } else {
+        res.redirect('/');
+    }
+});
+
+router.post('/roles/remove/siteban', (req, res) => {
+    if(req.isAuthenticated() && req.user.roles.includes('Administrator')){
+            dbpool.getConnection( (err, connection) => {
+                if(err) throw err;
+                req.body.steamid.forEach(element => {
+                    console.log(element);
+                    connection.query('CALL Delete_User_Role_Assoc(' + dbpool.escape(element) + ',' + '"Banned"' + ');', 
+                    (error, results, fields) => {
+                        if (error) throw error;
+                    });
+                });
+            connection.release();
+            res.send({result: 'Success'});
+            });
+    } else {
+        res.redirect('/');
+    }
+});
+
 //Administrators can POST to this endpoint for contest creation
 router.post('/create/contest', (req, res) => {
     if(req.isAuthenticated() && req.user.roles.includes('Administrator')){

@@ -538,7 +538,7 @@ router.post('/shuffle/submit/', (req, res) => {
                 dbpool.getConnection( (err, connection) => {
                     if (err) throw err;
                     connection.query('CALL Upsert_Shuffle_Submission(' + dbpool.escape(req.body.shuffleID) +
-                                                                    ',' + dbpool.escape(req.user.steamid) + 
+                                                                    ',' + dbpool.escape(req.user.steamid) +
                                                                     ',' + dbpool.escape(req.body.submissionURL) +
                                                                     ');',
                         (error, results, fields) => {

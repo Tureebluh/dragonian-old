@@ -1,7 +1,9 @@
 <%- include('../app/header') -%>
 <%- include('../app/navbar') -%>
+
 <section id="showErrorSuccess"></section>
 
+<!-- Add or remove Judge -->
 <section id="manageJudgesContainer" class="contest-creation">
     <form action="/admin/add/judges" method="post" class="contest-creation-form" id="addJudgeForm">
         <h1 id="manageJudgesHeader">Add Judge</h1>
@@ -20,6 +22,26 @@
     </form>
 </section>
 
+<!-- Add or remove entire site ban -->
+<section id="manageSiteBanContainer" class="contest-creation">
+    <form action="/admin/add/siteban" method="post" class="contest-creation-form" id="addSiteBanForm">
+        <h1 id="manageSiteBanHeader">Apply Website Ban</h1>
+        <input type="text" id="searchUsersSiteban" placeholder="Search users..."/>
+        <select name="users" id="addSiteBanDropdown" size="10" required></select>
+        <br>
+        <br>
+        <input type="submit" id="submitSiteBan" alt="Submit Website Ban" value="Submit Website Ban" />
+    </form>
+    <form action="/admin/remove/siteban" method="post" class="contest-creation-form" id="removeSiteBanForm">
+        <h1 id="manageSiteBanHeader">Remove Website Ban</h1>
+        <select name="users" id="removeSiteBanDropdown" size="10" multiple required></select>
+        <br>
+        <br>
+        <input style="background-color: red;" type="submit" id="removeSiteBan" alt="Remove Website Ban" value="Remove Website Ban" />
+    </form>
+</section>
+
+<!-- Add or remove shuffle ban -->
 <section id="manageShuffleBanContainer" class="contest-creation">
     <form action="/admin/add/shuffleban" method="post" class="contest-creation-form" id="addShuffleBanForm">
         <h1 id="manageShuffleBanHeader">Apply Shuffle Ban</h1>
@@ -37,5 +59,6 @@
         <input style="background-color: red;" type="submit" id="removeShuffleBan" alt="Remove Shuffle Ban" value="Remove Shuffle Ban" />
     </form>
 </section>
+
 
 <%- include('../app/bodyend') -%>
