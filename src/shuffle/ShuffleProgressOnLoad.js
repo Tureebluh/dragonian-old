@@ -38,7 +38,7 @@ const onload = () => {
                 
                 if(shuffleDict[subObj[1]['r2_SteamID']]){
                     let r2Span = '<span><img src="' + shuffleDict[subObj[1]['r2_SteamID']].avatarfull + '"/>&nbsp;' + shuffleDict[subObj[1]['r2_SteamID']].personaname + '<br>' +
-                                 '<a target="_BLANK" href="' + shuffleDict[subObj[1]['r2_SteamID']]['r2_workshop_URL'] + '">Click Here</a></span>';
+                                 '<a target="_BLANK" href="' + subObj[1]['r2_workshop_URL'] + '">Click Here</a></span>';
                     tempHTML += r2Span;
                 } else {
                     let r2Span = "<span><img src='/img/userdefault.png'/>&nbsp;Unclaimed<br>" +
@@ -48,7 +48,7 @@ const onload = () => {
 
                 if(shuffleDict[subObj[1]['r3_SteamID']]){
                     let r3Span = '<span><img src="' + shuffleDict[subObj[1]['r3_SteamID']].avatarfull + '"/>&nbsp;' + shuffleDict[subObj[1]['r3_SteamID']].personaname + '<br>' +
-                                 '<a target="_BLANK" href="' + shuffleDict[subObj[1]['r3_SteamID']]['r3_workshop_URL'] + '">Click Here</a></span>';
+                                 '<a target="_BLANK" href="' + subObj[1]['r3_workshop_URL'] + '">Click Here</a></span>';
                     tempHTML += r3Span;
                 } else {
                     let r2Span = '<span><img src="/img/userdefault.png"/>&nbsp;Unclaimed<br>' +
@@ -58,7 +58,7 @@ const onload = () => {
                 
                 if(shuffleDict[subObj[1]['r4_SteamID']]){
                     let r4Span = '<span><img src="' + shuffleDict[subObj[1]['r4_SteamID']].avatarfull + '"/>&nbsp;' + shuffleDict[subObj[1]['r4_SteamID']].personaname + '<br>' +
-                                 '<a target="_BLANK" href="' + shuffleDict[subObj[1]['r4_SteamID']]['r4_workshop_URL'] + '">Click Here</a></span>';
+                                 '<a target="_BLANK" href="' + subObj[1]['r4_workshop_URL'] + '">Click Here</a></span>';
                     tempHTML += r4Span;
                 } else {
                     let r2Span = '<span><img src="/img/userdefault.png"/>&nbsp;Unclaimed<br>' +
