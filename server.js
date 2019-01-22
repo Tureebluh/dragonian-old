@@ -119,6 +119,14 @@ server.get('/profile/me', (req, res) => {
     }
 });
 
+//Render progress page for active shuffle
+server.get('/shuffle/progress/', (req, res) => {
+    if(req.isAuthenticated()){
+        res.render('user/shuffle/shuffleProgress');
+    } else {
+        res.redirect('/auth/login');
+    }
+});
 
 //Render voting page for active contest
 server.get('/contest/vote/', (req, res) => {

@@ -11,6 +11,7 @@ import HomePageOnLoad from './user/HomePageOnLoad';
 import CollabOnLoad from './collab/CollabOnLoad';
 
 import ShuffleOnLoad from './shuffle/ShuffleOnLoad';
+import ShuffleProgressOnLoad from './shuffle/ShuffleProgressOnLoad';
 
 import ContestOnLoad from './contest/ContestOnLoad';
 import ContestVoteOnLoad from './contest/ContestVoteOnLoad';
@@ -82,6 +83,13 @@ window.onload = function(){
     *********************************************************/
     if(window.location.pathname === "/shuffle/" || window.location.pathname === "/shuffle"){
         ShuffleOnLoad();
+    }
+
+    /******************************************************** 
+                            SHUFFLE
+    *********************************************************/
+    if(window.location.pathname === "/shuffle/progress/" || window.location.pathname === "/shuffle/progress"){
+        ShuffleProgressOnLoad();
     }
 
     /******************************************************** 

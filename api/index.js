@@ -507,6 +507,8 @@ router.post("/contest/judge/submit", (req, res) => {
 *                                                           SHUFFLES
 *
 **********************************************************************************************************************************/
+
+
 //Report the specified workshop_URL for Admin review
 router.post('/shuffle/report', (req, res) => {
     if(req.isAuthenticated() && !req.user.roles.includes('Shuffle Banned') && req.user.verified){
@@ -666,6 +668,22 @@ router.get('/shuffle/active', (req, res) => {
         dbpool.getConnection( (err, connection) => {
             if (err) throw err;
             connection.query('CALL Get_Active_Shuffle();', (error, results, fields) => {
+                connection.release();
+                if (error) throw error;
+                res.send(results);
+            });
+        });
+    } else {
+        res.send('Unauthorized Access');
+    }
+});
+
+//Returns back the shuffle progress for the active shuffle
+router.get('/shuffle/active/progress', (req, res) => {
+    if(req.isAuthenticated() && !req.user.roles.includes('Shuffle Banned')){
+        dbpool.getConnection( (err, connection) => {
+            if (err) throw err;
+            connection.query('CALL Get_All_Shuffle_Submissions(null);', (error, results, fields) => {
                 connection.release();
                 if (error) throw error;
                 res.send(results);

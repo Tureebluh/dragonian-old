@@ -1,0 +1,33 @@
+
+#shufProgressTable {
+    color: $almost-white;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-weight: 400;
+    font-size: 1.3rem;
+    background-color: $main-bg-color;
+    padding: 1rem;
+    text-align: center;
+}
+
+#shufProgressTable .shuffle-submission-container {
+    background-color: slategray;
+    margin: 5% 0 0 0;
+}
+
+#shufProgressTable .shuffle-submission-container span {
+    display: inline-block;
+    max-width: 25%;
+    padding: 0.3rem;
+}
+
+#shufProgressTable .shuffle-submission-container span a {
+    color: $near-black;
+    text-decoration: none;
+    font-weight: bolder;
+}
+
+#shufProgressTable .shuffle-submission-container span img {
+    width: 25%;
+    height: 25%;
+    vertical-align: middle;
+}
