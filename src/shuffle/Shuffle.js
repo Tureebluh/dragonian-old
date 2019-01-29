@@ -75,7 +75,7 @@ class Shuffle {
             tempString += "<br>";
         tempString += "</div>";
         tempString += "<br>";
-        tempString += "<div class=\"Description\"><h2>Summary</h2>" + this._Description + "</div>";
+        tempString += "<div class=\"Description\">" + this._Description + "</div>";
         tempString += "<br>";
         return tempString;
     }
