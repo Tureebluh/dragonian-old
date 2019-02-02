@@ -66,6 +66,11 @@
     max-width: 65%;
     border: 0.3rem white solid;
     margin-bottom: 3rem; }
+  #failedLogin h3 {
+    color: #8c0f0f;
+    background-color: gainsboro; }
+  #failedLogin h1 {
+    color: #3b79ff; }
   .infopanel {
     width: 100%;
     padding: 3rem 10%;
@@ -74,7 +79,8 @@
     font-weight: bold;
     font-family: Georgia, 'Times New Roman', Times, serif;
     font-size: 1.5rem;
-    color: gainsboro; }
+    color: gainsboro;
+    background-color: #303030; }
   #contestWinnerSection {
     color: #f0de40; }
   .contest-winner {
@@ -82,17 +88,13 @@
   .contest-winner img {
     vertical-align: middle;
     max-width: 4rem; }
-  .discord {
-    background-color: #303030; }
+  .youtube img {
+    max-width: 13rem; }
   .discord img {
     max-width: 15rem; }
-  .twitch {
-    background-color: #303030; }
   .twitch img {
     max-width: 10rem;
     margin-bottom: 1.5rem; }
-  .patreon {
-    background-color: #303030; }
   .patreon h1, .patreon span {
     color: #0f81df; }
   .patreon img {
@@ -450,10 +452,11 @@
     padding: 0;
     font-size: 1.5rem; }
   #contestSubmissionContainer .twitch-timestamp {
-    color: gainsboro;
-    font-size: 1.2rem;
+    color: #272822;
+    font-size: 1.5rem;
+    font-weight: bolder;
     margin: 0.5rem auto 2rem auto;
-    background-color: gray;
+    background-color: #6988b1;
     box-shadow: 0 0.5rem 0.1rem gainsboro;
     padding: 2rem; }
   #contestSubmissionContainer .twitch-timestamp img {

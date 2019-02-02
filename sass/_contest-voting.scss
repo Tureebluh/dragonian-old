@@ -63,16 +63,18 @@
     font-size: 1.5rem;
 }
 #contestSubmissionContainer .twitch-timestamp {
-    color: $almost-white;
-    font-size: 1.2rem;
+    color: $near-black;
+    font-size: 1.5rem;
+    font-weight: bolder;
     margin: 0.5rem auto 2rem auto;
-    background-color: gray;
+    background-color: rgb(105, 136, 177);
     box-shadow: 0 0.5rem 0.1rem $almost-white;
     padding: 2rem;
 }
 #contestSubmissionContainer .twitch-timestamp img {
     width: 30%;
 }
+
 #contestSubmissionContainer h1 {
     color: white;
     font-size: 2rem;

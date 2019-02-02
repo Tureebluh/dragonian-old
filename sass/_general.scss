@@ -91,6 +91,16 @@ footer a {
     margin-bottom: 3rem;
 }
 
+#failedLogin h3 {
+    color: $red-bg-color;
+    background-color: $almost-white;
+}
+
+#failedLogin h1 {
+    color: $text-blue-color;
+
+}
+
 .infopanel {
     width: 100%;
     padding: 3rem 10%;
@@ -100,7 +110,9 @@ footer a {
     font-family: Georgia, 'Times New Roman', Times, serif;
     font-size: 1.5rem;
     color: $almost-white;
+    background-color: $main-bg-color;
 }
+
 #contestWinnerSection {
     color: $first-place-color;
 }
@@ -112,24 +124,19 @@ footer a {
     max-width: 4rem;
 }
 
-.discord {
-    background-color: $main-bg-color;
+.youtube img {
+    max-width: 13rem;
 }
+
 .discord img {
     max-width: 15rem;
 }
 
-.twitch {
-    background-color: $main-bg-color;
-}
 .twitch img {
     max-width: 10rem;
     margin-bottom: 1.5rem;
 }
 
-.patreon {
-    background-color: $main-bg-color;
-}
 .patreon h1, .patreon span {
     color: $toy-blue-color;
 }

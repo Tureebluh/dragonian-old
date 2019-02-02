@@ -444,7 +444,7 @@ router.post('/create/contest', (req, res) => {
             res.redirect('/admin/contest' + '?result=success');
         });
     } else {
-        res.send('Unauthorized Access');
+        res.redirect('/auth/verification/failed');
     }
 });
 
@@ -501,7 +501,7 @@ router.post('/create/shuffle', (req, res) => {
             res.redirect('/admin/shuffle' + '?result=success');
         });
     } else {
-        res.send('Unauthorized Access');
+        res.redirect('/auth/verification/failed');
     }
 });
 
@@ -528,7 +528,7 @@ router.post('/create/rule', (req, res) => {
             if(err) throw err;
         });
     } else {
-        res.send('Unauthorized Access');
+        res.redirect('/auth/verification/failed');
     }
 });
 
@@ -565,7 +565,7 @@ router.post('/create/criteria', (req, res) => {
             if(err) throw err;
         });
     } else {
-        res.send('Unauthorized Access');
+        res.redirect('/auth/verification/failed');
     }
 });
 

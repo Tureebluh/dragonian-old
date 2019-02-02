@@ -23,7 +23,7 @@ router.get('/profile/user/details', (req, res) => {
             });
         });
     } else {
-        res.send('Unauthorized Access');
+        res.redirect('/auth/verification/failed');
     }
 });
 //Gets users shuffles that they've completed
@@ -40,7 +40,7 @@ router.get('/profile/user/shuffles', (req, res) => {
             });
         });
     } else {
-        res.send('Unauthorized Access');
+        res.redirect('/auth/verification/failed');
     }
 });
 //Get users contests they've completed
@@ -57,7 +57,7 @@ router.get('/profile/user/contests', (req, res) => {
             });
         });
     } else {
-        res.send('Unauthorized Access');
+        res.redirect('/auth/verification/failed');
     }
 });
 
@@ -73,7 +73,7 @@ router.get('/profile/user/verify', (req, res) => {
                 return res.json();
             })
             .then(resJson => {
-                //If the game count is equal to 1 it was found, other wise done will be called with false and fail validation
+                //If the game count is equal to 1 it was found, other wise user fails verification
                 if(resJson.response['game_count'] === 1){
                     dbpool.getConnection( (err, connection) => {
                         if (err) throw err;
@@ -95,7 +95,7 @@ router.get('/profile/user/verify', (req, res) => {
             res.send({result: 1});
         }
     } else {
-        res.send('Unauthorized Access');
+        res.redirect('/auth/verification/failed');
     }
 });
 
@@ -121,7 +121,8 @@ router.post('/contest/submit/', (req, res) => {
     if(req.isAuthenticated() && req.user.verified){
         if(!req.user.roles.includes('Judge') && !req.user.roles.includes('Administrator')) {
             if(typeof req.body.verifySubmissionCB !== 'undefined'){
-                if(req.body.contestID && req.body.submissionURL.indexOf('https://steamcommunity.com/sharedfiles/filedetails/?id=') === 0){
+                if(req.body.contestID && (req.body.submissionURL.indexOf('https://steamcommunity.com/sharedfiles/filedetails/?id=') === 0) ||
+                                        req.body.submissionURL.indexOf('https://steamcommunity.com/workshop/filedetails/?id=') === 0){
                     dbpool.getConnection( (err, connection) => {
                         if (err) throw err;
                         
@@ -146,7 +147,7 @@ router.post('/contest/submit/', (req, res) => {
             res.redirect('/contest?result=votefail');
         }    
     } else {
-        res.send('Unauthorized Access');
+        res.redirect('/auth/verification/failed');
     }
 });
 
@@ -186,7 +187,7 @@ router.post('/contest/vote/submit', (req, res) => {
             res.redirect('/contest?result=votefail');
         }
     } else {
-        res.send('Unauthorized Access');
+        res.redirect('/auth/verification/failed');
     }
 });
 
@@ -222,7 +223,7 @@ router.get('/contest/all/active', (req, res) => {
             });
         });
     } else {
-        res.send('Unauthorized Access');
+        res.redirect('/auth/verification/failed');
     }
 });
 //Returns back the users with a Judge role
@@ -237,7 +238,7 @@ router.get('/contest/all/judges', (req, res) => {
             });
         });
     } else {
-        res.send('Unauthorized Access');
+        res.redirect('/auth/verification/failed');
     }
 });
 //Returns back the oldest active contest scoring rubric
@@ -252,7 +253,7 @@ router.get('/contest/all/rubric', (req, res) => {
             });
         });
     } else {
-        res.send('Unauthorized Access');
+        res.redirect('/auth/verification/failed');
     }
 });
 //Returns back all the contest_ID's and Name's of all the contest
@@ -267,7 +268,7 @@ router.get('/contest/names/all', (req, res) => {
             });
         });
     } else {
-        res.send('Unauthorized Access');
+        res.redirect('/auth/verification/failed');
     }
 });
 //Returns back all data associated with the @param ContestID
@@ -282,7 +283,7 @@ router.get('/contest/all/:contestID', (req, res) => {
             });
         });
     } else {
-        res.send('Unauthorized Access');
+        res.redirect('/auth/verification/failed');
     }
 });
 //Returns back the rules associated with the @param ContestID
@@ -297,7 +298,7 @@ router.get('/contest/rules/:contestID', (req, res) => {
             });
         });
     } else {
-        res.send('Unauthorized Access');
+        res.redirect('/auth/verification/failed');
     }
 });
 
@@ -313,7 +314,7 @@ router.get("/contest/rules/", (req, res) => {
             });
         });
     } else {
-        res.send('Unauthorized Access');
+        res.redirect('/auth/verification/failed');
     }
 });
 
@@ -329,7 +330,7 @@ router.get("/contest/criteria/", (req, res) => {
             });
         });
     } else {
-        res.send('Unauthorized Access');
+        res.redirect('/auth/verification/failed');
     }
 });
 
@@ -345,7 +346,7 @@ router.post("/contest/criteria/id", (req, res) => {
             });
         });
     } else {
-        res.send('Unauthorized Access');
+        res.redirect('/auth/verification/failed');
     }
 });
 
@@ -361,7 +362,7 @@ router.post("/contest/criteria/contestid", (req, res) => {
             });
         });
     } else {
-        res.send('Unauthorized Access');
+        res.redirect('/auth/verification/failed');
     }
 });
 
@@ -377,7 +378,7 @@ router.get("/contest/submissions", (req, res) => {
             });
         });
     } else {
-        res.send('Unauthorized Access');
+        res.redirect('/auth/verification/failed');
     }
 });
 
@@ -393,7 +394,7 @@ router.get("/contest/topsubs", (req, res) => {
             });
         });
     } else {
-        res.send('Unauthorized Access');
+        res.redirect('/auth/verification/failed');
     }
 });
 
@@ -409,7 +410,7 @@ router.get("/contest/voters/judged", (req, res) => {
             });
         });
     } else {
-        res.send('Unauthorized Access');
+        res.redirect('/auth/verification/failed');
     }
 });
 
@@ -425,7 +426,7 @@ router.get("/contest/judged/scores", (req, res) => {
             });
         });
     } else {
-        res.send('Unauthorized Access');
+        res.redirect('/auth/verification/failed');
     }
 });
 
@@ -441,7 +442,7 @@ router.get("/contest/judge/topsubs", (req, res) => {
             });
         });
     } else {
-        res.send('Unauthorized Access');
+        res.redirect('/auth/verification/failed');
     }
 });
 
@@ -457,7 +458,7 @@ router.get("/contest/judge/criteria", (req, res) => {
             });
         });
     } else {
-        res.send('Unauthorized Access');
+        res.redirect('/auth/verification/failed');
     }
 });
 
@@ -473,7 +474,7 @@ router.get("/contest/judge/criteria", (req, res) => {
             });
         });
     } else {
-        res.send('Unauthorized Access');
+        res.redirect('/auth/verification/failed');
     }
 });
 
@@ -498,7 +499,7 @@ router.post("/contest/judge/submit", (req, res) => {
             res.send({result:'Success'});
         });
     } else {
-        res.send('Unauthorized Access');
+        res.redirect('/auth/verification/failed');
     }
 });
 
@@ -528,7 +529,7 @@ router.post('/shuffle/report', (req, res) => {
             res.send({result: 'Failed'});
         } 
     } else {
-        res.send('Unauthorized Access');
+        res.redirect('/auth/verification/failed');
     }
 });
 
@@ -536,7 +537,8 @@ router.post('/shuffle/report', (req, res) => {
 router.post('/shuffle/submit/', (req, res) => {
     if(req.isAuthenticated() && !req.user.roles.includes('Shuffle Banned') && req.user.verified){
         if(typeof req.body.verifySubmissionCB !== 'undefined'){
-            if(req.body.shuffleID && req.body.submissionURL.indexOf('https://steamcommunity.com/sharedfiles/filedetails/?id=') === 0){
+            if(req.body.shuffleID && (req.body.submissionURL.indexOf('https://steamcommunity.com/sharedfiles/filedetails/?id=') === 0) ||
+                                    req.body.submissionURL.indexOf('https://steamcommunity.com/workshop/filedetails/?id=') === 0){
                 dbpool.getConnection( (err, connection) => {
                     if (err) throw err;
                     connection.query('CALL Upsert_Shuffle_Submission(' + dbpool.escape(req.body.shuffleID) +
@@ -556,7 +558,7 @@ router.post('/shuffle/submit/', (req, res) => {
             res.redirect('/shuffle?result=noterms');
         } 
     } else {
-        res.send('Unauthorized Access');
+        res.redirect('/auth/verification/failed');
     }
 });
 
@@ -580,7 +582,7 @@ router.post('/shuffle/getpick/', (req, res) => {
                 res.send({results: 'Failed'});
             }
     } else {
-        res.send('Unauthorized Access');
+        res.redirect('/auth/verification/failed');
     }
 });
 
@@ -603,7 +605,7 @@ router.post('/shuffle/previous/', (req, res) => {
                 res.send({results: 'Failed'});
             }
     } else {
-        res.send('Unauthorized Access');
+        res.redirect('/auth/verification/failed');
     }
 });
 
@@ -626,7 +628,7 @@ router.post('/shuffle/workshop/random', (req, res) => {
             res.send({});
         }
     } else {
-        res.send('Unauthorized Access');
+        res.redirect('/auth/verification/failed');
     }
 });
 
@@ -642,7 +644,7 @@ router.get('/shuffle/names/all', (req, res) => {
             });
         });
     } else {
-        res.send('Unauthorized Access');
+        res.redirect('/auth/verification/failed');
     }
 });
 
@@ -658,7 +660,7 @@ router.get('/shuffle/all/:shuffleID', (req, res) => {
             });
         });
     } else {
-        res.send('Unauthorized Access');
+        res.redirect('/auth/verification/failed');
     }
 });
 
@@ -674,7 +676,7 @@ router.get('/shuffle/active', (req, res) => {
             });
         });
     } else {
-        res.send('Unauthorized Access');
+        res.redirect('/auth/verification/failed');
     }
 });
 
@@ -690,7 +692,7 @@ router.get('/shuffle/active/progress', (req, res) => {
             });
         });
     } else {
-        res.send('Unauthorized Access');
+        res.redirect('/auth/verification/failed');
     }
 });
 
@@ -711,7 +713,7 @@ router.get('/collabs/all/unassignedroles', (req, res) => {
             });
         });
     } else {
-        res.send('Unauthorized Access');
+        res.redirect('/auth/verification/failed');
     }
 });
 
