@@ -4,8 +4,8 @@
   "description": "A website for the Dragon's Lair PlanCo community for collabs and contest.",
   "main": "server.js",
   "engines": {
-	"node": "8.11.3",
-	"npm": "6.4.1"
+    "node": "10.15.1",
+    "npm": "6.4.1"
   },
   "scripts": {
     "build": "webpack --progress",
