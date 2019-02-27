@@ -14,7 +14,7 @@ router.get('/contest', (req, res) => {
 
 //Send Administrator to shuffle administration page for CRUD operation on shuffle
 router.get('/shuffle', (req, res) => {
-    if(req.isAuthenticated() && req.user.roles.includes('Administrator')){
+    if(req.isAuthenticated() && (req.user.roles.includes('Administrator') || req.user.roles.includes('Shuffle Moderator'))){
         res.render('admin/shuffle/shuffle');
     } else {
         res.redirect('/shuffle');
