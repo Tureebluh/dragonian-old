@@ -14,6 +14,18 @@ import rateLimit from 'express-rate-limit';
 
 
 const server = express();
+
+const sess = {
+    cookie: {
+        maxAge: 86400000 * 30
+    },
+    secret: process.env.DRAGONIAN_DB_PASS,
+    name: 'dragonianID',
+    store: sessionStore,
+    resave: true,
+    saveUninitialized: false
+};
+
 //CHANGE BACK TO (301)
 //If server is running in production all request will be permanently(301) routed to https
 if(config.nodeEnv === 'production'){
@@ -35,6 +47,9 @@ if(config.nodeEnv === 'production'){
     server.use('/api', rateLimiter);
     server.use('/auth', rateLimiter);
     server.use('/admin', rateLimiter);
+
+    server.set('trust proxy', 1);
+    sess.cookie.secure = true;
 }
 
 //Middleware to convert SASS to CSS
@@ -48,13 +63,7 @@ server.use(bodyParser.urlencoded({limit: '100kb', extended: true}));
 server.use(bodyParser.json());
 
 //Middleware to use express sessions and load session store
-server.use(session({
-    secret: process.env.DRAGONIAN_DB_PASS,
-    name: 'dragonianID',
-    store: sessionStore,
-    resave: false,
-    saveUninitialized: false
-}));
+server.use(session(sess));
 
 //Middleware to use passport for authentication
 //NOTE: passport.session() must be called AFTER session has been created and passed to express
