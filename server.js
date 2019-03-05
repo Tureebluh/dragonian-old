@@ -22,7 +22,7 @@ const sess = {
     secret: process.env.DRAGONIAN_DB_PASS,
     name: 'dragonianID',
     store: sessionStore,
-    resave: true,
+    resave: false,
     saveUninitialized: false
 };
 

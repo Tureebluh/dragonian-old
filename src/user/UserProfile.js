@@ -47,15 +47,15 @@ class UserProfile {
         tempString += '<h1>User Profile</h1>';
         tempString += '<h2><img src="' + this._avatarfull + '"/> &nbsp;' + this._personaname + '</h2>';
         tempString += '<br>';
-        tempString += '<div>';
+        tempString += '<div class="dates">';
             tempString += '<span>Last login: ' + this._LastLogIn.toDateString() + '</span>';
             tempString += '<span>Member since: ' + this._CreatedDate.toDateString() + '</span>';
         tempString += '</div>';
         
         if(this._verified !== 1){
-            tempString += '<h3 id="userVerified" style="text-align: center; color: white; margin-top: 1rem;" class="error-notification">Not Verified<br><a href="/auth/verification/failed">Why am I seeing this?</a></h3>';
+            tempString += '<h3 id="userVerified" class="error-notification">Not Verified<br><a href="/auth/verification/failed">Why am I seeing this?</a></h3>';
         } else {
-            tempString += '<h3 id="userVerified" style="text-align: center; color: white; margin-top: 1rem;" class="success-notification">Verified</h3>';
+            tempString += '<h3 id="userVerified" class="success-notification">Verified</h3>';
         }
         
         return tempString;
@@ -66,14 +66,27 @@ class UserProfile {
 
         tempString += '<h3>Completed Shuffles</h3>';
         tempString += '<br>';
-        
-        this.shuffles.forEach(element => {
-            if(element['r4_workshop_URL']){
-                tempString += '<a target="_BLANK" href="' + element['r4_workshop_URL'] + '">' + element.Name + ' - Click Here</a>';
-                tempString += '<br><br>';
-            }
-        });
-        
+        tempString += '<p class="link-container">';
+
+            this.shuffles.forEach(element => {
+                if(element['r4_workshop_URL']){
+                    tempString += '<a target="_BLANK" href="' + element['r4_workshop_URL'] + '">' + element.Name + '</a>';
+                    tempString += '<a target="_BLANK" href="' + element['r4_workshop_URL'] + '">' + element.Name + '</a>';
+                    tempString += '<a target="_BLANK" href="' + element['r4_workshop_URL'] + '">' + element.Name + '</a>';
+                    tempString += '<a target="_BLANK" href="' + element['r4_workshop_URL'] + '">' + element.Name + '</a>';
+                    tempString += '<a target="_BLANK" href="' + element['r4_workshop_URL'] + '">' + element.Name + '</a>';
+                    tempString += '<a target="_BLANK" href="' + element['r4_workshop_URL'] + '">' + element.Name + '</a>';
+                    tempString += '<a target="_BLANK" href="' + element['r4_workshop_URL'] + '">' + element.Name + '</a>';
+                    tempString += '<a target="_BLANK" href="' + element['r4_workshop_URL'] + '">' + element.Name + '</a>';
+                    tempString += '<a target="_BLANK" href="' + element['r4_workshop_URL'] + '">' + element.Name + '</a>';
+                    tempString += '<a target="_BLANK" href="' + element['r4_workshop_URL'] + '">' + element.Name + '</a>';
+                    tempString += '<a target="_BLANK" href="' + element['r4_workshop_URL'] + '">' + element.Name + '</a>';
+                    tempString += '<a target="_BLANK" href="' + element['r4_workshop_URL'] + '">' + element.Name + '</a>';
+                }
+            });
+            
+
+        tempString += '</p>';
         return tempString;
     }
 
@@ -84,7 +97,7 @@ class UserProfile {
         tempString += '<br>';
         
         this.contests.forEach(element => {
-            tempString += '<a target="_BLANK" href="' + element['workshop_URL'] + '">' + element.Name + ' - Click Here</a>';
+            tempString += '<a target="_BLANK" href="' + element['workshop_URL'] + '">' + element.Name + '</a>';
             tempString += '<br><br>';
         });
         
