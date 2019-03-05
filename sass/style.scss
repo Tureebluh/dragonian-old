@@ -191,13 +191,17 @@ $red-bg-color: rgb(140, 15, 15);
 
 	/* Large Devices, Wide Screens */
 	@media only screen and (min-width : 11200px) {
+        /***************************
+            HOME PAGE & GENERAL
+        ****************************/
         html {
             font-size: 24px;
-            min-height: 100vh;
+            height: 100%;
         }
 		body {
             display: grid;
             max-width: none;
+            height: 100%;
             grid-template-columns: 1fr 1fr 6fr;
             grid-gap: 3em;
         }
@@ -220,9 +224,11 @@ $red-bg-color: rgb(140, 15, 15);
             left: 1.5rem;
             max-width: 20%;
         }
+        .infopanel {
+            grid-column: 1/4;
+        }
         footer {
             grid-column: 1/4;
-            grid-row: 6/7;
             padding: 1.5em;
         }
         

@@ -89,7 +89,8 @@
     vertical-align: middle;
     max-width: 4rem; }
   .youtube img {
-    max-width: 13rem; }
+    max-width: 13rem;
+    margin: 0 auto 1em auto; }
   .discord img {
     max-width: 15rem; }
   .twitch img {
@@ -774,12 +775,16 @@
   /* Medium Devices, Desktops - No minimum height */
   /* Large Devices, Wide Screens */
   @media only screen and (min-width: 11200px) {
+    /***************************
+            HOME PAGE & GENERAL
+        ****************************/
     html {
       font-size: 24px;
-      min-height: 100vh; }
+      height: 100%; }
     body {
       display: grid;
       max-width: none;
+      height: 100%;
       grid-template-columns: 1fr 1fr 6fr;
       grid-gap: 3em; }
     .navbar {
@@ -797,9 +802,10 @@
       top: 3.6rem;
       left: 1.5rem;
       max-width: 20%; }
+    .infopanel {
+      grid-column: 1/4; }
     footer {
       grid-column: 1/4;
-      grid-row: 6/7;
       padding: 1.5em; }
     /***************************
             USER PROFILE & USER DATA
