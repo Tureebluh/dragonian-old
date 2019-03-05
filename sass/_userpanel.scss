@@ -27,7 +27,7 @@
     float: left;
 }
 
-.userbanner .controlPanel .steaminfo .logoutBtn {
+.userbanner .controlPanel .steaminfo .logoutBtn, .userbanner .controlPanel .steaminfo .loginBtn {
     margin-top: -25%;
 }
 .userbanner {
@@ -40,11 +40,11 @@
 .userbanner > img {
     max-width: 35%;
 }
-.userbanner .controlPanel, .userbanner .controlPanel .logoutBtn {
+.userbanner .controlPanel, .userbanner .controlPanel .logoutBtn, .userbanner .controlPanel .loginBtn {
     width: 100%;
     padding: 5% 0;
 }
-.userbanner .controlPanel, .userbanner .controlPanel .logoutBtn input {
+.userbanner .controlPanel, .userbanner .controlPanel .logoutBtn input, .userbanner .controlPanel .loginBtn input {
     float: right;
 }
 .userSubmitBtn {

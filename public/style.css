@@ -202,7 +202,7 @@
     height: 3rem;
     vertical-align: middle;
     float: left; }
-  .userbanner .controlPanel .steaminfo .logoutBtn {
+  .userbanner .controlPanel .steaminfo .logoutBtn, .userbanner .controlPanel .steaminfo .loginBtn {
     margin-top: -25%; }
   .userbanner {
     background-color: #8c0f0f;
@@ -212,10 +212,10 @@
     min-height: 7rem; }
   .userbanner > img {
     max-width: 35%; }
-  .userbanner .controlPanel, .userbanner .controlPanel .logoutBtn {
+  .userbanner .controlPanel, .userbanner .controlPanel .logoutBtn, .userbanner .controlPanel .loginBtn {
     width: 100%;
     padding: 5% 0; }
-  .userbanner .controlPanel, .userbanner .controlPanel .logoutBtn input {
+  .userbanner .controlPanel, .userbanner .controlPanel .logoutBtn input, .userbanner .controlPanel .loginBtn input {
     float: right; }
   .userSubmitBtn {
     width: 75%;
@@ -773,7 +773,7 @@
   /* Small Devices, Tablets */
   /* Medium Devices, Desktops - No minimum height */
   /* Large Devices, Wide Screens */
-  @media only screen and (min-width: 1200px) {
+  @media only screen and (min-width: 11200px) {
     html {
       font-size: 24px;
       min-height: 100vh; }
@@ -781,11 +781,29 @@
       display: grid;
       max-width: none;
       grid-template-columns: 1fr 1fr 6fr;
-      grid-gap: 1em; }
+      grid-gap: 3em; }
     .navbar {
       grid-column: 1/2;
       grid-row: 1/2;
-      max-height: 5vh; }
+      max-height: 5vh;
+      font-size: 0.5rem; }
+    .dropdown {
+      margin: 1.5rem;
+      height: 3rem; }
+    .dropdown .dropbtn hr {
+      margin: 0.3rem auto; }
+    .dropdown-content {
+      position: absolute;
+      top: 3.6rem;
+      left: 1.5rem;
+      max-width: 20%; }
+    footer {
+      grid-column: 1/4;
+      grid-row: 6/7;
+      padding: 1.5em; }
+    /***************************
+            USER PROFILE & USER DATA
+        ****************************/
     .userbanner {
       grid-column: 3/4;
       grid-row: 1/2;
@@ -794,6 +812,16 @@
     .userbanner * {
       background-color: inherit !important;
       min-height: none; }
+    .userbanner .controlPanel .logoutBtn input {
+      margin-top: 1em; }
+    .steaminfo {
+      text-align: right; }
+    .steaminfo form {
+      margin: 0.2em 1em; }
+    .steaminfo img {
+      float: right; }
+    .steaminfo a {
+      float: right; }
     #userProfile {
       grid-column: 1/3;
       grid-row: 2/6; }
@@ -802,21 +830,22 @@
       width: 100%;
       text-align: center; }
     #userProfile #userVerified {
-      margin: 2rem auto; }
+      margin: 2rem auto;
+      border-radius: 0.6em; }
     .link-container {
-      width: 20%;
-      display: inline-block; }
+      text-align: center;
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      grid-gap: 1em;
+      padding: 1em; }
     #userContests {
       grid-column: 3/4;
       grid-row: 2/4; }
     #userContests a, #userShuffles a {
-      max-width: 10%;
-      background-color: yellowgreen;
-      cursor: pointer; }
+      background-color: #4090c5;
+      box-shadow: 1px 1px 15px #505050;
+      padding: 5px;
+      border-radius: 1em; }
     #userShuffles {
       grid-column: 3/4;
-      grid-row: 4/6; }
-    footer {
-      grid-column: 1/4;
-      grid-row: 6/7;
-      padding: 1.5em; } } }
+      grid-row: 4/6; } } }

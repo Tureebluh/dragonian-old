@@ -450,7 +450,7 @@ router.post('/create/contest', (req, res) => {
 
 //Administrators can POST to this endpoint for contest creation
 router.post('/create/shuffle', (req, res) => {
-    if(req.isAuthenticated() && req.user.roles.includes('Administrator')){
+    if(req.isAuthenticated() && (req.user.roles.includes('Administrator') || req.user.roles.includes('Shuffle Moderator'))){
         dbpool.getConnection( (err, connection) => {
 
             let roundOne = new Date(req.body.shuffleRoundOne.toString());

@@ -66,27 +66,15 @@ class UserProfile {
 
         tempString += '<h3>Completed Shuffles</h3>';
         tempString += '<br>';
-        tempString += '<p class="link-container">';
+        tempString += '<div class="link-container">';
 
             this.shuffles.forEach(element => {
                 if(element['r4_workshop_URL']){
                     tempString += '<a target="_BLANK" href="' + element['r4_workshop_URL'] + '">' + element.Name + '</a>';
-                    tempString += '<a target="_BLANK" href="' + element['r4_workshop_URL'] + '">' + element.Name + '</a>';
-                    tempString += '<a target="_BLANK" href="' + element['r4_workshop_URL'] + '">' + element.Name + '</a>';
-                    tempString += '<a target="_BLANK" href="' + element['r4_workshop_URL'] + '">' + element.Name + '</a>';
-                    tempString += '<a target="_BLANK" href="' + element['r4_workshop_URL'] + '">' + element.Name + '</a>';
-                    tempString += '<a target="_BLANK" href="' + element['r4_workshop_URL'] + '">' + element.Name + '</a>';
-                    tempString += '<a target="_BLANK" href="' + element['r4_workshop_URL'] + '">' + element.Name + '</a>';
-                    tempString += '<a target="_BLANK" href="' + element['r4_workshop_URL'] + '">' + element.Name + '</a>';
-                    tempString += '<a target="_BLANK" href="' + element['r4_workshop_URL'] + '">' + element.Name + '</a>';
-                    tempString += '<a target="_BLANK" href="' + element['r4_workshop_URL'] + '">' + element.Name + '</a>';
-                    tempString += '<a target="_BLANK" href="' + element['r4_workshop_URL'] + '">' + element.Name + '</a>';
-                    tempString += '<a target="_BLANK" href="' + element['r4_workshop_URL'] + '">' + element.Name + '</a>';
                 }
             });
             
-
-        tempString += '</p>';
+        tempString += '</div>';
         return tempString;
     }
 
@@ -95,12 +83,13 @@ class UserProfile {
 
         tempString += '<h3>Completed Contest</h3>';
         tempString += '<br>';
+        tempString += '<div class="link-container">';
+
+            this.contests.forEach(element => {
+                tempString += '<a target="_BLANK" href="' + element['workshop_URL'] + '">' + element.Name + '</a>';
+            });
         
-        this.contests.forEach(element => {
-            tempString += '<a target="_BLANK" href="' + element['workshop_URL'] + '">' + element.Name + '</a>';
-            tempString += '<br><br>';
-        });
-        
+        tempString += '</div>';
         return tempString;
     }
 }
