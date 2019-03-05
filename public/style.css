@@ -129,8 +129,6 @@
     background-color: orange; }
   .navbar a:visited, .navbar a {
     color: white; }
-  .navbar a:hover {
-    background-color: orange; }
   .dropdown {
     overflow: hidden;
     width: 4rem;
@@ -774,7 +772,7 @@
   /* Small Devices, Tablets */
   /* Medium Devices, Desktops - No minimum height */
   /* Large Devices, Wide Screens */
-  @media only screen and (min-width: 11200px) {
+  @media only screen and (min-width: 1200px) {
     /***************************
             HOME PAGE & GENERAL
         ****************************/
@@ -792,6 +790,8 @@
       grid-row: 1/2;
       max-height: 5vh;
       font-size: 0.5rem; }
+    .navbar a:hover {
+      background-color: #5d5d5d; }
     .dropdown {
       margin: 1.5rem;
       height: 3rem; }
@@ -802,8 +802,20 @@
       top: 3.6rem;
       left: 1.5rem;
       max-width: 20%; }
-    .infopanel {
-      grid-column: 1/4; }
+    .home-grid-container {
+      grid-column: 1/4;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-gap: 2em; }
+    .infopanel, footer {
+      background-color: #3d3d3d;
+      box-shadow: 1px 1px 10px gainsboro; }
+    .infopanel:hover, .navbar:hover {
+      background-color: #5d5d5d; }
+    #contestWinnerSection {
+      grid-column: 1/3; }
+    .twitch {
+      grid-column: 1.5/2.5; }
     footer {
       grid-column: 1/4;
       padding: 1.5em; }
@@ -820,6 +832,10 @@
       min-height: none; }
     .userbanner .controlPanel .logoutBtn input {
       margin-top: 1em; }
+    .userbanner .controlPanel .loginBtn input {
+      margin: 1em 1em 0 0; }
+    .userbanner .controlPanel .logoutBtn input:hover {
+      background-color: #5d5d5d; }
     .steaminfo {
       text-align: right; }
     .steaminfo form {
