@@ -235,7 +235,7 @@ $red-bg-color: rgb(140, 15, 15);
             grid-template-columns: 1fr 1fr;
             grid-gap: 2em;
         }
-        .infopanel, footer {
+        .infopanel, #userContests, #userShuffles, #userProfileSection, footer {
             background-color: $main-bg-panel;
             box-shadow: 1px 1px 10px $almost-white;
         }
@@ -267,13 +267,13 @@ $red-bg-color: rgb(140, 15, 15);
             min-height: none;
         }
         .userbanner .controlPanel .logoutBtn input {
-            margin-top: 1em;
+            margin: 3em -10em 0 0;
         }
         .userbanner .controlPanel .loginBtn input {
-            margin: 1em 1em 0 0;
+            margin: 3em -6.8em 0 0;
         }
-        .userbanner .controlPanel .logoutBtn input:hover {
-            background-color: $main-bg-panel-hover;
+        .userbanner .controlPanel .logoutBtn input:hover, .userbanner .controlPanel .loginBtn input:hover {
+            background-color: $main-bg-panel-hover !important;
         }
         .steaminfo {
             text-align: right;
@@ -286,6 +286,10 @@ $red-bg-color: rgb(140, 15, 15);
         }
         .steaminfo a {
             float: right;
+            width: auto!important;
+        }
+        .steaminfo a:hover {
+            color: $toy-blue-color;
         }
 
         #userProfile {
@@ -312,15 +316,27 @@ $red-bg-color: rgb(140, 15, 15);
             grid-column: 3/4;
             grid-row: 2/4;
         }
-        #userContests a, #userShuffles a {
-            background-color: rgb(64, 144, 197);
-            box-shadow: 1px 1px 15px rgb(80, 80, 80);
-            padding: 5px;
-            border-radius: 1em;
-        }
         #userShuffles {
             grid-column: 3/4;
             grid-row: 4/6;
+        }
+        #userContests a, #userShuffles a {
+            color: $almost-white;
+            background-color: $main-bg-panel-hover;
+            padding: 0.6em;
+            border-radius: 1em;
+        }
+        #userContests a:hover, #userShuffles a:hover {
+            color: $almost-white;
+            background-color: $toy-blue-color;
+        }
+
+        /***************************
+                COLLAB PAGES
+        ****************************/
+        #collabsDiv {
+            background: transparent;
+            line-height: 6em;
         }
 	}
 }
