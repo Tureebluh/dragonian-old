@@ -354,7 +354,8 @@ $yellow-text-color: rgb(218, 218, 0);
         #howItWorkSection {
             grid-column: 1/4;
         }
-        #activeContest, #activeShuffle, #judgeSection, #contestRubric, #submitEntrySection, #nextRoundTimer, #workshopLink, #previousLinks, #howItWorkSection {
+        #activeContest, #activeShuffle, #judgeSection, #contestRubric, #submitEntrySection, #nextRoundTimer, #workshopLink,
+            #previousLinks, #howItWorkSection, #shufProgressTable, #contestResultsContainer {
             background-color: $main-bg-panel;
             box-shadow: 1px 1px 10px $almost-white;
         }
@@ -414,8 +415,8 @@ $yellow-text-color: rgb(218, 218, 0);
         #contestResultsContainer {
             grid-column: 1/4;
             grid-row-start: 2;
-            padding: 5%;
-            min-height: 50vh;
+            padding: 1% 5%;
+            min-height: 75vh;
         }
 
 
@@ -459,8 +460,8 @@ $yellow-text-color: rgb(218, 218, 0);
         }
         #shufProgressTable {
             grid-column: 1/4;
-            max-width: 80%;
-            margin: 0 auto;
+            width: 100%;
+            padding: 1% 10% 5% 10%;
         }
 	}
 }
