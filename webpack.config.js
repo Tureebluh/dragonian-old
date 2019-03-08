@@ -6,7 +6,7 @@ module.exports = {
 	entry: ["./src/index.js"],
 	output: {
 		path: __dirname + "/public",
-		filename: "bundle.min.js"
+		filename: "bundle.[contenthash].min.js"
 	},
 	module: {
 		rules: [
