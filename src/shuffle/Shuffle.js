@@ -84,44 +84,66 @@ class Shuffle {
         let tempString = '<h2 id="timeRemaining"><strong>';
         
         //First Round
-        if(this.RoundOneStart < Date.now() && this.RoundTwoStart > Date.now()){
-            let hoursUntil = Math.round((((this.RoundTwoStart.getTime() - Date.now()) / 1000) / 60) / 60);
-            if(hoursUntil > 0){
-                hoursUntil += ' hour(s) ';
-            } else {
-                hoursUntil = Math.round(((this.RoundTwoStart.getTime() - Date.now()) / 1000) / 60) + ' minute(s) ';
-            }
-            tempString += hoursUntil + 'left in <br>Round 1!</h2></strong>';
+        if(this.RoundOneStart < Date.now() && this.RoundTwoStart > Date.now()){       //ms    //secs
+            let totalSecs = Math.round((this.RoundTwoStart.getTime() - Date.now()) / 1000);
+            let totalMins = Math.round(( totalSecs / 60));
+            let totalHours = Math.round(totalMins / 60);
+            let secsLeft = Math.round(totalSecs % 60);
+            let minsLeft = Math.round(totalMins % 60);
+            let hoursLeft = Math.round(totalHours % 24);
+            let daysLeft = Math.round(totalHours / 24);
+
+
+            let timeString = '<span class="yellow">' + daysLeft + '</span>' + ' day(s) ' + '<span class="yellow">' + hoursLeft +
+                             '</span>' + ' hour(s) ' + '<span class="yellow">' + minsLeft + '</span>' + ' minute(s) ' + '<span class="yellow">' + secsLeft + '</span>';
+            tempString += timeString + 'left in <br>Round 1!</h2></strong>';
         
         //Second Round
         } else if(this.RoundTwoStart < Date.now() && this.RoundThreeStart > Date.now()){
-            let hoursUntil = Math.round((((this.RoundThreeStart.getTime() - Date.now()) / 1000) / 60) / 60);
-            if(hoursUntil > 0){
-                hoursUntil += ' hour(s) ';
-            } else {
-                hoursUntil = Math.round(((this.RoundThreeStart.getTime() - Date.now()) / 1000) / 60) + ' minute(s) ';
-            }
-            tempString += hoursUntil + 'left in <br>Round 2!</h2></strong>';
+            let totalSecs = Math.round((this.RoundThreeStart.getTime() - Date.now()) / 1000);
+            let totalMins = Math.round(( totalSecs / 60));
+            let totalHours = Math.round(totalMins / 60);
+            let secsLeft = Math.round(totalSecs % 60);
+            let minsLeft = Math.round(totalMins % 60);
+            let hoursLeft = Math.round(totalHours % 24);
+            let daysLeft = Math.round(totalHours / 24);
+
+            let timeString = '<span class="yellow">' + daysLeft + '</span>' + ' day(s) ' + '<span class="yellow">' + hoursLeft +
+                             '</span>' + ' hour(s) ' + '<span class="yellow">' + minsLeft + '</span>' + ' minute(s) ' + '<span class="yellow">' + secsLeft + '</span>';
+            tempString += timeString + 'left in <br>Round 2!</h2></strong>';
         
         //Third Round
         } else if(this.RoundThreeStart < Date.now() && this.RoundFourStart > Date.now()){
-            let hoursUntil = Math.round((((this.RoundFourStart.getTime() - Date.now()) / 1000) / 60) / 60);
-            if(hoursUntil > 0){
-                hoursUntil += ' hour(s) ';
-            } else {
-                hoursUntil = Math.round(((this.RoundFourStart.getTime() - Date.now()) / 1000) / 60) + ' minute(s) ';
-            }
-            tempString += hoursUntil + 'left in <br>Round 3!</h2></strong>';
+            let totalSecs = Math.round((this.RoundFourStart.getTime() - Date.now()) / 1000);
+            let totalMins = Math.round(( totalSecs / 60));
+            let totalHours = Math.round(totalMins / 60);
+            let secsLeft = Math.round(totalSecs % 60);
+            let minsLeft = Math.round(totalMins % 60);
+            let hoursLeft = Math.round(totalHours % 24);
+            let daysLeft = Math.round(totalHours / 24);
+
+            let timeString = '<span class="yellow">' + daysLeft + '</span>' + ' day(s) ' + '<span class="yellow">' + hoursLeft +
+                             '</span>' + ' hour(s) ' + '<span class="yellow">' + minsLeft + '</span>' + ' minute(s) ' + '<span class="yellow">' + secsLeft + '</span>';
+            tempString += timeString + 'left in <br>Round 3!</h2></strong>';
         
         //Final Round
         } else if(this.RoundFourStart < Date.now() && this.EndDate > Date.now()){
-            let hoursUntil = Math.round((((this.EndDate.getTime() - Date.now()) / 1000) / 60) / 60);
-            if(hoursUntil > 0){
-                hoursUntil += ' hour(s) ';
-            } else {
-                hoursUntil = Math.round(((this.EndDate.getTime() - Date.now()) / 1000) / 60) + ' minute(s) ';
-            }
-            tempString += hoursUntil + 'left in <br>Round 4!</h2></strong>';
+            let totalSecs = parseInt((this.EndDate.getTime() - Date.now()) / 1000);
+
+            let daysLeft = parseInt(totalSecs / 86400);
+            totalSecs = parseInt(totalSecs % 86400);
+
+            let hoursLeft = parseInt(totalSecs / 3600);
+            totalSecs = parseInt(totalSecs % 3600);
+
+            let minsLeft = parseInt(totalSecs / 60);
+            totalSecs = parseInt(totalSecs % 60);
+
+            let secsLeft = parseInt(totalSecs);
+
+            let timeString = '<span class="yellow">' + daysLeft + '</span>' + ' day(s) ' + '<span class="yellow">' + hoursLeft +
+                             '</span>' + ' hour(s) ' + '<span class="yellow">' + minsLeft + '</span>' + ' minute(s) ' + '<span class="yellow">' + secsLeft + ' second(s) </span>';
+            tempString += timeString + 'left in <br>Round 4!</h2></strong>';
         }
 
         return tempString;

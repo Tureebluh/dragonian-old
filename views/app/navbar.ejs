@@ -5,8 +5,9 @@
         <a href="/shuffle">Shuffle</a>
         <ul>
             <li><a href="/shuffle/progress">Shuffle Progress</a></li>
+            <%- (user) ? ((user.roles.includes('Shuffle Moderator')) ? include('../app/shuffleModerator') : null) : null %>
         </ul>
-        <%- (user) ? ((user.roles.includes('Shuffle Moderator')) ? include('../app/shuffleModerator') : null) : null %>
+        
         <a href="/contest">Contest</a>
         <ul>
             <li><a href="/contest/vote">Contest Vote</a></li>

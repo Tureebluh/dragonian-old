@@ -113,9 +113,11 @@ const onload = () => {
                 }).catch(error => {console.error(error)});
             }).catch(error => {console.error(error)});
         } else {
+            document.querySelector('#judgeSection').classList.add('hidden');
+            document.querySelector('#contestRubric').classList.add('hidden');
             let tempString = '';
                 tempString += '<form action="/contest/results/" method="get" class="contestVotingForm">';
-                    tempString += '<input type="submit" alt="Go To Judging Page" value="See Contest Results">';
+                    tempString += '<input type="submit" alt="Go To Judging Page" value="Contest Results">';
                 tempString += '</form>';
             document.querySelector('#activeContest').innerHTML = "<h2>You're in luck, the next contest begins soon!<br>Be sure to check out Twitch for live updates regarding future contest announcements, judging results, and more!</h2>" + 
                                                                 '<a href="https://www.twitch.tv/r3ddragons" target="_blank"><img id="twitchImg" src="img/twitch_purple_combo.svg"></a>';

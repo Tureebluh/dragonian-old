@@ -39,6 +39,10 @@ const onload = () => {
             document.querySelector('#submitEntrySection').innerHTML = shuffleObj.submissionDiv();
             document.querySelector('#submitEntrySection').classList.toggle('hidden');
             document.querySelector('#nextRoundTimer').innerHTML = shuffleObj.timerDiv();
+            setInterval(() => {
+                document.querySelector('#nextRoundTimer').innerHTML = shuffleObj.timerDiv();
+            }, 1000);
+            
             document.querySelector('#nextRoundTimer').classList.toggle('hidden');
             document.querySelector('#shuffleIDHidden').value = shuffleObj.Shuffle_ID;
             shuffleObj.workshopDiv();

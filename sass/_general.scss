@@ -76,6 +76,10 @@ footer a {
     max-width: 50%;
 }
 
+.yellow {
+    color: $yellow-text-color;
+}
+
 #privacyPolicy, #termsOfUse, #failedLogin {
     color: whitesmoke;
     text-align: center;
@@ -144,7 +148,12 @@ footer a {
 .patreon img {
     max-height: 10rem;
 }
-
+.dragon-img {
+    display: block;
+    max-width: 50%;
+    margin: 2em auto;
+    
+}
 .yt-cont {
     position: relative;
     padding: 1rem;
