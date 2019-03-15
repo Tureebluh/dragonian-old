@@ -82,10 +82,10 @@ class Shuffle {
 
     timerDiv(){
         let tempString = '<h2 id="timeRemaining"><strong>';
-        
+        let utcNow = new Date(Date.now()).getTime();
         //First Round
-        if(this.RoundOneStart < Date.now() && this.RoundTwoStart > Date.now()){       //ms    //secs
-            let totalSecs = parseInt((this.RoundTwoStart.getTime() - Date.now()) / 1000);
+        if(this.RoundOneStart < utcNow && this.RoundTwoStart > utcNow){       //ms    //secs
+            let totalSecs = parseInt(((this.RoundTwoStart - Date.now()) / 1000) - this.RoundTwoStart.getTimezoneOffset() * 60);
 
             let daysLeft = parseInt(totalSecs / 86400);
             totalSecs = parseInt(totalSecs % 86400);
@@ -100,12 +100,13 @@ class Shuffle {
 
 
             let timeString = '<span class="yellow">' + daysLeft + '</span>' + ' day(s) ' + '<span class="yellow">' + hoursLeft +
-                             '</span>' + ' hour(s) ' + '<span class="yellow">' + minsLeft + '</span>' + ' minute(s) ' + '<span class="yellow">' + secsLeft + '</span>';
-            tempString += timeString + 'left in <br>Round 1!</h2></strong>';
+                             '</span>' + ' hour(s) ' + '<span class="yellow">' + minsLeft + '</span>' + ' minute(s) ' + '<span class="yellow">' + secsLeft + '</span> second(s) ';
+            tempString += timeString + '<br>left in Round 1!</h2></strong>';
         
         //Second Round
         } else if(this.RoundTwoStart < Date.now() && this.RoundThreeStart > Date.now()){
-            let totalSecs = parseInt((this.RoundThreeStart.getTime() - Date.now()) / 1000);
+            let totalSecs = parseInt(((this.RoundThreeStart - Date.now()) / 1000) - this.RoundThreeStart.getTimezoneOffset() * 60);
+
 
             let daysLeft = parseInt(totalSecs / 86400);
             totalSecs = parseInt(totalSecs % 86400);
@@ -119,12 +120,13 @@ class Shuffle {
             let secsLeft = parseInt(totalSecs);
 
             let timeString = '<span class="yellow">' + daysLeft + '</span>' + ' day(s) ' + '<span class="yellow">' + hoursLeft +
-                             '</span>' + ' hour(s) ' + '<span class="yellow">' + minsLeft + '</span>' + ' minute(s) ' + '<span class="yellow">' + secsLeft + '</span>';
-            tempString += timeString + 'left in <br>Round 2!</h2></strong>';
+                             '</span>' + ' hour(s) ' + '<span class="yellow">' + minsLeft + '</span>' + ' minute(s) ' + '<span class="yellow">' + secsLeft + '</span> second(s) ';
+            tempString += timeString + '<br>left in Round 2!</h2></strong>';
         
         //Third Round
         } else if(this.RoundThreeStart < Date.now() && this.RoundFourStart > Date.now()){
-            let totalSecs = parseInt((this.RoundFourStart.getTime() - Date.now()) / 1000);
+            let totalSecs = parseInt(((this.RoundFourStart - Date.now()) / 1000) - this.RoundFourStart.getTimezoneOffset() * 60);
+
 
             let daysLeft = parseInt(totalSecs / 86400);
             totalSecs = parseInt(totalSecs % 86400);
@@ -138,12 +140,12 @@ class Shuffle {
             let secsLeft = parseInt(totalSecs);
 
             let timeString = '<span class="yellow">' + daysLeft + '</span>' + ' day(s) ' + '<span class="yellow">' + hoursLeft +
-                             '</span>' + ' hour(s) ' + '<span class="yellow">' + minsLeft + '</span>' + ' minute(s) ' + '<span class="yellow">' + secsLeft + '</span>';
-            tempString += timeString + 'left in <br>Round 3!</h2></strong>';
+                             '</span>' + ' hour(s) ' + '<span class="yellow">' + minsLeft + '</span>' + ' minute(s) ' + '<span class="yellow">' + secsLeft + '</span> second(s) ';
+            tempString += timeString + '<br>left in Round 3!</h2></strong>';
         
         //Final Round
         } else if(this.RoundFourStart < Date.now() && this.EndDate > Date.now()){
-            let totalSecs = parseInt((this.EndDate.getTime() - Date.now()) / 1000);
+            let totalSecs = parseInt(((this.EndDate - Date.now()) / 1000) - this.EndDate.getTimezoneOffset() * 60);
 
             let daysLeft = parseInt(totalSecs / 86400);
             totalSecs = parseInt(totalSecs % 86400);
@@ -157,8 +159,8 @@ class Shuffle {
             let secsLeft = parseInt(totalSecs);
 
             let timeString = '<span class="yellow">' + daysLeft + '</span>' + ' day(s) ' + '<span class="yellow">' + hoursLeft +
-                             '</span>' + ' hour(s) ' + '<span class="yellow">' + minsLeft + '</span>' + ' minute(s) ' + '<span class="yellow">' + secsLeft + ' second(s) </span>';
-            tempString += timeString + 'left in <br>Round 4!</h2></strong>';
+                             '</span>' + ' hour(s) ' + '<span class="yellow">' + minsLeft + '</span>' + ' minute(s) ' + '<span class="yellow">' + secsLeft + '</span> second(s) ';
+            tempString += timeString + '<br>left in Round 4!</h2></strong>';
         }
 
         return tempString;

@@ -5,10 +5,10 @@ import fetch from 'node-fetch';
 const OpenIDStrategy = require('passport-openid').Strategy;
 const SteamStrategy = new OpenIDStrategy(
     {
-        providerURL: 'http://steamcommunity.com/openid',
+        providerURL: 'https://steamcommunity.com/openid',
         stateless: true,
-        returnURL: (config.nodeEnv === 'development') ? 'http://localhost:3000/auth/login/return' : 'http://www.dragonian.xyz/auth/login/return',
-        realm: (config.nodeEnv === 'development') ? 'http://localhost:3000' : 'http://www.dragonian.xyz'
+        returnURL: (config.nodeEnv === 'development') ? 'http://localhost:3000/auth/login/return' : 'https://www.dragonian.xyz/auth/login/return',
+        realm: (config.nodeEnv === 'development') ? 'http://localhost:3000' : 'https://www.dragonian.xyz'
     },
         function(identifier, done){
             fetch('http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=' + process.env.STEAM_API_KEY + '&steamids=' + identifier.match(/\d+$/)[0])

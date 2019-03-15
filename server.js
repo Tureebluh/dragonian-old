@@ -11,6 +11,7 @@ import path from 'path';
 import passport from './steampassport';
 import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
+import ServerShuffle from './ServerShuffle';
 
 
 const server = express();
@@ -177,4 +178,30 @@ server.use(express.static('public'));
 //Set express to listen for request on the port specified in config.port
 server.listen(config.port, () => {
     console.log("Server listening on port " + config.port);
+    //Create server shuffle object to get active shuffle
+    let serverShuffle = new ServerShuffle();
+
+    //Check for active shuffle and save to servershuffle obj
+    serverShuffle.getActiveShuffle()
+    .then((shuffle)=>{
+        serverShuffle = shuffle;
+        serverShuffle.shuffleWithinHour();
+    }).catch(err => {
+        console.error(err);
+    });
+
+    //Check daily for new shuffles
+    setTimeout(()=>{
+        serverShuffle.getActiveShuffle()
+        .then((shuffle)=>{
+            serverShuffle = shuffle;
+        }).catch(err => {
+            console.error(err);
+        });
+    }, 86400000);
+
+    //Check hourly for shuffle rounds ending
+    setTimeout(()=>{
+        serverShuffle.shuffleWithinHour();
+    }, 3600000);
 });
