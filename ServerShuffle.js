@@ -1,4 +1,5 @@
 import dbpool from './dbpool';
+import { triggerAsyncId } from 'async_hooks';
 
 class ServerShuffle {
     constructor(Shuffle_ID, RoundOneStart, RoundTwoStart, RoundThreeStart, RoundFourStart, EndDate) {
@@ -73,41 +74,73 @@ class ServerShuffle {
     }
 
     shuffleWithinHour(){
+        // if(typeof this.RoundOneStart !== 'undefined'){
+        //     //First Round
+        //     if((this.RoundOneStart < Date.now() && this.RoundTwoStart > Date.now()) && (this.RoundTwoStart - Date.now()) < 3600000){
+        //         console.log('Shuffle for Round 2');
+        //         this.shuffleByRound(2, this.RoundTwoStart - Date.now());
+        //     //Second Round
+        //     } else if((this.RoundTwoStart < Date.now() && this.RoundThreeStart > Date.now()) && (this.RoundThreeStart - Date.now()) < 3600000){
+        //         console.log('Shuffle for Round 3');
+        //         this.shuffleByRound(3, this.RoundThreeStart - Date.now());
+        //     //Third Round
+        //     } else if((this.RoundThreeStart < Date.now() && this.RoundFourStart > Date.now()) && (this.RoundFourStart - Date.now()) < 3600000){
+        //         console.log('Shuffle for Round 4');
+        //         this.shuffleByRound(4, this.RoundFourStart - Date.now());
+        //     }
+        // }
         if(typeof this.RoundOneStart !== 'undefined'){
             //First Round
-            if((this.RoundOneStart < Date.now() && this.RoundTwoStart > Date.now()) && (this.RoundTwoStart - Date.now()) < 3600000){
+            if(this.RoundOneStart < Date.now() && this.RoundTwoStart > Date.now()){
                 console.log('Shuffle for Round 2');
                 this.shuffleByRound(2, this.RoundTwoStart - Date.now());
             //Second Round
-            } else if((this.RoundTwoStart < Date.now() && this.RoundThreeStart > Date.now()) && (this.RoundThreeStart - Date.now()) < 3600000){
+            } else if(this.RoundTwoStart < Date.now() && this.RoundThreeStart > Date.now()){
                 console.log('Shuffle for Round 3');
                 this.shuffleByRound(3, this.RoundThreeStart - Date.now());
             //Third Round
-            } else if((this.RoundThreeStart < Date.now() && this.RoundFourStart > Date.now()) && (this.RoundFourStart - Date.now()) < 3600000){
+            } else if(this.RoundThreeStart < Date.now() && this.RoundFourStart > Date.now()){
                 console.log('Shuffle for Round 4');
                 this.shuffleByRound(4, this.RoundFourStart - Date.now());
             }
         }
     }
 
+    //Shuffle pieces for given round - Change setTimeout to timeLeft
     shuffleByRound(round, timeLeft){
-        let subDict = {};
+        let subDict = [];
+        let usedSubs = [];
+
+        //Need to store assigned shuffle pieces so they're not assigned to multiple people
         console.log('Round ' + round + ' time left: ' + timeLeft);
+
         setTimeout(()=>{
             dbpool.getConnection((err, connection) => {
                 if (err) { throw err; }
                 connection.query('CALL Get_Submissions_For_Shuffling(' + dbpool.escape(this.Shuffle_ID) + ');', (error, results, fields) => {
                     connection.release();
                     if (error) { throw error; }
+
                     if (typeof results[0][0] !== 'undefined') {
                         results[0].forEach(element => {
-                            subDict[element['shuffle_submission_ID']] = element;
+                            
+                            let i = Math.round(Math.random()*results[0].length);
+
+                            subDict.push(element);
+
+                            switch(round){
+                                case 2:
+                                    break;
+                                case 3:
+                                    break;
+                                case 4:
+                                    break;
+                            }
                         });
                     }
-                    console.log(subDict);
                 });
             });
-        }, 20000);
+        }, 2000);
     }
 }
 

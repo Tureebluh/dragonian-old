@@ -82,10 +82,9 @@ class Shuffle {
 
     timerDiv(){
         let tempString = '<h2 id="timeRemaining"><strong>';
-        let utcNow = new Date(Date.now()).getTime();
         //First Round
-        if(this.RoundOneStart < utcNow && this.RoundTwoStart > utcNow){       //ms    //secs
-            let totalSecs = parseInt(((this.RoundTwoStart - Date.now()) / 1000) - this.RoundTwoStart.getTimezoneOffset() * 60);
+        if(this.RoundOneStart < Date.now() && this.RoundTwoStart > Date.now()){       //ms    //secs
+            let totalSecs = parseInt((this.RoundTwoStart - Date.now()) / 1000);
 
             let daysLeft = parseInt(totalSecs / 86400);
             totalSecs = parseInt(totalSecs % 86400);
@@ -105,7 +104,7 @@ class Shuffle {
         
         //Second Round
         } else if(this.RoundTwoStart < Date.now() && this.RoundThreeStart > Date.now()){
-            let totalSecs = parseInt(((this.RoundThreeStart - Date.now()) / 1000) - this.RoundThreeStart.getTimezoneOffset() * 60);
+            let totalSecs = parseInt((this.RoundThreeStart - Date.now()) / 1000);
 
 
             let daysLeft = parseInt(totalSecs / 86400);
@@ -125,7 +124,7 @@ class Shuffle {
         
         //Third Round
         } else if(this.RoundThreeStart < Date.now() && this.RoundFourStart > Date.now()){
-            let totalSecs = parseInt(((this.RoundFourStart - Date.now()) / 1000) - this.RoundFourStart.getTimezoneOffset() * 60);
+            let totalSecs = parseInt((this.RoundFourStart - Date.now()) / 1000);
 
 
             let daysLeft = parseInt(totalSecs / 86400);
@@ -145,7 +144,7 @@ class Shuffle {
         
         //Final Round
         } else if(this.RoundFourStart < Date.now() && this.EndDate > Date.now()){
-            let totalSecs = parseInt(((this.EndDate - Date.now()) / 1000) - this.EndDate.getTimezoneOffset() * 60);
+            let totalSecs = parseInt((this.EndDate - Date.now()) / 1000);
 
             let daysLeft = parseInt(totalSecs / 86400);
             totalSecs = parseInt(totalSecs % 86400);
