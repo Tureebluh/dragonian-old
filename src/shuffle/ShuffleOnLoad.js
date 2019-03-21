@@ -39,14 +39,12 @@ const onload = () => {
             document.querySelector('#submitEntrySection').innerHTML = shuffleObj.submissionDiv();
             document.querySelector('#submitEntrySection').classList.toggle('hidden');
             document.querySelector('#nextRoundTimer').innerHTML = shuffleObj.timerDiv();
+            document.querySelector('#nextRoundTimer').classList.toggle('hidden');
             setInterval(() => {
                 document.querySelector('#nextRoundTimer').innerHTML = shuffleObj.timerDiv();
             }, 1000);
-            
-            document.querySelector('#nextRoundTimer').classList.toggle('hidden');
             document.querySelector('#shuffleIDHidden').value = shuffleObj.Shuffle_ID;
             shuffleObj.workshopDiv();
-            shuffleObj.previousDiv();
 
             //Events to toggle placeholder on submission field for better UX
             document.querySelector('#submissionURL').addEventListener('focusin', (event) => {
@@ -54,6 +52,45 @@ const onload = () => {
             });
             document.querySelector('#submissionURL').addEventListener('focusout', (event) => {
                 event.target.setAttribute('placeholder', 'Type/paste your workshop link here');
+            });
+
+            document.querySelector('#submitShuffleUser').addEventListener('click', event => {
+                if(!document.querySelector('.contestSubmissionForm').checkValidity()){
+                    return;
+                } else {
+                    event.preventDefault();
+                    let payload = {
+                        submissionURL: document.querySelector('#submissionURL').value,
+                        shuffleID: document.querySelector('#shuffleIDHidden').value,
+                        verifySubmissionCB: 1
+                    };
+
+                    fetch('/api/shuffle/submit', {
+                        credentials: 'include',
+                        method: 'POST',
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(payload)
+                    }).then(res => {
+                        return res.json();
+                    }).then(resJson => {
+                            let notify = document.querySelector('#showErrorSuccess');
+                            notify.classList.toggle('hidden');
+                            if(resJson.result === 'Success'){
+                                notify.innerHTML = '<h1 class="success-notification">Shuffle submitted successfully. Thank you for participating in our community events!</h1>';
+                            } else if(resJson.result === 'No Terms'){
+                                notify.innerHTML = '<h1 class="error-notification">Shuffle failed to submit. You must accepts the terms above.</h1>';
+                            } else if(resJson.result === 'Bad URL'){
+                                notify.innerHTML = '<h1 class="error-notification">Shuffle failed to submit. Please verify the workshop link and try again.</h1>';
+                            }
+                            setTimeout(()=>{
+                                notify.innerHTML = '';
+                                notify.classList.toggle('hidden');
+                            }, 5000);
+                    }).catch(error => console.error(error));
+                }
             });
         }  else {
             let tempString = '';
@@ -66,18 +103,6 @@ const onload = () => {
             '<h1 class="error-notification">Unauthorized Access. Please contact the administrator.</h1>';
         console.error(error);
     });
-
-    if(document.URL.indexOf('result=subsuccess') !== -1){
-        document.querySelector('#showErrorSuccess').innerHTML = 
-            '<h1 class="success-notification">Shuffle entry successfully submitted. Thank you for participating in the shuffle!</h1>';
-    } else if (document.URL.indexOf('result=badurl') !== -1){
-        document.querySelector('#showErrorSuccess').innerHTML = 
-            '<h1 class="error-notification">The workshop link entered is not a valid workshop link. Please fix any issues with the link and try submitting again.</h1>';
-    } else if (document.URL.indexOf('result=noterms') !== -1){
-        document.querySelector('#showErrorSuccess').innerHTML = 
-            '<h1 class="error-notification">You must agree to the terms of the shuffle by ticking the box at the bottom of the page. ' +
-            'Failure to agree to the terms will result in your submission not being entered.</h1>';
-    }
 }
 
 export default onload;

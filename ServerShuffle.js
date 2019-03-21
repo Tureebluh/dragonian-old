@@ -1,5 +1,4 @@
 import dbpool from './dbpool';
-import { triggerAsyncId } from 'async_hooks';
 
 class ServerShuffle {
     constructor(Shuffle_ID, RoundOneStart, RoundTwoStart, RoundThreeStart, RoundFourStart, EndDate) {
@@ -67,6 +66,8 @@ class ServerShuffle {
                         let roundFour = new Date(results[0][0].RoundFourStart);
                         let endDate = new Date(results[0][0].EndDate);
                         resolve(new ServerShuffle(results[0][0].Shuffle_ID, roundOne, roundTwo, roundThree, roundFour, endDate));
+                    } else {
+                        reject('No active shuffle');
                     }
                 });
             });
@@ -74,35 +75,21 @@ class ServerShuffle {
     }
 
     shuffleWithinHour(){
-        // if(typeof this.RoundOneStart !== 'undefined'){
-        //     //First Round
-        //     if((this.RoundOneStart < Date.now() && this.RoundTwoStart > Date.now()) && (this.RoundTwoStart - Date.now()) < 3600000){
-        //         console.log('Shuffle for Round 2');
-        //         this.shuffleByRound(2, this.RoundTwoStart - Date.now());
-        //     //Second Round
-        //     } else if((this.RoundTwoStart < Date.now() && this.RoundThreeStart > Date.now()) && (this.RoundThreeStart - Date.now()) < 3600000){
-        //         console.log('Shuffle for Round 3');
-        //         this.shuffleByRound(3, this.RoundThreeStart - Date.now());
-        //     //Third Round
-        //     } else if((this.RoundThreeStart < Date.now() && this.RoundFourStart > Date.now()) && (this.RoundFourStart - Date.now()) < 3600000){
-        //         console.log('Shuffle for Round 4');
-        //         this.shuffleByRound(4, this.RoundFourStart - Date.now());
-        //     }
-        // }
         if(typeof this.RoundOneStart !== 'undefined'){
             //First Round
-            if(this.RoundOneStart < Date.now() && this.RoundTwoStart > Date.now()){
-                console.log('Shuffle for Round 2');
-                this.shuffleByRound(2, 2000);
+            if((this.RoundOneStart < Date.now() && this.RoundTwoStart > Date.now()) && (this.RoundTwoStart - Date.now()) < 3600000){
+                this.shuffleByRound(2, this.RoundTwoStart - Date.now());
             //Second Round
-            } else if(this.RoundTwoStart < Date.now() && this.RoundThreeStart > Date.now()){
-                console.log('Shuffle for Round 3');
-                this.shuffleByRound(3, 2000);
+            } else if((this.RoundTwoStart < Date.now() && this.RoundThreeStart > Date.now()) && (this.RoundThreeStart - Date.now()) < 3600000){
+                this.shuffleByRound(3, this.RoundThreeStart - Date.now());
             //Third Round
-            } else if(this.RoundThreeStart < Date.now() && this.RoundFourStart > Date.now()){
-                console.log('Shuffle for Round 4');
-                this.shuffleByRound(4, 2000);
+            } else if((this.RoundThreeStart < Date.now() && this.RoundFourStart > Date.now()) && (this.RoundFourStart - Date.now()) < 3600000){
+                this.shuffleByRound(4, this.RoundFourStart - Date.now());
+            } else {
+                console.log('ID#' + this.Shuffle_ID + ': Still more than one hour remaining. Waiting until next cycle...');
             }
+        } else {
+            console.log('No active shuffle');
         }
     }
 
@@ -132,7 +119,7 @@ class ServerShuffle {
                                 index = Math.floor(Math.random()*results[0].length);
 
                                 //Do additional checks for each round. Ensures user never works on the same piece twice
-                                //Once a valid submission is randomly selected, user is added to isAssigned
+                                //Once a valid submission is randomly selected, user is added to assigned
                                 switch(round){
                                     case 2:
                                         if(!assigned.includes(results[0][index]['r1_SteamID'])){
@@ -153,6 +140,28 @@ class ServerShuffle {
                                                 assigned.push(results[0][index]['r1_SteamID']);
                                                 match = true;
                                             }
+                                            //If selected submission has been assigned, see if it would be a good fit for this user as well
+                                            //Check to make sure already assigned user has another valid submission to use
+                                        } else if((element['r1_SteamID'] !== results[0][index]['r1_SteamID']) &&
+                                                    (element['r1_SteamID'] !== results[0][index]['r2_SteamID']) ){
+                                            for(let k = 0; k < results[0].length; k++){
+                                                let elem = results[0][k];
+
+                                                totalIteration++;
+                                                if((elem['r1_SteamID'] !== results[0][index]['r3_SteamID']) &&
+                                                    (elem['r2_SteamID'] !== results[0][index]['r3_SteamID']) &&
+                                                    (elem['r3_SteamID'] !== results[0][index]['r3_SteamID']) &&
+                                                    (!assigned.includes(elem['r1_SteamID']))){
+                                                    
+                                                    elem['r3_SteamID'] = results[0][index]['r3_SteamID'];
+                                                    results[0][index]['r3_SteamID'] = element['r1_SteamID'];
+                                                    assigned.push(elem['r1_SteamID']);
+                                                    match = true;
+                                                    break;
+                                                }
+                                            }
+                                        } else if(assigned.length === results[0].length) {
+                                            match = true;
                                         }
                                         break;
                                     case 4:
@@ -170,6 +179,7 @@ class ServerShuffle {
                                         } else if((element['r1_SteamID'] !== results[0][index]['r1_SteamID']) &&
                                                     (element['r1_SteamID'] !== results[0][index]['r2_SteamID']) &&
                                                         (element['r1_SteamID'] !== results[0][index]['r3_SteamID']) ){
+                                            //Loop through each piece finding a match for our randomly selected BP
                                             for(let k = 0; k < results[0].length; k++){
                                                 let elem = results[0][k];
 
@@ -189,13 +199,43 @@ class ServerShuffle {
                                         } else if(assigned.length === results[0].length) {
                                             match = true;
                                         }
+                                        break;
                                 }
                             }
                         });//End of forEach
+
+                        console.log('\n*****************   Shuffled   ********************');
                         console.log('Total iterations: ' + totalIteration);
+
                         results[0].forEach(element => {
-                            console.log(element['shuffle_submission_ID'] + ' : ' + element['r4_SteamID'] + ' for round ' + round);
+                            switch(round){
+                                case 2:
+                                    this.updateSubmissionInDB(element['shuffle_submission_ID'], element['r2_SteamID'], round)
+                                    .then(message => {
+                                        console.log(message);
+                                    }).catch(err => {
+                                        console.error(err);
+                                    });
+                                    break;
+                                case 3:
+                                    this.updateSubmissionInDB(element['shuffle_submission_ID'], element['r3_SteamID'], round)
+                                    .then(message => {
+                                        console.log(message);
+                                    }).catch(err => {
+                                        console.error(err);
+                                    });
+                                    break;
+                                case 4:
+                                    this.updateSubmissionInDB(element['shuffle_submission_ID'], element['r4_SteamID'], round)
+                                    .then(message => {
+                                        console.log(message);
+                                    }).catch(err => {
+                                        console.error(err);
+                                    });
+                                    break;
+                            }
                         });
+                        console.log('');
                     }
                 });
             });

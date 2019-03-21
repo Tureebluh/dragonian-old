@@ -27,10 +27,9 @@
 #workshopLink h1, #previousLinks h1 {
     color: $text-blue-color;
 }
-#workshopLink a:hover, #previousLinks a:hover {
-    color: $success-color;
+#workshopLink a:hover, #previousLinks a > h1:hover {
+    color: $first-place-color!important;
 }
-
 #activeShuffle a img {
     width: 50%;
 }

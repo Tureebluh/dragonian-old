@@ -82,97 +82,53 @@ class Shuffle {
 
     timerDiv(){
         let tempString = '<h2 id="timeRemaining"><strong>';
+        let roundString = '';
+        let totalSecs;
+
         //First Round
         if(this.RoundOneStart < Date.now() && this.RoundTwoStart > Date.now()){       //ms    //secs
-            let totalSecs = parseInt((this.RoundTwoStart - Date.now()) / 1000);
-
-            let daysLeft = parseInt(totalSecs / 86400);
-            totalSecs = parseInt(totalSecs % 86400);
-
-            let hoursLeft = parseInt(totalSecs / 3600);
-            totalSecs = parseInt(totalSecs % 3600);
-
-            let minsLeft = parseInt(totalSecs / 60);
-            totalSecs = parseInt(totalSecs % 60);
-
-            let secsLeft = parseInt(totalSecs);
-
-
-            let timeString = '<span class="yellow">' + daysLeft + '</span>' + ' day(s) ' + '<span class="yellow">' + hoursLeft +
-                             '</span>' + ' hour(s) ' + '<span class="yellow">' + minsLeft + '</span>' + ' minute(s) ' + '<span class="yellow">' + secsLeft + '</span> second(s) ';
-            tempString += timeString + '<br>left in Round 1!</h2></strong>';
-        
+            totalSecs = parseInt((this.RoundTwoStart - Date.now()) / 1000);
+            roundString += '<br>left in Round 1!</h2></strong>';
         //Second Round
         } else if(this.RoundTwoStart < Date.now() && this.RoundThreeStart > Date.now()){
-            let totalSecs = parseInt((this.RoundThreeStart - Date.now()) / 1000);
-
-
-            let daysLeft = parseInt(totalSecs / 86400);
-            totalSecs = parseInt(totalSecs % 86400);
-
-            let hoursLeft = parseInt(totalSecs / 3600);
-            totalSecs = parseInt(totalSecs % 3600);
-
-            let minsLeft = parseInt(totalSecs / 60);
-            totalSecs = parseInt(totalSecs % 60);
-
-            let secsLeft = parseInt(totalSecs);
-
-            let timeString = '<span class="yellow">' + daysLeft + '</span>' + ' day(s) ' + '<span class="yellow">' + hoursLeft +
-                             '</span>' + ' hour(s) ' + '<span class="yellow">' + minsLeft + '</span>' + ' minute(s) ' + '<span class="yellow">' + secsLeft + '</span> second(s) ';
-            tempString += timeString + '<br>left in Round 2!</h2></strong>';
+            totalSecs = parseInt((this.RoundThreeStart - Date.now()) / 1000);
+            roundString += '<br>left in Round 2!</h2></strong>';
         
         //Third Round
         } else if(this.RoundThreeStart < Date.now() && this.RoundFourStart > Date.now()){
-            let totalSecs = parseInt((this.RoundFourStart - Date.now()) / 1000);
-
-
-            let daysLeft = parseInt(totalSecs / 86400);
-            totalSecs = parseInt(totalSecs % 86400);
-
-            let hoursLeft = parseInt(totalSecs / 3600);
-            totalSecs = parseInt(totalSecs % 3600);
-
-            let minsLeft = parseInt(totalSecs / 60);
-            totalSecs = parseInt(totalSecs % 60);
-
-            let secsLeft = parseInt(totalSecs);
-
-            let timeString = '<span class="yellow">' + daysLeft + '</span>' + ' day(s) ' + '<span class="yellow">' + hoursLeft +
-                             '</span>' + ' hour(s) ' + '<span class="yellow">' + minsLeft + '</span>' + ' minute(s) ' + '<span class="yellow">' + secsLeft + '</span> second(s) ';
-            tempString += timeString + '<br>left in Round 3!</h2></strong>';
+            totalSecs = parseInt((this.RoundFourStart - Date.now()) / 1000);
+            roundString += '<br>left in Round 3!</h2></strong>';
         
         //Final Round
         } else if(this.RoundFourStart < Date.now() && this.EndDate > Date.now()){
-            let totalSecs = parseInt((this.EndDate - Date.now()) / 1000);
-
-            let daysLeft = parseInt(totalSecs / 86400);
-            totalSecs = parseInt(totalSecs % 86400);
-
-            let hoursLeft = parseInt(totalSecs / 3600);
-            totalSecs = parseInt(totalSecs % 3600);
-
-            let minsLeft = parseInt(totalSecs / 60);
-            totalSecs = parseInt(totalSecs % 60);
-
-            let secsLeft = parseInt(totalSecs);
-
-            let timeString = '<span class="yellow">' + daysLeft + '</span>' + ' day(s) ' + '<span class="yellow">' + hoursLeft +
-                             '</span>' + ' hour(s) ' + '<span class="yellow">' + minsLeft + '</span>' + ' minute(s) ' + '<span class="yellow">' + secsLeft + '</span> second(s) ';
-            tempString += timeString + '<br>left in Round 4!</h2></strong>';
+            totalSecs = parseInt((this.EndDate - Date.now()) / 1000);
+            roundString += '<br>left in Round 4!</h2></strong>';
         }
 
-        return tempString;
-    }
-    previousDiv(){
-        if(this.RoundThreeStart < Date.now() && this.EndDate > Date.now()){
+        let daysLeft = parseInt(totalSecs / 86400);
+        totalSecs = parseInt(totalSecs % 86400);
 
-            let tempString = '<h1>Previous Rounds</h1>';
+        let hoursLeft = parseInt(totalSecs / 3600);
+        totalSecs = parseInt(totalSecs % 3600);
+
+        let minsLeft = parseInt(totalSecs / 60);
+        totalSecs = parseInt(totalSecs % 60);
+
+        let secsLeft = parseInt(totalSecs);
+
+        let timeString = '<span class="yellow">' + daysLeft + '</span>' + ' day(s) ' + '<span class="yellow">' + hoursLeft +
+                            '</span>' + ' hour(s) ' + '<span class="yellow">' + minsLeft + '</span>' + ' minute(s) ' + '<span class="yellow">' + secsLeft + '</span> second(s) ';
+        return tempString += timeString + roundString;
+    }
+
+    workshopDiv(){
+        if(this.RoundTwoStart < Date.now() && this.EndDate > Date.now()){
+            let tempString = '<h1>Current Round</h1>';
 
             let payload = {
                 shuffleID: this._Shuffle_ID
             };
-            fetch('/api/shuffle/previous/', {
+            fetch('/api/shuffle/workshop/random', {
                 credentials: 'include',
                 method: 'POST',
                 headers: {
@@ -184,126 +140,55 @@ class Shuffle {
                 return res.json();
             }).then(resJson => {
                 if(typeof resJson[0][0] !== 'undefined'){
-                    resJson[0].forEach(element => {
-                        if(this.RoundThreeStart < Date.now() && this.RoundFourStart > Date.now()){
-                            tempString += '<a target="_BLANK" href="';
-                            tempString += resJson[0][0]['r1_workshop_URL'] + '">Round 1';
-                            tempString += ' - Click Here</a>';
-                            tempString += '<br><br>';
 
-                            tempString += '<a target="_BLANK" href="';
-                            tempString += resJson[0][0]['r2_workshop_URL'] + '">Round 2';
-                            tempString += ' - Click Here</a>';
-                            tempString += '<br><br>';
+                    tempString += '<a id="randomShuffleURL" target="_BLANK" href="';
 
-                        } else if(this.RoundFourStart < Date.now() && this.EndDate > Date.now()){
-                            tempString += '<a target="_BLANK" href="';
-                            tempString += resJson[0][0]['r1_workshop_URL'] + '">Round 1';
-                            tempString += ' - Click Here</a>';
-                            tempString += '<br><br>';
+                    if(this.RoundOneStart < Date.now() && this.RoundTwoStart > Date.now()){
+                        
+                    } else if(this.RoundTwoStart < Date.now() && this.RoundThreeStart > Date.now()){
+                        tempString += resJson[0][0]['r1_workshop_URL'] + '">';
+                    } else if(this.RoundThreeStart < Date.now() && this.RoundFourStart > Date.now()){
+                        tempString += resJson[0][0]['r2_workshop_URL'] + '">';
+                    } else if(this.RoundFourStart < Date.now() && this.EndDate > Date.now()){
+                        tempString += resJson[0][0]['r3_workshop_URL'] + '">';
+                    }
 
-                            tempString += '<a target="_BLANK" href="';
-                            tempString += resJson[0][0]['r2_workshop_URL'] + '">Round 2';
-                            tempString += ' - Click Here</a>';
-                            tempString += '<br><br>';
+                    tempString += 'Random Link - Click Here</a>';
+                    tempString += '<br><br>';
+                    tempString += '<div class="report-user"><img id="reportShuffle" class="report-flag" style="height: 2rem;" src="img/flag.svg" /><br>Report User</div>';
 
-                            tempString += '<a target="_BLANK" href="';
-                            tempString += resJson[0][0]['r3_workshop_URL'] + '">Round 3';
-                            tempString += ' - Click Here</a>';
-                            tempString += '<br><br>';
+                    document.querySelector('#workshopLink').innerHTML = tempString;
+                    document.querySelector('#workshopLink').classList.toggle('hidden');
+
+                    document.querySelector('.report-user').addEventListener('click', (event) => {
+                        let res = confirm('Does the blueprint violate one of the posted RULES?');
+                        if(res){
+                            payload = {
+                                submissionURL: document.querySelector('#randomShuffleURL').href
+                            };
+                            fetch('/api/shuffle/report', {
+                                credentials: 'include',
+                                method: 'POST',
+                                headers: {
+                                    'Accept': 'application/json',
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify(payload)
+                            }).then(res => {
+                                return res.json();
+                            }).then(resJson => {
+                                    if(resJson.result === 'Success'){
+                                        document.querySelector('#showErrorSuccess').innerHTML = 
+                                                '<h1 class="success-notification">Report submitted successfully. Thank you for helping keep the community amazing!</h1>';
+                                                window.location.hash = '#showErrorSuccess';
+                                    } else {
+                                        document.querySelector('#showErrorSuccess').innerHTML = 
+                                                '<h1 class="success-notification">Report failed to submit. Please contact an administrator if the problem persist.</h1>';
+                                                window.location.hash = '#showErrorSuccess';
+                                    }
+                            }).catch(error => console.error(error));
                         }
                     });
-                    document.querySelector('#previousLinks').innerHTML = tempString;
-                    document.querySelector('#previousLinks').classList.toggle('hidden');
-                }
-            }).catch(error => console.error(error));
-        }
-    }
-    workshopDiv(){
-        if(this.RoundTwoStart < Date.now() && this.EndDate > Date.now()){
-            let tempString = '<h1>Current Round</h1>';
-
-            let payload = {
-                shuffleID: this._Shuffle_ID
-            };
-            fetch('/api/shuffle/getpick/', {
-                credentials: 'include',
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(payload)
-            }).then(res => {
-                return res.json();
-            }).then(resJson => {
-                if(resJson.results === 'Success'){
-                    payload = {
-                        shuffleID: this._Shuffle_ID
-                    };
-                    fetch('/api/shuffle/workshop/random', {
-                        credentials: 'include',
-                        method: 'POST',
-                        headers: {
-                            'Accept': 'application/json',
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify(payload)
-                    }).then(res => {
-                        return res.json();
-                    }).then(resJson => {
-                        if(typeof resJson[0][0] !== 'undefined'){
-
-                            tempString += '<a id="randomShuffleURL" target="_BLANK" href="';
-
-                            if(this.RoundOneStart < Date.now() && this.RoundTwoStart > Date.now()){
-                                
-                            } else if(this.RoundTwoStart < Date.now() && this.RoundThreeStart > Date.now()){
-                                tempString += resJson[0][0]['r1_workshop_URL'] + '">';
-                            } else if(this.RoundThreeStart < Date.now() && this.RoundFourStart > Date.now()){
-                                tempString += resJson[0][0]['r2_workshop_URL'] + '">';
-                            } else if(this.RoundFourStart < Date.now() && this.EndDate > Date.now()){
-                                tempString += resJson[0][0]['r3_workshop_URL'] + '">';
-                            }
-
-                            tempString += 'Random Link - Click Here</a>';
-                            tempString += '<br><br>';
-                            tempString += '<div class="report-user"><img id="reportShuffle" class="report-flag" style="height: 2rem;" src="img/flag.svg" /><br>Report User</div>';
-
-                            document.querySelector('#workshopLink').innerHTML = tempString;
-                            document.querySelector('#workshopLink').classList.toggle('hidden');
-
-                            document.querySelector('.report-user').addEventListener('click', (event) => {
-                                let res = confirm('Does the blueprint violate one of the posted RULES?');
-                                if(res){
-                                    payload = {
-                                        submissionURL: document.querySelector('#randomShuffleURL').href
-                                    };
-                                    fetch('/api/shuffle/report', {
-                                        credentials: 'include',
-                                        method: 'POST',
-                                        headers: {
-                                            'Accept': 'application/json',
-                                            'Content-Type': 'application/json'
-                                        },
-                                        body: JSON.stringify(payload)
-                                    }).then(res => {
-                                        return res.json();
-                                    }).then(resJson => {
-                                            if(resJson.result === 'Success'){
-                                                document.querySelector('#showErrorSuccess').innerHTML = 
-                                                        '<h1 class="success-notification">Report submitted successfully. Thank you for helping keep the community amazing!</h1>';
-                                                        window.location.hash = '#showErrorSuccess';
-                                            } else {
-                                                document.querySelector('#showErrorSuccess').innerHTML = 
-                                                        '<h1 class="success-notification">Report failed to submit. Please contact an administrator if the problem persist.</h1>';
-                                                        window.location.hash = '#showErrorSuccess';
-                                            }
-                                    }).catch(error => console.error(error));
-                                }
-                            });
-                        }
-                    }).catch(error => console.error(error));
                 }
             }).catch(error => console.error(error));
         }

@@ -3,11 +3,13 @@
 <%- include('../../app/userbanner') -%>
 <section id="activeShuffle" class="shuffle"></section>
 <section id="nextRoundTimer" class="hidden shuffle"></section>
-<section id="previousLinks" class="hidden shuffle"></section>
+<section id="previousLinks" class="shuffle">
+        <a target="_BLANK" href="/shuffle/progress"><h1>Shuffle Progress</h1></a>
+</section>
 <section id="workshopLink" class="hidden shuffle"></section>
+<section id="showErrorSuccess" class="hidden shuffle"></section>
 <section id="submitEntrySection" class="hidden shuffle"></section>
 <section id="howItWorkSection" class="shuffle">
     <%- include('howItWorks') -%>
 </section>
-<section id="showErrorSuccess" class="shuffle"></section>
 <%- include('../../app/bodyend') -%>

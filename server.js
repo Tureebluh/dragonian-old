@@ -185,6 +185,7 @@ server.listen(config.port, () => {
     serverShuffle.getActiveShuffle()
     .then((shuffle)=>{
         serverShuffle = shuffle;
+        console.log('\tActive shuffle found: ID#' + serverShuffle['Shuffle_ID']);
         serverShuffle.shuffleWithinHour();
     }).catch(err => {
         console.error(err);
@@ -195,6 +196,8 @@ server.listen(config.port, () => {
         serverShuffle.getActiveShuffle()
         .then((shuffle)=>{
             serverShuffle = shuffle;
+            console.log('Active shuffle found: ID# ' + serverShuffle['Shuffle_ID']);
+            serverShuffle.shuffleWithinHour();
         }).catch(err => {
             console.error(err);
         });

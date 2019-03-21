@@ -546,64 +546,17 @@ router.post('/shuffle/submit/', (req, res) => {
                                                                     ',' + dbpool.escape(req.body.submissionURL) +
                                                                     ');',
                         (error, results, fields) => {
-                            res.redirect('/shuffle?result=subsuccess');
+                            res.send({result:'Success'});
                             connection.release();
                             if (error) throw error;
                     });
                 });
             } else {
-                res.redirect('/shuffle?result=badurl');
+                res.send({result: 'Bad URL'});
             }
         } else {
-            res.redirect('/shuffle?result=noterms');
+            res.send({result: 'No Terms'});
         } 
-    } else {
-        res.redirect('/auth/verification/failed');
-    }
-});
-
-//Enters the user into the specified shuffle by ID
-router.post('/shuffle/getpick/', (req, res) => {
-    if(req.isAuthenticated() && !req.user.roles.includes('Shuffle Banned') && req.user.verified){
-            if(req.body.shuffleID){
-                dbpool.getConnection( (err, connection) => {
-                    if (err) throw err;
-                    connection.query('CALL Upsert_Shuffle_Submission(' + dbpool.escape(req.body.shuffleID) +
-                                                                    ',' + dbpool.escape(req.user.steamid) + 
-                                                                    ',' + null +
-                                                                    ');',
-                        (error, results, fields) => {
-                            res.send({results: 'Success'});
-                            connection.release();
-                            if (error) throw error;
-                    });
-                });
-            } else {
-                res.send({results: 'Failed'});
-            }
-    } else {
-        res.redirect('/auth/verification/failed');
-    }
-});
-
-//Gives the user information on all previous submissions
-router.post('/shuffle/previous/', (req, res) => {
-    if(req.isAuthenticated() && !req.user.roles.includes('Shuffle Banned') && req.user.verified){
-            if(req.body.shuffleID){
-                dbpool.getConnection( (err, connection) => {
-                    if (err) throw err;
-                    connection.query('CALL Get_Shuffle_Round_Contributors(' + dbpool.escape(req.body.shuffleID) +
-                                                                        ',' + dbpool.escape(req.user.steamid) +
-                                                                        ');',
-                        (error, results, fields) => {
-                            res.send(results);
-                            connection.release();
-                            if (error) throw error;
-                    });
-                });
-            } else {
-                res.send({results: 'Failed'});
-            }
     } else {
         res.redirect('/auth/verification/failed');
     }
