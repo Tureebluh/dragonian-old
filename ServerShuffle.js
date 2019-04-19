@@ -206,51 +206,79 @@ class ServerShuffle {
 
                         console.log('\n*****************   Shuffled   ********************');
                         console.log('Total iterations: ' + totalIteration);
-
-                        results[0].forEach(element => {
-                            switch(round){
-                                case 2:
-                                    this.updateSubmissionInDB(element['shuffle_submission_ID'], element['r2_SteamID'], round)
-                                    .then(message => {
-                                        console.log(message);
-                                    }).catch(err => {
-                                        console.error(err);
-                                    });
-                                    break;
-                                case 3:
-                                    this.updateSubmissionInDB(element['shuffle_submission_ID'], element['r3_SteamID'], round)
-                                    .then(message => {
-                                        console.log(message);
-                                    }).catch(err => {
-                                        console.error(err);
-                                    });
-                                    break;
-                                case 4:
-                                    this.updateSubmissionInDB(element['shuffle_submission_ID'], element['r4_SteamID'], round)
-                                    .then(message => {
-                                        console.log(message);
-                                    }).catch(err => {
-                                        console.error(err);
-                                    });
-                                    break;
-                            }
+                        dbpool.getConnection((err, connection) => {
+                            if (err) { throw err; }
+                            results[0].forEach(element => {
+                                switch(round){
+                                    case 2:
+                                        this.updateSubmissionInDB(element['shuffle_submission_ID'], element['r2_SteamID'], round, connection)
+                                        .then(message => {
+                                            console.log(message);
+                                        }).catch(err => {
+                                            console.error(err);
+                                        });
+                                        break;
+                                    case 3:
+                                        this.updateSubmissionInDB(element['shuffle_submission_ID'], element['r3_SteamID'], round, connection)
+                                        .then(message => {
+                                            console.log(message);
+                                        }).catch(err => {
+                                            console.error(err);
+                                        });
+                                        break;
+                                    case 4:
+                                        this.updateSubmissionInDB(element['shuffle_submission_ID'], element['r4_SteamID'], round, connection)
+                                        .then(message => {
+                                            console.log(message);
+                                        }).catch(err => {
+                                            console.error(err);
+                                        });
+                                        break;
+                                }
+                            });
+                            results[0].forEach(element => {
+                                switch(round){
+                                    case 2:
+                                        this.updateSubmissionInDB(element['shuffle_submission_ID'], element['r2_SteamID'], round, connection)
+                                        .then(message => {
+                                            console.log(message);
+                                        }).catch(err => {
+                                            console.error(err);
+                                        });
+                                        break;
+                                    case 3:
+                                        this.updateSubmissionInDB(element['shuffle_submission_ID'], element['r3_SteamID'], round, connection)
+                                        .then(message => {
+                                            console.log(message);
+                                        }).catch(err => {
+                                            console.error(err);
+                                        });
+                                        break;
+                                    case 4:
+                                        this.updateSubmissionInDB(element['shuffle_submission_ID'], element['r4_SteamID'], round, connection)
+                                        .then(message => {
+                                            console.log(message);
+                                        }).catch(err => {
+                                            console.error(err);
+                                        });
+                                        break;
+                                }
+                            });
+                            connection.release();
                         });
+                        
                         console.log('');
                     }
                 });
             });
         }, timeLeft);
     }
-    updateSubmissionInDB(subID, steamID, round){
+    updateSubmissionInDB(subID, steamID, round, connection){
         return new Promise((resolve, reject) => {
-            dbpool.getConnection((err, connection) => {
-                connection.query('CALL Update_Shuffle_Submission(' + dbpool.escape(subID) + ',' + 
-                                            dbpool.escape(steamID) + ',' +
-                                            dbpool.escape(round) + ');', (error, results, fields) => {
-                    connection.release();
-                    if (err) { throw err; }
-                    resolve(steamID + ' assigned to ' + subID + ' for Round ' + round);
-                });
+            connection.query('CALL Update_Shuffle_Submission(' + dbpool.escape(subID) + ',' + 
+                                        dbpool.escape(steamID) + ',' +
+                                        dbpool.escape(round) + ');', (error, results, fields) => {
+                resolve(steamID + ' assigned to ' + subID + ' for Round ' + round);
             });
         });
     }
