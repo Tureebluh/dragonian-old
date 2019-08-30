@@ -86,7 +86,7 @@ class ServerShuffle {
                     round = 2;
                 //Second Round
                 } else if(this.RoundTwoStart < Date.now() && this.RoundThreeStart > Date.now()){
-                    round = 4;
+                    round = 3;
                 //Third Round
                 } else if(this.RoundThreeStart < Date.now() && this.RoundFourStart > Date.now()){
                     round = 4;
