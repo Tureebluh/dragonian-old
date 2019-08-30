@@ -1,5 +1,7 @@
 import express from 'express';
 import dbpool from '../dbpool';
+import ServerShuffle from './ServerShuffle';
+import { resolveNaptr } from 'dns';
 
 const router = express.Router();
 
@@ -67,6 +69,30 @@ router.post('/reports/shuffle/validate', (req, res) => {
                 if (error) throw error;
                 res.send({result: 'Success'});
             });
+        });
+    } else {
+        res.redirect('/shuffle');
+    }
+});
+
+//Shuffle players for every round
+router.post('/shuffleplayers', (req, res) => {
+    if(req.isAuthenticated() && req.user.roles.includes('Administrator')){
+        //Create server shuffle object to get active shuffle
+        let serverShuffle = new ServerShuffle();
+
+        //Check for active shuffle and save to servershuffle obj
+        serverShuffle.getActiveShuffle()
+        .then((shuffle)=>{
+            serverShuffle = shuffle;
+            console.log('\nActive shuffle found: ID#' + serverShuffle['Shuffle_ID']);
+            serverShuffle.shuffleByRound().then(msg => {
+                res.send(msg);
+            }).catch(err => {
+                res.send(err);
+            });
+        }).catch(err => {
+            console.error(err);
         });
     } else {
         res.redirect('/shuffle');

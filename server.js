@@ -11,7 +11,6 @@ import path from 'path';
 import passport from './steampassport';
 import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
-import ServerShuffle from './ServerShuffle';
 
 
 const server = express();
@@ -112,6 +111,7 @@ server.get('/contest', (req, res) => {
         res.redirect('/auth/login');
     }
 });
+
 //Render shuffle page
 server.get('/shuffle', (req, res) => {
     if(req.isAuthenticated()){
@@ -120,6 +120,7 @@ server.get('/shuffle', (req, res) => {
         res.redirect('/auth/login');
     }
 });
+
 //Render profile page for this user
 server.get('/profile/me', (req, res) => {
     if(req.isAuthenticated()){
@@ -178,33 +179,4 @@ server.use(express.static('public'));
 //Set express to listen for request on the port specified in config.port
 server.listen(config.port, () => {
     console.log("Server listening on port " + config.port);
-    //Create server shuffle object to get active shuffle
-    let serverShuffle = new ServerShuffle();
-
-    //Check for active shuffle and save to servershuffle obj
-    serverShuffle.getActiveShuffle()
-    .then((shuffle)=>{
-        serverShuffle = shuffle;
-        console.log('\tActive shuffle found: ID#' + serverShuffle['Shuffle_ID']);
-        serverShuffle.shuffleWithinHour();
-    }).catch(err => {
-        console.error(err);
-    });
-
-    //Check daily for new shuffles
-    setTimeout(()=>{
-        serverShuffle.getActiveShuffle()
-        .then((shuffle)=>{
-            serverShuffle = shuffle;
-            console.log('Active shuffle found: ID# ' + serverShuffle['Shuffle_ID']);
-            serverShuffle.shuffleWithinHour();
-        }).catch(err => {
-            console.error(err);
-        });
-    }, 86400000);
-
-    //Check hourly for shuffle rounds ending
-    setTimeout(()=>{
-        serverShuffle.shuffleWithinHour();
-    }, 3600000);
 });
